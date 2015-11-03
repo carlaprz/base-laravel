@@ -10,7 +10,11 @@ class NewsController extends BaseController
     protected $resourceName = 'news';
     protected $repositoryName = News::class;
     protected $pathFile = 'files/news/';
-   
+    protected $filesDimensions = [
+        'image' => ['w' => 300]
+        
+    ];
+    
     public function index()
     {
         $fluxesHead = [

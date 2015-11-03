@@ -100,7 +100,9 @@
          $('.deleteFile').on('click', function () {
             if (confirm('Esta seguro de borrar este archivo?')) {
                 var elementId = '#' + $(this).data('id');
-                $(elementId + '_prev').val('');
+                var elementdeleteId = '.' + $(this).data('delete');
+                console.log(elementdeleteId);
+                $(elementdeleteId).val('');
                 $(elementId).html('');
                 $(elementId+'file').show();
             }

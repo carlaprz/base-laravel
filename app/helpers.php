@@ -88,7 +88,7 @@ function current_route_has( $thing, $currentKey = 'menu' )
 function get_rules_from( $from )
 {
     $fields = config('form.' . $from . '.fields');
-    
+
     $rules = [];
     foreach ($fields as $fieldsName => $field) {
         if (array_key_exists('rules', $field)) {
@@ -98,15 +98,20 @@ function get_rules_from( $from )
 
     $langs = all_langs();
     foreach ($langs as $lang) {
-        $fields = config('form.' . $from . '.lenguages.'.$lang->code.'.fields');
-        foreach($fields as $fieldsName => $field){
+        $fields = config('form.' . $from . '.lenguages.' . $lang->code . '.fields');
+        foreach ($fields as $fieldsName => $field) {
             if (array_key_exists('rules', $field)) {
                 $rules[$lang->code][$fieldsName] = $field['rules'];
             }
         }
     }
-    
+
     return $rules;
+}
+
+function get_slug_from( $from )
+{
+    return config('form.' . $from . '.slug');
 }
 
 function resource_home( $resource )
@@ -129,14 +134,14 @@ function resource_home( $resource )
 
 function all_categories()
 {
-     App::setLocale('es');
+    App::setLocale('es');
     $repo = app(Categories::class);
     $toReturn = [];
     foreach ($repo->parents()as $category) {
-        
+
         $toReturn[$category->id] = $category->title;
-        foreach ($repo->childsByParent($category->id)as $child){
-             $toReturn[$child->id] = '-- '.$child->title;
+        foreach ($repo->childsByParent($category->id)as $child) {
+            $toReturn[$child->id] = '-- ' . $child->title;
         }
     }
     return $toReturn;
@@ -190,4 +195,10 @@ function slugify( $text )
     }
 
     return $clean;
+}
+
+function preg_array_key_exists( $pattern, $array )
+{
+    $keys = array_keys($array);
+    return preg_grep($pattern, $keys);
 }

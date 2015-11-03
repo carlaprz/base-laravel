@@ -8,6 +8,7 @@ return [
         'save' => 'admin.categiries.save',
         'update' => 'admin.categiries.update',
         'editor' => false,
+        'slug' =>  ['title'],
         'fields' => [
             'parent' => [
                 'type' => 'select',
@@ -18,7 +19,7 @@ return [
                 'type' => 'radio',
                 'title' => 'Activo',
                 'description' => 'Estado',
-                'rules' => 'required'
+                'rules' => ''
             ]
         ],
         'lenguages' => [
@@ -28,19 +29,19 @@ return [
                         'type' => 'text',
                         'title' => 'Nombre',
                         'description' => 'Nombre',
-                        'rules' => []
+                        'rules' => 'required'
                     ],
                     'meta_title' => [
                         'type' => 'text',
                         'title' => 'Meta Titulo ',
                         'description' => 'Meta Titulo',
-                        'rules' => []
+                        'rules' => ''
                     ],
                     'meta_description' => [
                         'type' => 'textarea',
                         'title' => 'Meta Descripcion',
                         'description' => 'Meta Descripcion',
-                        'rules' => []
+                        'rules' => ''
                     ]
                 ]
             ],
@@ -50,19 +51,19 @@ return [
                         'type' => 'text',
                         'title' => 'Name',
                         'description' => 'Name',
-                        'rules' => []
+                        'rules' => ''
                     ],
                     'meta_title' => [
                         'type' => 'text',
                         'title' => 'Meta title ',
                         'description' => 'Meta title',
-                        'rules' => []
+                        'rules' => ''
                     ],
                     'meta_description' => [
                         'type' => 'textarea',
                         'title' => 'Meta Description',
                         'description' => 'Meta Description',
-                        'rules' => []
+                        'rules' => ''
                     ]
                 ]
             ],
@@ -72,19 +73,19 @@ return [
                         'type' => 'text',
                         'title' => 'Nom',
                         'description' => 'Nom',
-                        'rules' => []
+                        'rules' => ''
                     ],
                     'meta_title' => [
                         'type' => 'text',
                         'title' => 'Meta titre ',
                         'description' => 'Meta titre',
-                        'rules' => []
+                        'rules' => ''
                     ],
                     'meta_description' => [
                         'type' => 'textarea',
                         'title' => 'Meta Description',
                         'description' => 'Meta Description',
-                        'rules' => []
+                        'rules' => ''
                     ]
                 ]
             ]
@@ -96,13 +97,14 @@ return [
         'description' => 'Administración de Productos',
         'save' => 'admin.products.save',
         'update' => 'admin.products.update',
-        'editor' => false,
+        'slug' =>  ['title'],
+        'editor' => true,
         'fields' => [
             'active' => [
                 'type' => 'radio',
                 'title' => 'Activo',
                 'description' => 'Estado',
-                'rules' => 'required'
+                'rules' => ''
             ],
             'category_id' => [
                 'type' => 'select',
@@ -114,8 +116,13 @@ return [
                 'type' => 'image_file',
                 'title' => 'Image:',
                 'description' => 'Introduzca la imagen del producto',
-                'rules' => [
-                ]
+                'rules' => 'required'
+            ],
+            'thumb' => [
+                'type' => 'image_file',
+                'title' => 'Thumb para el listado:',
+                'description' => 'Introduzca la imagen del producto para el listado',
+                'rules' => 'required'
             ]
         ],
         'lenguages' => [
@@ -125,41 +132,43 @@ return [
                         'type' => 'text',
                         'title' => 'Nombre',
                         'description' => 'Nombre',
-                        'rules' => []
+                        'rules' => 'required'
                     ],
                     'description' => [
                         'type' => 'textarea',
                         'title' => 'Descripcion',
                         'description' => 'Descripcion',
-                        'rules' => []
+                        'rules' => ''
+                    ],
+                    'description_sheet' => [
+                        'type' => 'textarea',
+                        'title' => 'Caracteristicas Tecnicas',
+                        'description' => 'Caracteristicas Tecnicas',
+                        'rules' => ''
                     ],
                     'data_comercial' => [
                         'type' => 'file',
                         'title' => 'Ficha Comercial:',
                         'description' => '',
-                        'rules' => [
-                        ]
+                        'rules' => ''
                     ],
                     'data_sheet' => [
                         'type' => 'file',
                         'title' => 'Ficha tecnica:',
                         'description' => '',
-                        'rules' => [
-                        ]
+                        'rules' => ''
                     ],
                     'data_iom' => [
                         'type' => 'file',
                         'title' => 'IOM:',
                         'description' => '',
-                        'rules' => [
-                        ]
+                        'rules' => ''
                     ],
                     'data_drawing' => [
                         'type' => 'file',
                         'title' => 'Dibujos:',
                         'description' => '',
-                        'rules' => [
-                        ]
+                        'rules' => ''
                     ]
                 ]
             ],
@@ -169,41 +178,43 @@ return [
                         'type' => 'text',
                         'title' => 'Name',
                         'description' => 'Name',
-                        'rules' => []
+                        'rules' => ''
                     ],
                     'description' => [
                         'type' => 'textarea',
                         'title' => 'Description',
                         'description' => 'Description',
-                        'rules' => []
+                        'rules' => ''
+                    ],
+                    'description_sheet' => [
+                        'type' => 'textarea',
+                        'title' => 'Caracteristicas Tecnicas',
+                        'description' => 'Caracteristicas Tecnicas',
+                        'rules' => ''
                     ],
                     'data_comercial' => [
                         'type' => 'file',
                         'title' => 'Ficha Comercial:',
                         'description' => '',
-                        'rules' => [
-                        ]
+                        'rules' => ''
                     ],
                     'data_sheet' => [
                         'type' => 'file',
                         'title' => 'Ficha tecnica:',
                         'description' => '',
-                        'rules' => [
-                        ]
+                        'rules' => ''
                     ],
                     'data_iom' => [
                         'type' => 'file',
                         'title' => 'IOM:',
                         'description' => '',
-                        'rules' => [
-                        ]
+                        'rules' => ''
                     ],
                     'data_drawing' => [
                         'type' => 'file',
                         'title' => 'Dibujos:',
                         'description' => '',
-                        'rules' => [
-                        ]
+                        'rules' => ''
                     ]
                 ]
             ],
@@ -213,41 +224,45 @@ return [
                         'type' => 'text',
                         'title' => 'Nom',
                         'description' => 'Nom',
-                        'rules' => []
+                        'rules' => ''
                     ],
                     'description' => [
                         'type' => 'textarea',
                         'title' => 'Description',
                         'description' => 'Description',
-                        'rules' => []
+                        'rules' => ''
+                    ],
+                    'description_sheet' => [
+                        'type' => 'textarea',
+                        'title' => 'Caracteristicas Tecnicas',
+                        'description' => 'Caracteristicas Tecnicas',
+                        'rules' => ''
                     ],
                     'data_comercial' => [
                         'type' => 'file',
                         'title' => 'Ficha Comercial:',
                         'description' => '',
-                        'rules' => [
-                        ]
+                        'rules' => '
+                        '
                     ],
                     'data_sheet' => [
                         'type' => 'file',
                         'title' => 'Ficha tecnica:',
                         'description' => '',
-                        'rules' => [
-                        ]
+                        'rules' => '
+                        '
                     ],
                     'data_iom' => [
                         'type' => 'file',
                         'title' => 'IOM:',
                         'description' => '',
-                        'rules' => [
-                        ]
+                        'rules' => ''
                     ],
                     'data_drawing' => [
                         'type' => 'file',
                         'title' => 'Dibujos:',
                         'description' => '',
-                        'rules' => [
-                        ]
+                        'rules' => ''
                     ]
                 ]
             ]
@@ -265,7 +280,7 @@ return [
                 'type' => 'radio',
                 'title' => 'Activo',
                 'description' => 'Estado',
-                'rules' => 'required'
+                'rules' => ''
             ]
         ],
         'lenguages' => [
@@ -275,13 +290,13 @@ return [
                         'type' => 'text',
                         'title' => 'Titulo',
                         'description' => 'Titulo',
-                        'rules' => []
+                        'rules' => 'required'
                     ],
                     'description' => [
                         'type' => 'textarea',
                         'title' => 'Descripcion',
                         'description' => 'Descripcion',
-                        'rules' => []
+                        'rules' => ''
                     ]
                 ]
             ],
@@ -291,13 +306,13 @@ return [
                         'type' => 'text',
                         'title' => 'Title',
                         'description' => 'Title',
-                        'rules' => []
+                        'rules' => ''
                     ],
                     'description' => [
                         'type' => 'textarea',
                         'title' => 'Description',
                         'description' => 'Description',
-                        'rules' => []
+                        'rules' => ''
                     ]
                 ]
             ],
@@ -307,13 +322,13 @@ return [
                         'type' => 'text',
                         'title' => 'Titre',
                         'description' => 'Titre',
-                        'rules' => []
+                        'rules' => ''
                     ],
                     'description' => [
                         'type' => 'textarea',
                         'title' => 'Description',
                         'description' => 'Description',
-                        'rules' => []
+                        'rules' => ''
                     ]
                 ]
             ]
@@ -331,14 +346,13 @@ return [
                 'type' => 'image_file',
                 'title' => 'Image:',
                 'description' => 'Introduzca la imagen Principal de la noticia',
-                'rules' => [
-                ]
+                'rules' => 'required'
             ],
             'active' => [
                 'type' => 'radio',
                 'title' => 'Activo',
                 'description' => 'Estado',
-                'rules' => 'required'
+                'rules' => ''
             ]
         ],
         'lenguages' => [
@@ -348,13 +362,13 @@ return [
                         'type' => 'text',
                         'title' => 'Titulo',
                         'description' => 'Titulo',
-                        'rules' => []
+                        'rules' => 'required'
                     ],
                     'description' => [
                         'type' => 'textarea',
                         'title' => 'Descripcion',
                         'description' => 'Descripcion',
-                        'rules' => []
+                        'rules' => 'required'
                     ]
                 ]
             ],
@@ -364,13 +378,13 @@ return [
                         'type' => 'text',
                         'title' => 'Title',
                         'description' => 'Title',
-                        'rules' => []
+                        'rules' => ''
                     ],
                     'description' => [
                         'type' => 'textarea',
                         'title' => 'Description',
                         'description' => 'Description',
-                        'rules' => []
+                        'rules' => ''
                     ]
                 ]
             ],
@@ -380,13 +394,13 @@ return [
                         'type' => 'text',
                         'title' => 'Titre',
                         'description' => 'Titre',
-                        'rules' => []
+                        'rules' => ''
                     ],
                     'description' => [
                         'type' => 'textarea',
                         'title' => 'Description',
                         'description' => 'Description',
-                        'rules' => []
+                        'rules' => ''
                     ]
                 ]
             ]

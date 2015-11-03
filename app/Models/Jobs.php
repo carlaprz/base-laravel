@@ -36,32 +36,64 @@ final class Jobs extends Model
 
     public function add( $data )
     {
-        $validated = $this->validate($data);
-        if($validated['error'] == false){
-             return $this->create($data);
-        }else{
+
+    }
+
+    public function addBeforeValidation( $data, $rules )
+    {
+        $validated = $this->validate($data, false, $rules);
+        if ($validated['error'] == false) {
+            return $this->create($data);
+        } else {
             return $validated;
         }
     }
 
-    public function updateBeforeValidation($data, $id){
-        $validated = $this->validate($data, $id);
-        if($validated['error'] == false){
-             return $this->update($data);
-        }else{
+    public function updateBeforeValidation( $data, $id ,$rules)
+    {
+        $validated = $this->validate($data, $id, $rules);
+        if ($validated['error'] == false) {
+            return $this->update($data);
+        } else {
             return $validated;
         }
     }
 
-    private function validate( $data , $id = null){
+    private function validate( $data, $id = null, $rules )
+    {
         $langs = all_langs();
         $errors = [];
 
-        if(key_exists('es', $data)){
-                if($data['es']['title'] == ''){
-                    $errors['error'][] = 'El campo titulo en español es obligatorio.';
-                    return  $errors;
+        foreach ($rules as $key => $value) {
+
+            if (is_array($value)) {
+                foreach ($value as $field => $rule) {
+                    if ($rule == 'required') {
+                        if (empty($data[$key][$field])) {
+                            $text = $field;
+                            if ($field == 'title') {
+                                $text = 'nombre';
+                            }
+                            $errors['error'][] = 'El campo ' . $text . ' en el idioma "' . strtoupper($key) . '" es obligatorio.';
+                        }
+                    }
                 }
+            } else {
+                if ($value == 'required') {
+                    if (isset($data[$key]) && empty($data[$key])) {
+                        $text = $key;
+                        if ($key == 'category_id') {
+                            $text = 'categoria';
+                        }
+
+                        $errors['error'][] = 'El campo ' . $text . ' es obligatorio.';
+                    }
+                }
+            }
+        }
+
+        if (!empty($errors)) {
+            return $errors;
         }
 
         return true;
@@ -72,13 +104,14 @@ final class Jobs extends Model
         return $this->where('active', '=', 1)->get();
     }
 
-    public function searchJobs($search)
+    public function searchJobs( $search )
     {
         return $this->select('jobs.*')
-            ->join(DB::raw('jobs_translations jt'), 'jt.jobs_id', '=', 'jobs.id')
-            ->where('jobs.active', '=', 1)
-            ->where('jt.title','LIKE' ,  '%' . $search . '%')
-            ->get();
+                        ->join(DB::raw('jobs_translations jt'), 'jt.jobs_id', '=', 'jobs.id')
+                        ->where('jobs.active', '=', 1)
+                        ->where('jt.title', 'LIKE', '%' . $search . '%')
+                        ->groupBy('jobs.id')
+                        ->get();
     }
 
 }

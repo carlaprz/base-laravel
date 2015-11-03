@@ -18,6 +18,7 @@ class Products extends Migration
             $table->increments('id');
             $table->integer('category_id')->unsigned();
             $table->string('image');
+            $table->string('thumb');
             $table->boolean('active')->default(1);
             $table->timestamps();
 
@@ -32,10 +33,11 @@ class Products extends Migration
 
             $table->string('title');
             $table->longText('description');
-            $table->text('data_sheet');
-            $table->text('data_comercial');
-            $table->text('data_iom');
-            $table->text('data_drawing');
+            $table->longText('description_sheet');
+            $table->text('data_sheet')->nullable();
+            $table->text('data_comercial')->nullable();
+            $table->text('data_iom')->nullable();
+            $table->text('data_drawing')->nullable();
             $table->string('slug');
 
             $table->timestamps();

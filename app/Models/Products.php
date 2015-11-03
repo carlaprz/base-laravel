@@ -14,9 +14,9 @@ final class Products extends Model implements ModelInterface
 
     const IMAGE_PATH = 'files/products/';
 
-    public $translatedAttributes = ['products_id', 'locale', 'title', 'description', 'data_sheet', 'data_comercial', 'data_iom', 'data_drawing', 'slug'];
-    protected $fillable = ['category_id', 'image', 'active', 'products_id', 'locale', 'title', 'description', 'data_sheet', 'data_comercial', 'data_iom', 'data_drawing', 'slug'];
-    protected $appends = ["es", "en", "fr", "categoryName" , "categorySlug"];
+    public $translatedAttributes = ['products_id', 'locale', 'title', 'description', 'data_sheet', 'data_comercial', 'data_iom', 'data_drawing', 'description_sheet', 'slug'];
+    protected $fillable = ['category_id', 'image', 'thumb', 'active', 'products_id', 'locale', 'title', 'description', 'data_sheet', 'data_comercial', 'data_iom',  'description_sheet','data_drawing', 'slug'];
+    protected $appends = ["es", "en", "fr", "categoryName", "categorySlug"];
 
     public function getCategory()
     {
@@ -29,6 +29,7 @@ final class Products extends Model implements ModelInterface
         return [
             'title' => $this->title,
             'description' => $this->description,
+            'description_sheet' => $this->description_sheet,
             'data_sheet' => asset(self::IMAGE_PATH . 'es/' . $this->data_sheet),
             'data_comercial' => asset(self::IMAGE_PATH . 'es/' . $this->data_comercial),
             'data_iom' => asset(self::IMAGE_PATH . 'es/' . $this->data_iom),
@@ -42,6 +43,7 @@ final class Products extends Model implements ModelInterface
         return [
             'title' => $this->title,
             'description' => $this->description,
+            'description_sheet' => $this->description_sheet,
             'data_sheet' => asset(self::IMAGE_PATH . 'en/' . $this->data_sheet),
             'data_comercial' => asset(self::IMAGE_PATH . 'en/' . $this->data_comercial),
             'data_iom' => asset(self::IMAGE_PATH . 'en/' . $this->data_iom),
@@ -53,8 +55,9 @@ final class Products extends Model implements ModelInterface
     {
         App::setLocale('fr');
         return [
-            'title' => $this->title,
+            'title' => $this->title,            
             'description' => $this->description,
+            'description_sheet' => $this->description_sheet,
             'data_sheet' => asset(self::IMAGE_PATH . 'fr/' . $this->data_sheet),
             'data_comercial' => asset(self::IMAGE_PATH . 'fr/' . $this->data_comercial),
             'data_iom' => asset(self::IMAGE_PATH . 'fr/' . $this->data_iom),
@@ -75,10 +78,14 @@ final class Products extends Model implements ModelInterface
     }
 
     //ALL
-
     public function add( $data )
     {
-        $validated = $this->validate($data);
+        
+    }
+
+    public function addBeforeValidation( $data, $rules )
+    {
+        $validated = $this->validate($data, false, $rules);
         if ($validated['error'] == false) {
             return $this->create($data);
         } else {
@@ -86,9 +93,9 @@ final class Products extends Model implements ModelInterface
         }
     }
 
-    public function updateBeforeValidation( $data, $id )
+    public function updateBeforeValidation( $data, $id, $rules )
     {
-        $validated = $this->validate($data, $id);
+        $validated = $this->validate($data, $id, $rules);
         if ($validated['error'] == false) {
             return $this->update($data);
         } else {
@@ -96,21 +103,48 @@ final class Products extends Model implements ModelInterface
         }
     }
 
-    private function validate( $data, $id = null )
+    private function validate( $data, $id = null, $rules )
     {
 
         $langs = all_langs();
         $errors = [];
+        /* echo '<pre>';
+          print_r($rules);
+          echo '</pre>';
+          echo '<pre>';
+          print_r($data);
+          echo '</pre>'; */
+        foreach ($rules as $key => $value) {
+            if (is_array($value)) {
+                foreach ($value as $field => $rule) {
+                    if ($rule == 'required') {
+                        if (isset($data[$key]) && empty($data[$key][$field])) {
+                            $text = $field;
+                            if ($field == 'title') {
+                                $text = 'nombre';
+                            }
+                            $errors['error'][] = 'El campo ' . $text . ' en el idioma "' . strtoupper($key) . '" es obligatorio.';
+                        }
+                    }
+                }
+            } else {
+                if ($value == 'required') {
+                    if (isset($data[$key]) && empty($data[$key])) {
+                        $text = $key;
+                        if ($key == 'category_id') {
+                            $text = 'categoria';
+                        }
 
-        if (!isset($data['es']) && !isset($data['es']['title'])) {
-            $errors['error'][] = 'El campo titulo en español es obligatorio.';
-            return $errors;
+                        $errors['error'][] = 'El campo ' . $text . ' es obligatorio.';
+                    }
+                }
+            }
         }
+        // dd($errors);
 
         $queryValidation = $this->select('*')->join(DB::raw('products_translations ct'), 'ct.products_id', '=', 'products.id');
-
         foreach ($langs as $lang) {
-            if (isset($data[$lang->code]['title'])) {
+            if (isset($data[$lang->code]) && isset($data[$lang->code]['title']) && !empty($data[$lang->code]['title'])) {
                 $queryValidation = $queryValidation->orWhere(function($query) use( $lang, $data, $id)
                 {
                     $query = $query->where('ct.locale', '=', $lang->code)
@@ -125,11 +159,19 @@ final class Products extends Model implements ModelInterface
 
         $data = $queryValidation->get();
         if (count($data) > 0) {
-            $errors['error'][] = 'Ya existe un producto con ese titulo.';
+            $errors['error'][] = 'Ya existe un producto con ese titulo .';
+        }
+
+        if (!empty($errors)) {
             return $errors;
         }
 
         return true;
+    }
+
+    public function getThumbAttribute( $thumb )
+    {
+        return (filter_var($thumb, FILTER_VALIDATE_URL) === FALSE) ? $this->imagePath($thumb) : $thumb;
     }
 
     public function getImageAttribute( $image )
@@ -159,6 +201,13 @@ final class Products extends Model implements ModelInterface
                         ->get();
     }
 
+    public function findProductsByCategories( $categories = [] )
+    {
+        return $this->wherein('category_id', $categories)
+                        ->where('active', '=', 1)
+                        ->get();
+    }
+
     public function findProductBySlug( $slug )
     {
         return $this->select('products.*')
@@ -166,21 +215,18 @@ final class Products extends Model implements ModelInterface
                         ->where('products.active', '=', 1)
                         ->where('products.category_id', '>', 0)
                         ->where('ct.slug', $slug)
-                        ->get();
+                        ->first();
     }
 
     public function SearchProduct( $search )
     {
         return $this->select('products.*')
-            ->join(DB::raw('products_translations ct'), 'ct.products_id', '=', 'products.id')
-            ->where('products.active', '=', 1)
-            ->where('products.category_id', '>', 0)
-            ->where('ct.title', 'LIKE' , '%' . $search . '%')
-            ->get();
+                        ->join(DB::raw('products_translations ct'), 'ct.products_id', '=', 'products.id')
+                        ->where('products.active', '=', 1)
+                        ->where('products.category_id', '>', 0)
+                        ->where('ct.title', 'LIKE', '%' . $search . '%')
+                        ->groupBy('products.id')
+                        ->get();
     }
-
-
-
-
 
 }

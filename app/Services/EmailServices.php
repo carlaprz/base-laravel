@@ -10,7 +10,7 @@ class EmailService
     private function sendEmail( $from, $to, $subject, $view, $data )
     {
         Mail::send($view, $data, function ($message) use($from, $to, $subject) {
-            $message->from('pau.garcia@thatzad.com');
+            $message->from('web@hitecsa.es');
             $message->to($to);
             $message->subject($subject);
         });

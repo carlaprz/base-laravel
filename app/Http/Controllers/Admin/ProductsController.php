@@ -14,6 +14,10 @@ class ProductsController extends BaseController
     protected $resourceName = 'products';
     protected $repositoryName = Products::class;
     protected $pathFile = 'files/products/';
+    protected $filesDimensions = [
+        'image' => ['w' => 564,'h' => 384],
+        'thumb' => ['w' => 424,'h' => 362],
+    ];
   
 
     public function index()
