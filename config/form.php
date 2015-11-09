@@ -8,7 +8,7 @@ return [
         'save' => 'admin.categiries.save',
         'update' => 'admin.categiries.update',
         'editor' => false,
-        'slug' =>  ['title'],
+        'slug' => ['title'],
         'fields' => [
             'parent' => [
                 'type' => 'select',
@@ -97,7 +97,7 @@ return [
         'description' => 'Administración de Productos',
         'save' => 'admin.products.save',
         'update' => 'admin.products.update',
-        'slug' =>  ['title'],
+        'slug' => ['title'],
         'editor' => true,
         'fields' => [
             'active' => [
@@ -404,6 +404,23 @@ return [
                     ]
                 ]
             ]
+        ]
+    ],
+    'users' => [
+        'name' => 'Usuarios',
+        'for_files' => true,
+        'description' => 'Administración de Usuarios',
+        'save' => 'admin.users.save',
+        'update' => 'admin.users.update',
+        'editor' => true,
+        'fields' => [
+            'name' => [
+                'type' => 'text',
+                'title' => 'Nombre:',
+                'description' => 'Introduzca el Nombre.',
+                'rules' => ['required']
+            ],
+            
         ]
     ]
 ];

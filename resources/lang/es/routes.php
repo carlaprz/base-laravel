@@ -1,4 +1,4 @@
-home<?php
+<?php
 
 return [
      'index' => '',

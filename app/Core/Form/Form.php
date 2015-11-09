@@ -1,24 +1,27 @@
-<?php namespace App\Core\Form;
+<?php
+
+namespace App\Core\Form;
 
 use App\Core\Form\Fields\Field;
 
 final class Form
 {
+
     private $fields = [];
     private $name;
     private $description;
     private $editor;
     private $data = [];
 
-    public function __construct($name, $description, $editor, $data = [])
+    public function __construct( $name, $description, $editor, $data = [] )
     {
         $this->name = $name;
         $this->description = $description;
         $this->editor = $editor;
-        $this->data = $data;        
+        $this->data = $data;
     }
 
-    public function addField($type ,Field $field)
+    public function addField( $type, Field $field )
     {
         $this->fields[$type][] = $field;
     }
@@ -33,17 +36,17 @@ final class Form
         return $this->description;
     }
 
-    public function fields($type)
+    public function fields( $type )
     {
-        return $this->fields[$type];
+        return isset($this->fields[$type]) ? $this->fields[$type] : null;
     }
 
     public function editor()
     {
         return $this->editor;
     }
-    
-    public function route($to)
+
+    public function route( $to )
     {
         return route($this->data[$to]);
     }
@@ -53,4 +56,5 @@ final class Form
         return (array_key_exists('for_files', $this->data) &&
                 $this->data['for_files']);
     }
+
 }

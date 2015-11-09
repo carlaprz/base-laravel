@@ -44,6 +44,7 @@
                         </div>
                     </div>
                     @endforeach
+                    
                     @foreach(all_langs() as $languages)
                     @if(null !== ($form->fields($languages->code)))
                     <div class="langueages"> 

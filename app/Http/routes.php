@@ -156,6 +156,35 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => ['aut
         'as' => 'admin.news.delete',
         'uses' => 'NewsController@delete'
     ]);
+    
+    Route::get('users', [
+        'as' => 'admin.users.index',
+        'uses' => 'UsersController@index'
+    ]);
+
+    Route::get('users/create', [
+        'as' => 'admin.users.create',
+        'uses' => 'UsersController@create'
+    ]);
+
+    Route::post('users/create', [
+        'as' => 'admin.users.save',
+        'uses' => 'UsersController@save'
+    ]);
+
+    Route::get('users/edit/{id}', [
+        'as' => 'admin.users.edit',
+        'uses' => 'UsersController@edit'
+    ]);
+
+    Route::post('users/edit/{id}', [
+        'as' => 'admin.users.update',
+        'uses' => 'UsersController@update'
+    ]);
+    Route::get('users/delete/{id}', [
+        'as' => 'admin.users.delete',
+        'uses' => 'UsersController@delete'
+    ]);
 });
 
 

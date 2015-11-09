@@ -43,5 +43,14 @@ return [
         'icon' => 'fa fa-bullhorn',
         'name' => 'Noticias',
         'resource' => 'news'
+    ],
+     [
+        'route' => 'admin.users.index',
+        'create' => 'admin.users.create',
+        'edit' => 'admin.users.edit',
+        'delete' => 'admin.users.delete',
+        'icon' => 'fa fa-user',
+        'name' => 'Usuarios',
+        'resource' => 'users'
     ]
 ];

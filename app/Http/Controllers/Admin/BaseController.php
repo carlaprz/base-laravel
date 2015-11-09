@@ -22,10 +22,7 @@ abstract class BaseController extends Controller
 
     public function __construct()
     {
-       /* if (Auth::user()->isAdmin() !== true) {
-            Auth::logout();
-            return ;
-        }*/
+       
     }
 
     public function create( FormGenerator $formBuilder )

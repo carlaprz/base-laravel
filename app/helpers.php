@@ -99,9 +99,11 @@ function get_rules_from( $from )
     $langs = all_langs();
     foreach ($langs as $lang) {
         $fields = config('form.' . $from . '.lenguages.' . $lang->code . '.fields');
-        foreach ($fields as $fieldsName => $field) {
-            if (array_key_exists('rules', $field)) {
-                $rules[$lang->code][$fieldsName] = $field['rules'];
+        if (!empty($fields)) {
+            foreach ($fields as $fieldsName => $field) {
+                if (array_key_exists('rules', $field)) {
+                    $rules[$lang->code][$fieldsName] = $field['rules'];
+                }
             }
         }
     }
