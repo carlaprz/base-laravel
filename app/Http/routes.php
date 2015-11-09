@@ -10,27 +10,30 @@
   | and give it the controller to call when that URI is requested.
   |
  */
-Route::group(['prefix' => LaravelLocalization::setLocale()], function()
+Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['guest']], function()
 {
-    
-     Route::get(trans('routes.home'), [
+    Route::get(trans('routes.home'), [
         'as' => 'home',
         'uses' => 'WelcomeController@index'
     ]);
 
+    Route::get(trans('routes.index'), [
+        'as' => 'index',
+        'uses' => 'WelcomeController@index'
+    ]);
 });
 
 Route::get('administrador', function()
 {
-    return redirect('admin/home');
+    return redirect('auth/login');
 });
 
 Route::controllers([
     'auth' => 'Auth\AuthController',
-    'password' => 'Auth\PasswordController',
+    'password' => 'Auth\PasswordController'
 ]);
 
-Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => ['auth']], function ()
+Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => ['auth','admin']], function ()
 {
     Route::get('home', [
         'as' => 'admin.home',

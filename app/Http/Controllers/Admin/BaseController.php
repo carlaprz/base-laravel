@@ -11,10 +11,6 @@ use Illuminate\Foundation\Bus\DispatchesCommands;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use App\Services\FileServices;
 
-/* ,
-  Validator,
-  Session,
-  Redirect */
 
 abstract class BaseController extends Controller
 {
@@ -26,7 +22,10 @@ abstract class BaseController extends Controller
 
     public function __construct()
     {
-        
+       /* if (Auth::user()->isAdmin() !== true) {
+            Auth::logout();
+            return ;
+        }*/
     }
 
     public function create( FormGenerator $formBuilder )

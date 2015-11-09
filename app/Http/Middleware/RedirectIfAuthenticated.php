@@ -4,6 +4,7 @@ use Closure;
 use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Http\RedirectResponse;
 
+
 class RedirectIfAuthenticated {
 
 	/**
@@ -33,12 +34,12 @@ class RedirectIfAuthenticated {
 	 */
 	public function handle($request, Closure $next)
 	{
-		if ($this->auth->check())
-		{
-			return new RedirectResponse(route('admin.home'));
-		}
-
-		return $next($request);
+            if ($this->auth->check() && $this->auth->user()->isAdmin() === 1)
+            {
+                return new RedirectResponse(route('admin.home'));
+            }
+            
+            return $next($request);
 	}
 
 }

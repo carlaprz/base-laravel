@@ -1,6 +1,6 @@
 <?php
 
 return [
-    'hello' => 'bonjour',
-    'helloDetails' => 'bonjour/{id}',
+    'index' => '',
+    'home' => 'homeFR'
 ];

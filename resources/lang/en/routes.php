@@ -1,9 +1,8 @@
 <?php
 
 return [
-  'hello' => 'hello'  ,
-  'helloDetails' => 'hello/{id}'  ,
-
+    'index' => '',
+     'home' => 'home'
 ];
 
 

@@ -11,7 +11,7 @@ class NewsController extends BaseController
     protected $repositoryName = News::class;
     protected $pathFile = 'files/news/';
     protected $filesDimensions = [
-        'image' => ['w' => 300]
+        'image' => ['w' => 640, 'h' => 581]
         
     ];
     
