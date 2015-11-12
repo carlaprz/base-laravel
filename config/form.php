@@ -4,9 +4,7 @@ return [
     'categories' => [
         'name' => 'Categorias',
         'for_files' => false,
-        'description' => 'Administración de Categorias',
-        'save' => 'admin.categiries.save',
-        'update' => 'admin.categiries.update',
+        'description' => 'Administración de Categorias',       
         'editor' => false,
         'slug' => ['title'],
         'fields' => [

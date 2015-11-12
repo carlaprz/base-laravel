@@ -34,18 +34,25 @@ class CreateUsersTable extends Migration
             $table->string('name');
             $table->string('email')->unique();
             $table->string('password', 60);
+
+            $table->string('address', 175);
+            $table->string('postalcode', 5);
+            $table->string('city', 175);
+            $table->string('telephone', 15);
+            $table->string('province', 175);
+
             $table->integer('rol')->unsigned();
             $table->integer('status')->unsigned();
             $table->rememberToken();
             $table->timestamps();
         });
-        
+
         Schema::table('users', function(Blueprint $table)
         {
             $table->foreign('rol')->references('id')->on('users_roles');
             $table->foreign('status')->references('id')->on('users_status');
         });
-        
+
         $this->insertStatus();
         $this->insertRoles();
         $this->insertUser();
