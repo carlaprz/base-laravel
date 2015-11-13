@@ -20,8 +20,8 @@ class Products extends Migration
             $table->string('image');
             $table->string('thumb');
             $table->boolean('active')->default(1);
-            $table->timestamps();
 
+            $table->timestamps();
             $table->foreign('category_id')->references('id')->on('categories');
         });
 
@@ -33,19 +33,27 @@ class Products extends Migration
 
             $table->string('title');
             $table->longText('description');
-            $table->longText('description_sheet');
-            $table->text('data_sheet')->nullable();
-            $table->text('data_comercial')->nullable();
-            $table->text('data_iom')->nullable();
-            $table->text('data_drawing')->nullable();
-            $table->string('slug');
 
+            $table->string('slug');
             $table->timestamps();
 
             $table->unique(['products_id', 'locale']);
             $table->unique(['title', 'locale']);
             $table->unique(['slug', 'locale']);
-            $table->foreign('products_id')->references('id')->on('products')->onDelete('cascade');
+            $table->foreign('products_id')->references('id')->on('products');
+        });
+
+        Schema::create('products_prices', function(Blueprint $table)
+        {
+            $table->increments('id');
+            $table->integer('products_id')->unsigned();
+
+            $table->float('pvp')->unsigned();
+            $table->float('pvp_discounted')->unsigned();
+            $table->float('iva')->unsigned();
+
+            $table->timestamps();
+            $table->foreign('products_id')->references('id')->on('products');
         });
     }
 
@@ -56,6 +64,7 @@ class Products extends Migration
      */
     public function down()
     {
+        Schema::drop('products_prices');
         Schema::drop('products_translations');
         Schema::drop('products');
     }

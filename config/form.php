@@ -5,7 +5,6 @@ return [
         'name' => 'Categorias',
         'for_files' => false,
         'description' => 'Administración de Categorias',
-
         'editor' => false,
         'slug' => ['title'],
         'fields' => [
