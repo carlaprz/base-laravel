@@ -109,12 +109,13 @@ final class News extends Model implements ModelInterface
                 {
                     $query = $query->where('ct.locale', '=', $lang->code)
                             ->Where('ct.title', '=', $data[$lang->code]['title']);
-                    if (isset($id)) {
-                        $query = $query->where('ct.news_id', '<>', $id);
-                    }
                     return $query;
                 });
             }
+        }
+        
+        if (isset($id)) {
+            $queryValidation = $queryValidation->where('ct.news_id', '<>', $id);
         }
 
         $data = $queryValidation->get();

@@ -21,10 +21,10 @@ final class Categories extends Model implements ModelInterface
     {
         return $this->belongsTo(Categories::class, 'parent', 'id')->first();
     }
-    
+
     public function getChildren()
     {
-          return $this->hasMany(Categories::class, 'parent')->get();
+        return $this->hasMany(Categories::class, 'parent')->get();
     }
 
     public function getEsAttribute()
@@ -126,15 +126,17 @@ final class Categories extends Model implements ModelInterface
                     if (isset($data[$lang->code]['parent'])) {
                         $query = $query->Where('ct.parent', '=', $data[$lang->code]['parent']);
                     }
-
-                    if (isset($id)) {
-                        $query = $query->where('ct.categories_id', '<>', $id);
-                    }
                     return $query;
                 });
             }
         }
+
+        if (isset($id)) {
+            $queryValidation = $queryValidation->where('ct.categories_id', '<>', $id);
+        }
+
         $data = $queryValidation->get();
+
         if (count($data) > 0) {
             $errors['error'][] = 'Ya existe una categoria con ese Nombre.';
             return $errors;
@@ -163,9 +165,10 @@ final class Categories extends Model implements ModelInterface
                         ->where('active', '=', 1)
                         ->get();
     }
-    
-    public function children(){
-       return $this->getChildren();
+
+    public function children()
+    {
+        return $this->getChildren();
     }
 
     public function findCategoryBySlug( $slug )

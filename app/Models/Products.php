@@ -15,7 +15,7 @@ final class Products extends Model implements ModelInterface
     const IMAGE_PATH = 'files/products/';
 
     public $translatedAttributes = ['products_id', 'locale', 'title', 'description', 'data_sheet', 'data_comercial', 'data_iom', 'data_drawing', 'description_sheet', 'slug'];
-    protected $fillable = ['category_id', 'image', 'thumb', 'active', 'products_id', 'locale', 'title', 'description', 'data_sheet', 'data_comercial', 'data_iom',  'description_sheet','data_drawing', 'slug'];
+    protected $fillable = ['category_id', 'image', 'thumb', 'active', 'products_id', 'locale', 'title', 'description', 'data_sheet', 'data_comercial', 'data_iom', 'description_sheet', 'data_drawing', 'slug'];
     protected $appends = ["es", "en", "fr", "categoryName", "categorySlug"];
 
     public function getCategory()
@@ -55,7 +55,7 @@ final class Products extends Model implements ModelInterface
     {
         App::setLocale('fr');
         return [
-            'title' => $this->title,            
+            'title' => $this->title,
             'description' => $this->description,
             'description_sheet' => $this->description_sheet,
             'data_sheet' => asset(self::IMAGE_PATH . 'fr/' . $this->data_sheet),
@@ -108,12 +108,7 @@ final class Products extends Model implements ModelInterface
 
         $langs = all_langs();
         $errors = [];
-        /* echo '<pre>';
-          print_r($rules);
-          echo '</pre>';
-          echo '<pre>';
-          print_r($data);
-          echo '</pre>'; */
+
         foreach ($rules as $key => $value) {
             if (is_array($value)) {
                 foreach ($value as $field => $rule) {
@@ -149,12 +144,14 @@ final class Products extends Model implements ModelInterface
                 {
                     $query = $query->where('ct.locale', '=', $lang->code)
                             ->Where('ct.title', '=', $data[$lang->code]['title']);
-                    if (isset($id)) {
-                        $query = $query->where('ct.products_id', '<>', $id);
-                    }
+                    
                     return $query;
                 });
             }
+        }
+
+        if (isset($id)) {
+            $queryValidation = $queryValidation->where('ct.products_id', '<>', $id);
         }
 
         $data = $queryValidation->get();

@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class Lenguages extends Migration
+class Languages extends Migration
 {
 
     /**
@@ -13,6 +13,8 @@ class Lenguages extends Migration
      */
     public function up()
     {
+        $configMigrations = Config::get('configMigrations.languages');
+
         Schema::create('languages', function(Blueprint $table)
         {
             $table->increments('id');
@@ -23,33 +25,22 @@ class Lenguages extends Migration
             $table->boolean('default')->default(0);
             $table->timestamps();
         });
-        
-        $this->insertLanguages();
+
+        $this->insertLanguages($configMigrations);
     }
 
-    private function insertLanguages()
+    private function insertLanguages( $configMigrations )
     {
-        $languages = [
-            [
-                'code' => 'es',
-                'locale' => 'es_ES',
-                'name' => 'Español',
-                'default' => 1,
+        $languages = [];
+        foreach ($configMigrations as $lang) {
+            $languages [] = [
+                'code' => $lang['code'],
+                'locale' => $lang['locale'],
+                'name' => $lang['name'],
+                'default' => $lang['default'],
                 'created_at' => date("Y-m-d H:s:i")
-            ],
-            [
-                'code' => 'en',
-                'locale' => 'en_EN',
-                'name' => 'Ingles',
-                'created_at' => date("Y-m-d H:s:i")
-            ],
-            [
-                'code' => 'fr',
-                'locale' => 'fr_FR',
-                'name' => 'Frances',
-                'created_at' => date("Y-m-d H:s:i")
-            ]
-        ];
+            ];
+        }
 
         foreach ($languages as $key => $lenguage) {
             DB::table('languages')->insert($lenguage);
