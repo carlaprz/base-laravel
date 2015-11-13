@@ -4,3 +4,5 @@
 /nbproject
 /public/adm.php
 /public/files
+.DS_Store
+.idea/
