@@ -4,7 +4,7 @@ return [
     'categories' => [
         'name' => 'Categorias',
         'for_files' => false,
-        'description' => 'Administración de Categorias',       
+        'description' => 'Administración de Categorias',
         'editor' => false,
         'slug' => ['title'],
         'fields' => [
@@ -27,7 +27,7 @@ return [
                         'type' => 'text',
                         'title' => 'Nombre',
                         'description' => 'Nombre',
-                        'rules' => 'required'
+                        'rules' => ['required']
                     ],
                     'meta_title' => [
                         'type' => 'text',
@@ -64,28 +64,6 @@ return [
                         'rules' => ''
                     ]
                 ]
-            ],
-            'fr' => [
-                'fields' => [
-                    'title' => [
-                        'type' => 'text',
-                        'title' => 'Nom',
-                        'description' => 'Nom',
-                        'rules' => ''
-                    ],
-                    'meta_title' => [
-                        'type' => 'text',
-                        'title' => 'Meta titre ',
-                        'description' => 'Meta titre',
-                        'rules' => ''
-                    ],
-                    'meta_description' => [
-                        'type' => 'textarea',
-                        'title' => 'Meta Description',
-                        'description' => 'Meta Description',
-                        'rules' => ''
-                    ]
-                ]
             ]
         ]
     ],
@@ -93,9 +71,7 @@ return [
         'name' => 'Productos',
         'for_files' => true,
         'description' => 'Administración de Productos',
-        'save' => 'admin.products.save',
-        'update' => 'admin.products.update',
-        'slug' => ['title'],
+        'slug' => false,
         'editor' => true,
         'fields' => [
             'active' => [
@@ -108,176 +84,36 @@ return [
                 'type' => 'select',
                 'title' => 'Categoria',
                 'description' => 'all_categories',
-                'rules' => 'required'
+                'rules' => ['required']
             ],
             'image' => [
                 'type' => 'image_file',
                 'title' => 'Image:',
                 'description' => 'Introduzca la imagen del producto',
-                'rules' => 'required'
+                'rules' => ['required']
             ],
             'thumb' => [
                 'type' => 'image_file',
                 'title' => 'Thumb para el listado:',
                 'description' => 'Introduzca la imagen del producto para el listado',
-                'rules' => 'required'
-            ]
-        ],
-        'lenguages' => [
-            'es' => [
-                'fields' => [
-                    'title' => [
-                        'type' => 'text',
-                        'title' => 'Nombre',
-                        'description' => 'Nombre',
-                        'rules' => 'required'
-                    ],
-                    'description' => [
-                        'type' => 'textarea',
-                        'title' => 'Descripcion',
-                        'description' => 'Descripcion',
-                        'rules' => ''
-                    ],
-                    'description_sheet' => [
-                        'type' => 'textarea',
-                        'title' => 'Caracteristicas Tecnicas',
-                        'description' => 'Caracteristicas Tecnicas',
-                        'rules' => ''
-                    ],
-                    'data_comercial' => [
-                        'type' => 'file',
-                        'title' => 'Ficha Comercial:',
-                        'description' => '',
-                        'rules' => ''
-                    ],
-                    'data_sheet' => [
-                        'type' => 'file',
-                        'title' => 'Ficha tecnica:',
-                        'description' => '',
-                        'rules' => ''
-                    ],
-                    'data_iom' => [
-                        'type' => 'file',
-                        'title' => 'IOM:',
-                        'description' => '',
-                        'rules' => ''
-                    ],
-                    'data_drawing' => [
-                        'type' => 'file',
-                        'title' => 'Dibujos:',
-                        'description' => '',
-                        'rules' => ''
-                    ]
-                ]
+                'rules' => ['required']
             ],
-            'en' => [
-                'fields' => [
-                    'title' => [
-                        'type' => 'text',
-                        'title' => 'Name',
-                        'description' => 'Name',
-                        'rules' => ''
-                    ],
-                    'description' => [
-                        'type' => 'textarea',
-                        'title' => 'Description',
-                        'description' => 'Description',
-                        'rules' => ''
-                    ],
-                    'description_sheet' => [
-                        'type' => 'textarea',
-                        'title' => 'Caracteristicas Tecnicas',
-                        'description' => 'Caracteristicas Tecnicas',
-                        'rules' => ''
-                    ],
-                    'data_comercial' => [
-                        'type' => 'file',
-                        'title' => 'Ficha Comercial:',
-                        'description' => '',
-                        'rules' => ''
-                    ],
-                    'data_sheet' => [
-                        'type' => 'file',
-                        'title' => 'Ficha tecnica:',
-                        'description' => '',
-                        'rules' => ''
-                    ],
-                    'data_iom' => [
-                        'type' => 'file',
-                        'title' => 'IOM:',
-                        'description' => '',
-                        'rules' => ''
-                    ],
-                    'data_drawing' => [
-                        'type' => 'file',
-                        'title' => 'Dibujos:',
-                        'description' => '',
-                        'rules' => ''
-                    ]
-                ]
+            'pvp' => [
+                'type' => 'numeric',
+                'title' => 'Precio del producto:',
+                'description' => 'Introduzca el precio del producto',
+                'rules' => ['required']
             ],
-            'fr' => [
-                'fields' => [
-                    'title' => [
-                        'type' => 'text',
-                        'title' => 'Nom',
-                        'description' => 'Nom',
-                        'rules' => ''
-                    ],
-                    'description' => [
-                        'type' => 'textarea',
-                        'title' => 'Description',
-                        'description' => 'Description',
-                        'rules' => ''
-                    ],
-                    'description_sheet' => [
-                        'type' => 'textarea',
-                        'title' => 'Caracteristicas Tecnicas',
-                        'description' => 'Caracteristicas Tecnicas',
-                        'rules' => ''
-                    ],
-                    'data_comercial' => [
-                        'type' => 'file',
-                        'title' => 'Ficha Comercial:',
-                        'description' => '',
-                        'rules' => '
-                        '
-                    ],
-                    'data_sheet' => [
-                        'type' => 'file',
-                        'title' => 'Ficha tecnica:',
-                        'description' => '',
-                        'rules' => '
-                        '
-                    ],
-                    'data_iom' => [
-                        'type' => 'file',
-                        'title' => 'IOM:',
-                        'description' => '',
-                        'rules' => ''
-                    ],
-                    'data_drawing' => [
-                        'type' => 'file',
-                        'title' => 'Dibujos:',
-                        'description' => '',
-                        'rules' => ''
-                    ]
-                ]
-            ]
-        ]
-    ],
-    'jobs' => [
-        'name' => 'Bolsa de empleo',
-        'for_files' => false,
-        'description' => 'Administración de Bolsa de empleo',
-        'save' => 'admin.jobs.save',
-        'update' => 'admin.jobs.update',
-        'editor' => true,
-        'fields' => [
-            'active' => [
-                'type' => 'radio',
-                'title' => 'Activo',
-                'description' => 'Estado',
+            'pvp_discounted' => [
+                'type' => 'numeric',
+                'title' => 'Precio del producto descontado:',
+                'description' => 'Introduzca el precio descontado del producto en caso de que lo tenga',
+                'rules' => ''
+            ],
+            'iva' => [
+                'type' => 'numeric',
+                'title' => '% de impuesto:',
+                'description' => 'Introduzca el valor del impuesto en porcentaje',
                 'rules' => ''
             ]
         ],
@@ -286,15 +122,21 @@ return [
                 'fields' => [
                     'title' => [
                         'type' => 'text',
-                        'title' => 'Titulo',
-                        'description' => 'Titulo',
-                        'rules' => 'required'
+                        'title' => 'title',
+                        'description' => 'Titulo del producto',
+                        'rules' => ['required']
                     ],
                     'description' => [
                         'type' => 'textarea',
-                        'title' => 'Descripcion',
+                        'title' => 'description',
                         'description' => 'Descripcion',
                         'rules' => ''
+                    ],
+                    'slug' => [
+                        'type' => 'text',
+                        'title' => 'Slug',
+                        'description' => 'Caracteristicas Tecnicas',
+                        'rules' => ['required']
                     ]
                 ]
             ],
@@ -302,33 +144,43 @@ return [
                 'fields' => [
                     'title' => [
                         'type' => 'text',
-                        'title' => 'Title',
-                        'description' => 'Title',
+                        'title' => 'title',
+                        'description' => 'Titulo del producto',
                         'rules' => ''
                     ],
                     'description' => [
                         'type' => 'textarea',
-                        'title' => 'Description',
-                        'description' => 'Description',
+                        'title' => 'description',
+                        'description' => 'Descripcion',
                         'rules' => ''
-                    ]
-                ]
-            ],
-            'fr' => [
-                'fields' => [
-                    'title' => [
+                    ],
+                    'slug' => [
                         'type' => 'text',
-                        'title' => 'Titre',
-                        'description' => 'Titre',
-                        'rules' => ''
-                    ],
-                    'description' => [
-                        'type' => 'textarea',
-                        'title' => 'Description',
-                        'description' => 'Description',
-                        'rules' => ''
+                        'title' => 'Slug',
+                        'description' => 'Caracteristicas Tecnicas',
+                        'rules' => ['required']
                     ]
                 ]
+            ]
+        ]
+    ],
+    'payments' => [
+        'name' => 'Métodos de pago',
+        'for_files' => false,
+        'description' => 'Administración de métodos de pago',
+        'editor' => false,
+        'fields' => [
+            'name' => [
+                'type' => 'text',
+                'title' => 'Nombre',
+                'description' => 'Introduce el nombre del método de pago',
+                'rules' => ['required']
+            ],
+            'active' => [
+                'type' => 'radio',
+                'title' => 'Activo',
+                'description' => 'Estado',
+                'rules' => ['required']
             ]
         ]
     ],
@@ -336,15 +188,13 @@ return [
         'name' => 'Noticias',
         'for_files' => true,
         'description' => 'Administración de Noticias',
-        'save' => 'admin.news.save',
-        'update' => 'admin.news.update',
         'editor' => true,
         'fields' => [
             'image' => [
                 'type' => 'image_file',
                 'title' => 'Image:',
                 'description' => 'Introduzca la imagen Principal de la noticia',
-                'rules' => 'required'
+                'rules' => ['required']
             ],
             'active' => [
                 'type' => 'radio',
@@ -366,7 +216,7 @@ return [
                         'type' => 'textarea',
                         'title' => 'Descripcion',
                         'description' => 'Descripcion',
-                        'rules' => 'required'
+                        'rules' => ['required']
                     ]
                 ]
             ],
@@ -376,22 +226,6 @@ return [
                         'type' => 'text',
                         'title' => 'Title',
                         'description' => 'Title',
-                        'rules' => ''
-                    ],
-                    'description' => [
-                        'type' => 'textarea',
-                        'title' => 'Description',
-                        'description' => 'Description',
-                        'rules' => ''
-                    ]
-                ]
-            ],
-            'fr' => [
-                'fields' => [
-                    'title' => [
-                        'type' => 'text',
-                        'title' => 'Titre',
-                        'description' => 'Titre',
                         'rules' => ''
                     ],
                     'description' => [
@@ -406,19 +240,115 @@ return [
     ],
     'users' => [
         'name' => 'Usuarios',
-        'for_files' => true,
+        'for_files' => false,
         'description' => 'Administración de Usuarios',
-        'save' => 'admin.users.save',
-        'update' => 'admin.users.update',
-        'editor' => true,
+        'editor' => false,
         'fields' => [
             'name' => [
                 'type' => 'text',
-                'title' => 'Nombre:',
+                'title' => 'Nombre',
                 'description' => 'Introduzca el Nombre.',
                 'rules' => ['required']
             ],
-            
+            'email' => [
+                'type' => 'text',
+                'title' => 'Email',
+                'description' => 'Introduzca el correo electrónico del usuario.',
+                'rules' => ['required']
+            ],
+            'password' => [
+                'type' => 'text',
+                'title' => 'Contraseña',
+                'description' => 'Introduzca la contraseña del usuario.',
+                'rules' => ['required']
+            ],
+            'address' => [
+                'type' => 'text',
+                'title' => 'Dirección',
+                'description' => 'Introduzca la dirección.',
+                'rules' => ['required']
+            ],
+            'postalcode' => [
+                'type' => 'text',
+                'title' => 'Código postal',
+                'description' => 'Introduzca el código postal',
+                'rules' => ['required']
+            ],
+            'city' => [
+                'type' => 'text',
+                'title' => 'Código postal',
+                'description' => 'Introduzca el código postal',
+                'rules' => ['required']
+            ],
+            'telephone' => [
+                'type' => 'text',
+                'title' => 'Código postal',
+                'description' => 'Introduzca el código postal',
+                'rules' => ['required']
+            ],
+            'province' => [
+                'type' => 'text',
+                'title' => 'Código postal',
+                'description' => 'Introduzca el código postal',
+                'rules' => ['required']
+            ],
+            'rol' => [
+                'type' => 'select',
+                'title' => 'Rol del usuario',
+                'description' => 'Selecciona el rol del usuario',
+                'rules' => ['required']
+            ],
+            'status' => [
+                'type' => 'select',
+                'title' => 'Estado',
+                'description' => 'Seleccione el estado del usuario',
+                'rules' => ['required']
+            ]
         ]
-    ]
+    ],
+    'cupons' => [
+        'name' => 'Cupones de descuento',
+        'for_files' => false,
+        'description' => 'Administración de cupones de descuento',
+        'editor' => false,
+        'fields' => [
+            'code' => [
+                'type' => 'text',
+                'title' => 'Código',
+                'description' => 'Introduce el código de descuento',
+                'rules' => ['required']
+            ],
+            'date_start' => [
+                'type' => 'datetime',
+                'title' => 'Fecha de inicio',
+                'description' => 'Fecha en la que el descuento empieza a ser aplicable',
+                'rules' => ['required']
+            ],
+            'date_end' => [
+                'type' => 'datetime',
+                'title' => 'Fecha de fin',
+                'description' => 'Fecha en la que el descuento deja de ser aplicable',
+                'rules' => ''
+            ],
+            'type' => [
+                'type' => 'select',
+                'title' => 'Tipo',
+                'description' => 'Tipo de descuento',
+                'rules' => ['required']
+            ],
+            'discount' => [
+                'type' => 'numeric',
+                'title' => 'Valor del descuento',
+                'description' => 'Valor que se le descontará al cliente',
+                'rules' => ['required']
+            ],
+            'active' => [
+                'type' => 'numeric',
+                'title' => 'Valor del descuento',
+                'description' => 'Valor que se le descontará al cliente',
+                'rules' => ['required']
+            ],
+        ]
+        ]
+    ],
 ];
