@@ -10,8 +10,9 @@ use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
 use App\Models\UserRoles;
 use App\Models\UserStatus;
 use Validator;
+use App\Interfaces\ModelInterface;
 
-class User extends Model implements AuthenticatableContract, CanResetPasswordContract
+class User extends Model implements AuthenticatableContract, CanResetPasswordContract, ModelInterface
 {
 
     use Authenticatable,
@@ -26,10 +27,10 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
 
     /**
      * The attributes that are mass assignable.
-     *
+     * 
      * @var array
      */
-    protected $fillable = ['name', 'email', 'password', 'rol', 'status'];
+    protected $fillable = ['name', 'email', 'password', 'address', 'postalcode', 'city', 'telephone', 'province', 'rol', 'status'];
 
     /**
      * The attributes excluded from the model's JSON form.
@@ -37,6 +38,8 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
      * @var array
      */
     protected $hidden = ['password', 'remember_token'];
+    
+    protected $appends = ['statusName'];
 
     private function rol()
     {
@@ -55,39 +58,27 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
 
     public function allUserFront()
     {
-        return $this->where('rol', '<>', 1)->get();
+        return $this->where('rol', 2)->get();
     }
 
-    public function addBeforeValidation( $data, $rules )
+    public function add( $data )
     {
-        $validated = $this->validate($data, null, $rules);
-        if ($validated['error'] == false) {
-            return $this->add($data);
-        } else {
-            return $validated;
-        }
+        return $this->create($data);
     }
 
-    public function updateBeforeValidation( $data, $id, $rules )
+    public function validate( $data, $rules, $id = null )
     {
-        $validated = $this->validate($data, $id, $rules);
-        if ($validated['error'] == false) {
-            return $this->update($data);
-        } else {
-            return $validated;
+        if(isset($rules["email"]) && !empty($id)){
+            foreach ($rules["email"] as $key => $rul){
+                if(preg_match("/unique:/i",$rul)){
+                 $rules["email"][$key] = $rul.','.$id;
+                }
+            }
         }
+        return Validator::make($data, $rules);
     }
-
-    private function validate( $data, $id,$rules )
-    {
-      
-        $validation = Validator::make($data, $rules);
-
-        if ($validation->fails()) {
-            return $validation->errors();
-        }
-
-        return true;
+    
+    public function getStatusNameAttribute(){
+        return $this->status()->name;
     }
-
 }

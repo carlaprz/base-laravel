@@ -14,7 +14,7 @@
         <div class="panel panel-default">
             <div class="panel-heading">Completa los campos</div>
             <div class="panel-body">
-                @if ($errors->count())
+                @if (is_object($errors) && $errors->count()>0)
                 <div class="alert alert-danger">
                     <ul>
                         @foreach ($errors->all() as $error)
@@ -34,9 +34,12 @@
                       >
 
                       @foreach ($form->fields('generals') as $field)
+                      
                       <div class="row">
                         <div class="col-lg-12">
-                            <div class="form-group">
+                         
+                            <div class="form-group <?php echo (is_object($field) && get_class($field) == "App\Core\Form\Fields\Datetime")?"datepicker":''; ?>">
+                                
                                 {!! $field->before() !!}
                                 {!! $field->render() !!}
                                 {!! $field->after() !!}
@@ -144,6 +147,25 @@
             }
             $('.' + element).toggle('slow');
         });
+        
+         $(document).on('keydown', '.onlyNumbers', function (event) {
+            if (event.keyCode == 46 || event.keyCode == 8 || event.keyCode == 9 || event.keyCode == 27 || event.keyCode == 13 || (event.keyCode == 65 && event.ctrlKey === true) || (event.keyCode >= 35 && event.keyCode <= 39)) {
+                return;
+            } else {
+                if (event.shiftKey || (event.keyCode < 48 || event.keyCode > 57) && (event.keyCode < 96 || event.keyCode > 105)) {
+                    event.preventDefault();
+                }
+            }
+        });
+        
+          $(document).on('click', '.datepicker', function () {
+            $(this).datetimepicker({
+               format: 'YYYY-MM-DD HH:mm' ,
+               use24hours: true               
+            });
+        });
+        
+        
       });
 </script>
 @stop    

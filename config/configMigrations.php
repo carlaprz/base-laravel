@@ -4,8 +4,8 @@ return [
     'users' => [
         'admin' => true,
         'front' => true,
-        'fb_connect' => true,
-        'gp_connect' => true,
+        'fb_connect' => false, // DIDN?T DO
+        'gp_connect' => false, // DIDN?T DO
     ],
     'languages' => [
         [
@@ -27,9 +27,10 @@ return [
         'products' => true,
         'cart' => true,
         'cart_opcion' => [
-            'shipping' => true,            
+            'shipping' => true,
             'coupons' => true,
             'pricexlanguages' => false, // DONT DID
         ]
-    ]
+    ],
+    'faqs' => true,
 ];

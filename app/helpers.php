@@ -2,6 +2,7 @@
 
 use App\Models\Languages;
 use App\Models\Categories;
+use App\Models\UserStatus;
 
 function current_lang()
 {
@@ -203,4 +204,23 @@ function preg_array_key_exists( $pattern, $array )
 {
     $keys = array_keys($array);
     return preg_grep($pattern, $keys);
+}
+
+function users_status()
+{
+    $toReturn = [];
+    foreach (UserStatus::all() as $status) {
+        $toReturn[$status->id] = $status->name;
+    }
+    return $toReturn;
+}
+
+function langs_array(){
+    $langs = all_langs();
+    $data = [];
+    foreach ($langs as $lang){
+        $data[$lang->id] = $lang->code;
+    }
+    
+    return $data;
 }

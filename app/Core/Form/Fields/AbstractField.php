@@ -1,15 +1,18 @@
-<?php namespace App\Core\Form\Fields;
+<?php
+
+namespace App\Core\Form\Fields;
 
 use Session;
 
 abstract class AbstractField implements Field
 {
+
     private $name;
     private $title;
     private $description;
     private $value;
 
-    public function __construct($name, $title, $description, $value = null)
+    public function __construct( $name, $title = null, $description = null, $value = null )
     {
         $this->name = $name;
         $this->title = $title;
@@ -34,24 +37,25 @@ abstract class AbstractField implements Field
 
     public function value()
     {
-        return Session::hasOldInput($this->name())
-            ? Session::getOldInput($this->name())
-            : $this->value;
+        return Session::hasOldInput($this->name()) ? Session::getOldInput($this->name()) : $this->value;
     }
 
     abstract public function render();
 
     public function before()
     {
-        return "
+        if (!empty($this->title)) {
+            return "
             <label>
                 {$this->title()}
             </label>
         ";
+        }
     }
 
     public function after()
     {
         return '';
     }
+
 }

@@ -21,7 +21,7 @@ class UsersController extends BaseController
         $fluxesHead = [
             'id' => 'id',
             'name' => 'Nombre',
-            'active' => 'Activo'
+            'statusName' => 'Estado'
         ];
 
         $repo = App::make($this->repositoryName);

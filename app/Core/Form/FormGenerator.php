@@ -15,6 +15,8 @@ use App\Core\Form\Fields\Radio;
 use App\Core\Form\Fields\Select;
 use App\Core\Form\Fields\File;
 use App\Core\Form\Fields\URLImage;
+use App\Core\Form\Fields\Hidden;
+use App\Core\Form\Fields\Datetime;
 
 final class FormGenerator
 {
@@ -33,7 +35,9 @@ final class FormGenerator
         'file' => File::class,
         'url_image' => URLImage::class,
         'radio' => Radio::class,
-        'select' => Select::class
+        'select' => Select::class,
+        'hidden' => Hidden::class,
+        'datetime' => Datetime::class
     ];
 
     public function generate( $config, array $defaultData = [] )
@@ -93,8 +97,12 @@ final class FormGenerator
     {
         $title = $fieldData['title'];
         $description = $fieldData['description'];
-
-        $value = $this->getValue($defaultData, $name);
+        $value_dafault = isset($fieldData['value']) ? $fieldData['value'] : NULL;
+        if (empty($value_dafault)) {
+            $value = $this->getValue($defaultData, $name);
+        } else {
+            $value = $value_dafault;
+        }
 
         $fieldClass = $this->fieldClass($fieldData['type']);
 

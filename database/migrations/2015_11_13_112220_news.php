@@ -21,6 +21,8 @@ class News extends Migration
             {
                 $table->increments('id');
                 $table->string('image');
+                $table->integer('order');
+                $table->datetime('publish');
                 $table->boolean('active')->default(1);
                 $table->timestamps();
             });
@@ -51,13 +53,12 @@ class News extends Migration
      */
     public function down()
     {
-       $news = Config::get('configMigrations.news');
+        $news = Config::get('configMigrations.news');
 
         if ($news === true) {
-            
+
             Schema::drop('news_translations');
             Schema::drop('news');
-            
         }
     }
 

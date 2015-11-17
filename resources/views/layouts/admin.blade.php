@@ -11,12 +11,13 @@
 
         <link href="{{ admin_asset('css/bootstrap.min.css') }}" rel="stylesheet">
         <link href="{{ admin_asset('css/font-awesome.css') }}" rel="stylesheet"/>
-        <link href="{{ admin_asset('js/morris/morris-0.4.3.min.css') }}"
-              rel="stylesheet"/>
+        <link href="{{ admin_asset('js/morris/morris-0.4.3.min.css') }}" rel="stylesheet"/>
         <link href="{{ admin_asset('js/dataTables/dataTables.bootstrap.css') }}" rel="stylesheet" />
         <link href="{{ admin_asset('css/custom-styles.css') }}" rel="stylesheet"/>
         <link href="{{ admin_asset('css/summernote.css') }}" rel="stylesheet">
         <link href="{{ admin_asset('css/styles.css') }}" rel="stylesheet">
+
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/3.1.2/css/bootstrap-datetimepicker.min.css">
 
     </head>
     <body>
@@ -64,7 +65,10 @@
         <script src="{{ admin_asset('js/dataTables/dataTables.bootstrap.js') }}"></script>
         <script src="{{ admin_asset('js/summernote.min.js') }}"></script>
         <script src="{{ admin_asset('js/custom-scripts.js') }}"></script>
-        
+
+
+        <script src="http://momentjs.com/downloads/moment.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/3.1.2/js/bootstrap-datetimepicker.min.js"></script>
 
         @yield('scripts')
 

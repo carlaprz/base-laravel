@@ -2,8 +2,26 @@
 
 return [
     [
+        'route' => 'admin.users.index',
+        'create' => 'admin.users.create',
+        'edit' => 'admin.users.edit',
+        'delete' => 'admin.users.delete',
+        'icon' => 'fa fa-user',
+        'name' => 'Usuarios',
+        'resource' => 'users'
+    ],
+    [
+        'route' => 'admin.news.index',
+        'create' => 'admin.news.create',
+        'edit' => 'admin.news.edit',
+        'delete' => 'admin.news.delete',
+        'icon' => 'fa fa-bullhorn',
+        'name' => 'Noticias',
+        'resource' => 'news'
+    ],
+    [
         'dropdown' => true,
-        'icon' => 'fa fa-shopping-cart',
+        'icon' => 'fa fa-tag',
         'name' => 'Productos',
         'childs' => [
             [
@@ -27,30 +45,75 @@ return [
         ],
     ],
     [
-        'route' => 'admin.jobs.index',
-        'create' => 'admin.jobs.create',
-        'edit' => 'admin.jobs.edit',
-        'delete' => 'admin.jobs.delete',
-        'icon' => 'fa fa-users',
-        'name' => 'Bolsa de trabajos',
-        'resource' => 'jobs'
+        'route' => 'admin.orders.index',
+        'create' => 'admin.orders.create',
+        'edit' => 'admin.orders.edit',
+        'delete' => 'admin.orders.delete',
+        'icon' => 'fa fa-shopping-cart',
+        'name' => 'orders',
+        'resource' => 'orders'
     ],
     [
-        'route' => 'admin.news.index',
-        'create' => 'admin.news.create',
-        'edit' => 'admin.news.edit',
-        'delete' => 'admin.news.delete',
-        'icon' => 'fa fa-bullhorn',
-        'name' => 'Noticias',
-        'resource' => 'news'
+        'dropdown' => true,
+        'icon' => 'fa fa-road',
+        'name' => 'Gastos de envio',
+        'childs' => [
+            [
+                'route' => 'admin.shippingZones.index',
+                'resource' => 'shippingZones',
+                'create' => 'admin.shippingZones.create',
+                'edit' => 'admin.shippingZones.edit',
+                'delete' => 'admin.shippingZones.delete',
+                'name' => 'Zonas'                
+            ],
+            [
+                'route' => 'admin.shippingCountries.index',
+                'resource' => 'shippingCountries',
+                'create' => 'admin.shippingCountries.create',
+                'edit' => 'admin.shippingCountries.edit',
+                'delete' => 'admin.shippingCountries.delete',
+                'name' => 'Paises',
+            ],
+            [
+                'route' => 'admin.shippingCosts.index',
+                'resource' => 'shippingCosts',
+                'create' => 'admin.shippingCosts.create',
+                'edit' => 'admin.shippingCosts.edit',
+                'delete' => 'admin.shippingCosts.delete',
+                'name' => 'Gastos de envio',
+            ]
+        ],
     ],
-     [
-        'route' => 'admin.users.index',
-        'create' => 'admin.users.create',
-        'edit' => 'admin.users.edit',
-        'delete' => 'admin.users.delete',
-        'icon' => 'fa fa-user',
-        'name' => 'Usuarios',
-        'resource' => 'users'
+    [
+        'route' => 'admin.coupons.index',
+        'create' => 'admin.coupons.create',
+        'edit' => 'admin.coupons.edit',
+        'delete' => 'admin.coupons.delete',
+        'icon' => 'fa fa-gift',
+        'name' => 'Coupons',
+        'resource' => 'coupons'
+    ],
+    [
+        'dropdown' => true,
+        'icon' => 'fa fa-question',
+        'name' => 'Faqs',
+        'childs' => [
+            [
+                'route' => 'admin.faqsCategories.index',
+                'resource' => 'faqsCategories',
+                'create' => 'admin.faqsCategories.create',
+                'edit' => 'admin.faqsCategories.edit',
+                'delete' => 'admin.faqsCategories.delete',
+                'name' => 'Categorias'                
+            ],
+            [
+                'route' => 'admin.faqs.index',
+                'resource' => 'faqs',
+                'create' => 'admin.faqs.create',
+                'edit' => 'admin.faqs.edit',
+                'delete' => 'admin.faqs.delete',
+                'name' => 'Faqs',
+            ]            
+        ]
     ]
 ];

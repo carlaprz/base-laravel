@@ -10,10 +10,11 @@ use Illuminate\Http\Request;
 use Illuminate\Foundation\Bus\DispatchesCommands;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use App\Services\FileServices;
-
+use Validator;
 
 abstract class BaseController extends Controller
 {
+
     use DispatchesCommands,
         ValidatesRequests;
 
@@ -22,7 +23,7 @@ abstract class BaseController extends Controller
 
     public function __construct()
     {
-       
+        
     }
 
     public function create( FormGenerator $formBuilder )
@@ -45,16 +46,19 @@ abstract class BaseController extends Controller
 
     public function save( Request $request )
     {
-
         $repo = App::make($this->repositoryName);
         $rules = get_rules_from($this->resourceName);
 
         $data = $this->prepareData(Input::all(), $request);
 
-        $rs = $repo->addBeforeValidation($data, $rules);
-        if (!is_object($rs) && isset($rs['error'])) {
-            return back()->withInput()->withErrors($rs['error']);
+        $validations = $this->prepareValidate($data, $rules, null);
+
+        if (!empty($validations) && is_object($validations)) {
+            return back()->withInput()->withErrors($validations);
         }
+
+        $data = $this->clearLang($data);
+        $repo->add($data, $rules);
 
         $route = resource_home($this->resourceName);
         return redirect($route);
@@ -63,18 +67,82 @@ abstract class BaseController extends Controller
     public function update( $id, Request $request )
     {
         $repo = App::make($this->repositoryName);
-        $resource = $repo->find($id);
-        $rules = get_rules_from($this->resourceName);
 
+        $resource = $repo->find($id);
+        
+        $rules = get_rules_from($this->resourceName);
         $data = $this->prepareData(Input::all(), $request);
 
-        $rs = $resource->updateBeforeValidation($data, $resource->id, $rules);
-        if (!is_object($rs) && isset($rs['error'])) {
-            return back()->withInput()->withErrors($rs['error']);
+        $validations = $this->prepareValidate($data, $rules, $resource->id);
+        if (!empty($validations) && is_object($validations)) {
+            return back()->withInput()->withErrors($validations);
         }
+
+        $data = $this->clearLang($data);
+        $resource->update($data);
 
         $route = resource_home($this->resourceName);
         return redirect($route);
+    }
+
+    private function prepareValidate( $data, $rules, $id = null )
+    {
+        $validations = $this->validate($data, $rules, $id);
+
+        $error = false;
+        $errorMessages = new \Illuminate\Support\MessageBag;
+
+        foreach ($validations as $validation) {
+            if ($validation->fails() == true) {
+                $error = true;
+                print_r($validation->errors()->toArray());
+                $errorMessages->merge($validation->errors()->toArray());
+            }
+        }
+
+        if ($error === true) {
+            return ($errorMessages);
+        } else {
+            return false;
+        }
+    }
+
+    public function validate( $data, $rules, $id = null )
+    {
+        $langs = langs_array();
+        $errors = [];
+        
+        if (!empty($id)) {
+            foreach ($rules as $key => $rulesArray) {
+                foreach ($rulesArray as $subKey => $rule) {
+                    if (is_array($rule)) {                        
+                        foreach ($rule as $subsubKey => $value) {
+                            if (preg_match("/unique:/i", $value)) {
+                                $rules[$key][$subKey][$subsubKey] = str_replace("{unique:id}", $id, $value);
+                            }
+                        }
+                    } else {
+                        if (preg_match("/unique:/i", $rule)) {
+                            $rules[$key] = str_replace("{unique:id}", $id, $value);
+                        }
+                    }
+                }
+            }
+        }
+
+        foreach ($data as $key => $value) {
+            if (is_array($value)) {
+                if (in_array($key, $langs)) {
+                   $errors[] = Validator::make($value, $rules[$key]);
+                    unset($data[$key]);
+                    unset($rules[$key]);
+                }
+            }
+        }
+
+        $errors[] = Validator::make($data, $rules);
+        
+        return $errors;
     }
 
     private function prepareData( $data, $request )
@@ -82,16 +150,18 @@ abstract class BaseController extends Controller
         if (isset($this->pathFile)) {
             $data = FileServices::uploadFilesRequest($request, $data, $this->pathFile, $this->filesDimensions);
         }
-        
+
         //generate slugs
         $data = $this->generateSlugs($data);
         $data = $this->clearDescription($data);
+        
         //generate parent 
         $data = $this->generateParent($data);
-      
+
         $data = $this->removePrev($data);
-        $data = $this->clearLang($data);
-      
+
+        //$data = $this->clearLang($data);
+
         return $data;
     }
 
@@ -136,21 +206,23 @@ abstract class BaseController extends Controller
     private function generateSlugs( $data )
     {
         $fields = get_slug_from($this->resourceName);
-        $langs = all_langs();
-
-        foreach ($langs as $lang) {
-            $slug = [];
-            if (key_exists($lang->code, $data)) {
-                foreach ($fields as $field) {
-                    if (isset($data[$lang->code][$field]) && !empty($data[$lang->code][$field])) {
-                        $slug[$lang->code][] = slugify($data[$lang->code][$field]);
+        if (!empty($fields)){
+            $langs = all_langs();
+            foreach ($langs as $lang){
+                $slug = [];
+                if (key_exists($lang->code, $data)) {
+                    foreach ($fields as $field) {
+                        if (isset($data[$lang->code][$field]) && !empty($data[$lang->code][$field])) {
+                            $slug[$lang->code][] = slugify($data[$lang->code][$field]);
+                        }
                     }
                 }
-            }
-            if (isset($slug[$lang->code]) && is_array($slug[$lang->code])) {
-                $data[$lang->code]['slug'] = implode('/', $slug[$lang->code]);
+                if (isset($slug[$lang->code]) && is_array($slug[$lang->code])) {
+                    $data[$lang->code]['slug'] = implode('/', $slug[$lang->code]);
+                }
             }
         }
+
         return $data;
     }
 

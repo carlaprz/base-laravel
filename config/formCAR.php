@@ -17,8 +17,14 @@ return [
                 'type' => 'text',
                 'title' => 'Email',
                 'description' => 'Introduzca el correo electrónico del usuario.',
-                'rules' => ['required', 'email', 'unique:users,email,{unique:id}']
+                'rules' => ['required','email','unique:users,email']
             ],
+            /*'password' => [
+                'type' => 'text',
+                'title' => 'Contraseña',
+                'description' => 'Introduzca la contraseña del usuario.',
+                'rules' => ['required']
+            ],*/
             'address' => [
                 'type' => 'text',
                 'title' => 'Dirección',
@@ -52,10 +58,10 @@ return [
             'rol' => [
                 'title' => '',
                 'description' => '',
-                'type' => 'hidden',
+                'type' => 'hidden',                
                 'value' => 2,
                 'rules' => ['required']
-            ],
+            ],            
             'status' => [
                 'type' => 'select',
                 'title' => 'Estado',
@@ -69,7 +75,6 @@ return [
         'for_files' => true,
         'description' => 'Administración de Noticias',
         'editor' => true,
-        'slug' => ['title'], 
         'fields' => [
             'image' => [
                 'type' => 'image_file',
@@ -77,23 +82,11 @@ return [
                 'description' => 'Introduzca la imagen Principal de la noticia',
                 'rules' => ['required']
             ],
-            'order' => [
-                'type' => 'numeric',
-                'title' => 'Orden:',
-                'description' => 'Introduzca el orden en caso de destacar',
-                'rules' => ['numeric']
-            ],
-            'publish' => [
-                'type' => 'datetime',
-                'title' => 'Fecha de publicacion:',
-                'description' => 'Introduzca la fecha de publicacion',
-                'rules' => ['required','date_format:Y-m-d H:i']
-            ],
             'active' => [
                 'type' => 'radio',
                 'title' => 'Activo',
                 'description' => 'Estado',
-                'rules' => ['required']
+                'rules' => ''
             ]
         ],
         'lenguages' => [
@@ -103,7 +96,7 @@ return [
                         'type' => 'text',
                         'title' => 'Titulo',
                         'description' => 'Titulo',
-                        'rules' => ['required','unique:news_translations,title,{unique:id},news_id,locale,es']
+                        'rules' => 'required'
                     ],
                     'description' => [
                         'type' => 'textarea',
@@ -130,7 +123,35 @@ return [
                 ]
             ]
         ]
-    ],
+    ],   
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     'categories' => [
         'name' => 'Categorias',
         'for_files' => false,
@@ -314,6 +335,7 @@ return [
             ]
         ]
     ],
+    
     'cupons' => [
         'name' => 'Cupones de descuento',
         'for_files' => false,

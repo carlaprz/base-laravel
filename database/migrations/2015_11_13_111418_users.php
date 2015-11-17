@@ -132,11 +132,6 @@ class Users extends Migration
             ];
         }
 
-        $roles [] = [
-            'name' => 'guest',
-            'created_at' => date("Y-m-d H:s:i")
-        ];
-
         foreach ($roles as $rol) {
             DB::table('users_roles')->insert($rol);
         }
