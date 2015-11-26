@@ -119,13 +119,13 @@ return [
                         'type' => 'text',
                         'title' => 'Title',
                         'description' => 'Title',
-                        'rules' => ''
+                        'rules' => ['unique:news_translations,title,{unique:id},news_id,locale,en']
                     ],
                     'description' => [
                         'type' => 'textarea',
                         'title' => 'Description',
                         'description' => 'Description',
-                        'rules' => ''
+                        'rules' =>  ['required_with:title']
                     ]
                 ]
             ]

@@ -95,7 +95,6 @@ abstract class BaseController extends Controller
         foreach ($validations as $validation) {
             if ($validation->fails() == true) {
                 $error = true;
-                print_r($validation->errors()->toArray());
                 $errorMessages->merge($validation->errors()->toArray());
             }
         }
