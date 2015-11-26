@@ -27,7 +27,7 @@ class FileServices
                 foreach ($files[$lang->code] as $key => $file) {
                     if (isset($file)) {
                         
-                        $data[$lang->code][$key] = FileServices::uploadFilebyRequest($file, $path . $lang, $key, $dimensions);
+                        $data[$lang->code][$key] = FileServices::uploadFilebyRequest($file, $path .  $lang->code, $key, $dimensions);
                         unset($data[$lang->code][$key . '_prev']);
                     }
                 }
