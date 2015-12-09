@@ -119,26 +119,35 @@ abstract class BaseController extends Controller
                     foreach ($rulesArray as $subKey => $rule) {
                         if (is_array($rule)) {
                             foreach ($rule as $subsubKey => $value) {
+                                $val = $value;
                                 if (preg_match("/unique:id/i", $value)) {
-                                    $rules[$key][$subKey][$subsubKey] = str_replace("{unique:id}", $id, $value);
+                                    $val = str_replace("{unique:id}", $id, $val);
                                 }
+                                
                                 if (preg_match("/unique:parent/i", $value)) {
-                                    $rules[$key][$subKey][$subsubKey] = str_replace("{unique:parent}", $parent, $value);
+                                    $val= str_replace("{unique:parent}", $parent, $val);
+                                    
                                 }
+                                echo 'value: '.$val.'<br/>';
+                                $rules[$key][$subKey][$subsubKey] = $val;
                             }
                         } else {
+                            $val = $value;
                             if (preg_match("/unique:id/i", $rule)) {
-                                $rules[$key] = str_replace("{unique:id}", $id, $value);
+                                $val = str_replace("{unique:id}", $id, $val);
                             }
                             if (preg_match("/unique:parent/i", $value)) {
-                               $rules[$key]  = str_replace("{unique:parent}", $parent, $value);
+                               $val = str_replace("{unique:parent}", $parent, $val);
                             }
+                            
+                            $rules[$key]= $val;
                         }
                     }
                 }
             }
         }
-
+       
+        
         foreach ($data as $key => $value) {
             if (is_array($value)) {
                 if (in_array($key, $langs)) {
@@ -148,10 +157,9 @@ abstract class BaseController extends Controller
                 }
             }
         }
-        dd($rules);
-
+        
         $errors[] = Validator::make($data, $rules);
-        dd($errors);
+       
         return $errors;
     }
 

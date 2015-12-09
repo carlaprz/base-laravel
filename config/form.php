@@ -157,7 +157,7 @@ return [
                         'type' => 'text',
                         'title' => 'Nombre',
                         'description' => 'Nombre',
-                        'rules' => ['required','unique:categories_translations,title,{unique:id},categories_id,locale,es, parent,{unique:parent}']
+                        'rules' => ['required','unique:categories_translations,title,{unique:id},categories_id,locale,es,parent,{unique:parent}']
                     ],
                     'meta_title' => [
                         'type' => 'text',
@@ -179,7 +179,7 @@ return [
                         'type' => 'text',
                         'title' => 'Name',
                         'description' => 'Name',
-                        'rules' => ['unique:categories_translations,title,{unique:id},categories_id,locale,en']
+                        'rules' => ['unique:categories_translations,title,{unique:id},categories_id,locale,en,parent,{unique:parent}']
                     ],
                     'meta_title' => [
                         'type' => 'text',
