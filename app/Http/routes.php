@@ -10,16 +10,17 @@
   | and give it the controller to call when that URI is requested.
   |
  */
-Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['guest']], function()
+Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['localizationRedirect', 'localize']
+        ], function()
 {
-    Route::get(trans('routes.home'), [
+    Route::get(LaravelLocalization::transRoute('routes.home'), [
         'as' => 'home',
         'uses' => 'WelcomeController@index'
     ]);
 
-    Route::get(trans('routes.index'), [
-        'as' => 'index',
-        'uses' => 'WelcomeController@index'
+    Route::get(LaravelLocalization::transRoute('routes.caca'), [
+        'as' => 'caca',
+        'uses' => 'WelcomeController@caca'
     ]);
 });
 
@@ -182,7 +183,7 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => ['aut
         'as' => 'admin.orders.update',
         'uses' => 'OrdersController@update'
     ]);
-    
+
     Route::get('orders/delete/{id}', [
         'as' => 'admin.orders.delete',
         'uses' => 'OrdersController@delete'
@@ -212,12 +213,12 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => ['aut
         'as' => 'admin.shippingZones.update',
         'uses' => 'ShippingZonesController@update'
     ]);
-    
+
     Route::get('shippingZones/delete/{id}', [
         'as' => 'admin.shippingZones.delete',
         'uses' => 'ShippingZonesController@delete'
     ]);
-    
+
     Route::get('shippingCountries', [
         'as' => 'admin.shippingCountries.index',
         'uses' => 'ShippingCountriesController@index'
@@ -242,12 +243,12 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => ['aut
         'as' => 'admin.shippingCountries.update',
         'uses' => 'ShippingCountriesController@update'
     ]);
-    
+
     Route::get('shippingCountries/delete/{id}', [
         'as' => 'admin.shippingCountries.delete',
         'uses' => 'ShippingCountriesController@delete'
     ]);
-    
+
     Route::get('shippingCosts', [
         'as' => 'admin.shippingCosts.index',
         'uses' => 'ShippingCostsController@index'
@@ -272,12 +273,12 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => ['aut
         'as' => 'admin.shippingCosts.update',
         'uses' => 'ShippingCostsController@update'
     ]);
-    
+
     Route::get('shippingCosts/delete/{id}', [
         'as' => 'admin.shippingCosts.delete',
         'uses' => 'ShippingCostsController@delete'
     ]);
-    
+
     Route::get('coupons', [
         'as' => 'admin.coupons.index',
         'uses' => 'CouponsController@index'
@@ -302,12 +303,12 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => ['aut
         'as' => 'admin.coupons.update',
         'uses' => 'CouponsController@update'
     ]);
-    
+
     Route::get('coupons/delete/{id}', [
         'as' => 'admin.coupons.delete',
         'uses' => 'CouponsController@delete'
     ]);
-    
+
     Route::get('faqsCategories', [
         'as' => 'admin.faqsCategories.index',
         'uses' => 'FaqsCategoriesController@index'
@@ -332,13 +333,13 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => ['aut
         'as' => 'admin.faqsCategories.update',
         'uses' => 'FaqsCategoriesController@update'
     ]);
-    
+
     Route::get('faqsCategories/delete/{id}', [
         'as' => 'admin.faqsCategories.delete',
         'uses' => 'FaqsCategoriesController@delete'
     ]);
-    
-     Route::get('faqs', [
+
+    Route::get('faqs', [
         'as' => 'admin.faqs.index',
         'uses' => 'FaqsController@index'
     ]);
@@ -362,13 +363,11 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => ['aut
         'as' => 'admin.faqs.update',
         'uses' => 'FaqsController@update'
     ]);
-    
+
     Route::get('faqs/delete/{id}', [
         'as' => 'admin.faqs.delete',
         'uses' => 'FaqsController@delete'
     ]);
-    
-    
 });
 
 

@@ -30,7 +30,11 @@ class WelcomeController extends Controller {
 	 */
 	public function index()
 	{
-		return view('welcome');
+            
+            return view('welcome');
 	}
+        public function caca(){
+           echo ' caca';
+        }
 
 }

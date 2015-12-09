@@ -1,6 +1,6 @@
 <?php
 
 return [
-     'index' => '',
-     'home' => 'inicio'
+    'home' => 'inicio',
+    'caca' => 'caca'
 ];
