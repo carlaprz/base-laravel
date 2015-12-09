@@ -56,97 +56,10 @@ final class Categories extends Model implements ModelInterface
     }
 
     //ALL
+
     public function add( $data )
     {
-        
-    }
-
-    public function addBeforeValidation( $data, $rules )
-    {
-        $validated = $this->validate($data, false, $rules);
-        if ($validated['error'] == false) {
-            return $this->create($data);
-        } else {
-            return $validated;
-        }
-    }
-
-    public function updateBeforeValidation( $data, $id, $rules )
-    {
-        $validated = $this->validate($data, $id, $rules);
-        if ($validated['error'] == false) {
-            return $this->update($data);
-        } else {
-            return $validated;
-        }
-    }
-
-    private function validate( $data, $id = null, $rules )
-    {
-
-        $langs = all_langs();
-        $errors = [];
-
-
-        foreach ($rules as $key => $value) {
-
-            if (is_array($value)) {
-                foreach ($value as $field => $rule) {
-                    if ($rule == 'required') {
-                        if (empty($data[$key][$field])) {
-                            $text = $field;
-                            if ($field == 'title') {
-                                $text = 'nombre';
-                            }
-                            $errors['error'][] = 'El campo ' . $text . ' en el idioma "' . strtoupper($key) . '" es obligatorio.';
-                        }
-                    }
-                }
-            } else {
-                if ($value == 'required') {
-                    if (isset($data[$key]) && empty($data[$key])) {
-                        $text = $key;
-                        if ($key == 'category_id') {
-                            $text = 'categoria';
-                        }
-
-                        $errors['error'][] = 'El campo ' . $text . ' es obligatorio.';
-                    }
-                }
-            }
-        }
-
-        $queryValidation = $this->select('*')->join(DB::raw('categories_translations ct'), 'ct.categories_id', '=', 'categories.id');
-        foreach ($langs as $lang) {
-            if (isset($data[$lang->code]) && isset($data[$lang->code]['title'])) {
-                $queryValidation = $queryValidation->orWhere(function($query) use( $lang, $data, $id)
-                {
-                    $query = $query->where('ct.locale', '=', $lang->code)
-                            ->Where('ct.title', '=', $data[$lang->code]['title']);
-                    if (isset($data[$lang->code]['parent'])) {
-                        $query = $query->Where('ct.parent', '=', $data[$lang->code]['parent']);
-                    }
-                    return $query;
-                });
-            }
-        }
-
-        if (isset($id)) {
-            $queryValidation = $queryValidation->where('ct.categories_id', '<>', $id);
-        }
-
-        $data = $queryValidation->get();
-
-        if (count($data) > 0) {
-            $errors['error'][] = 'Ya existe una categoria con ese Nombre.';
-            return $errors;
-        }
-
-        if (!empty($errors)) {
-            return $errors;
-        }
-
-        return true;
+        return $this->create($data);
     }
 
     public function parents()

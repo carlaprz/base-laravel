@@ -125,7 +125,7 @@ return [
                         'type' => 'textarea',
                         'title' => 'Description',
                         'description' => 'Description',
-                        'rules' =>  ['required_with:title']
+                        'rules' => ['required_with:title']
                     ]
                 ]
             ]
@@ -147,7 +147,7 @@ return [
                 'type' => 'radio',
                 'title' => 'Activo',
                 'description' => 'Estado',
-                'rules' => ''
+                'rules' => []
             ]
         ],
         'lenguages' => [
@@ -157,19 +157,19 @@ return [
                         'type' => 'text',
                         'title' => 'Nombre',
                         'description' => 'Nombre',
-                        'rules' => ['required']
+                        'rules' => ['required','unique:categories_translations,title,{unique:id},categories_id,locale,es, parent,{unique:parent}']
                     ],
                     'meta_title' => [
                         'type' => 'text',
                         'title' => 'Meta Titulo ',
                         'description' => 'Meta Titulo',
-                        'rules' => ''
+                        'rules' => []
                     ],
                     'meta_description' => [
                         'type' => 'textarea',
                         'title' => 'Meta Descripcion',
                         'description' => 'Meta Descripcion',
-                        'rules' => ''
+                        'rules' => []
                     ]
                 ]
             ],
@@ -179,19 +179,19 @@ return [
                         'type' => 'text',
                         'title' => 'Name',
                         'description' => 'Name',
-                        'rules' => ''
+                        'rules' => ['unique:categories_translations,title,{unique:id},categories_id,locale,en']
                     ],
                     'meta_title' => [
                         'type' => 'text',
                         'title' => 'Meta title ',
                         'description' => 'Meta title',
-                        'rules' => ''
+                        'rules' => []
                     ],
                     'meta_description' => [
                         'type' => 'textarea',
                         'title' => 'Meta Description',
                         'description' => 'Meta Description',
-                        'rules' => ''
+                        'rules' => []
                     ]
                 ]
             ]
@@ -208,7 +208,7 @@ return [
                 'type' => 'radio',
                 'title' => 'Activo',
                 'description' => 'Estado',
-                'rules' => ''
+                'rules' => []
             ],
             'category_id' => [
                 'type' => 'select',
@@ -238,13 +238,13 @@ return [
                 'type' => 'numeric',
                 'title' => 'Precio del producto descontado:',
                 'description' => 'Introduzca el precio descontado del producto en caso de que lo tenga',
-                'rules' => ''
+                'rules' => []
             ],
             'iva' => [
                 'type' => 'numeric',
                 'title' => '% de impuesto:',
                 'description' => 'Introduzca el valor del impuesto en porcentaje',
-                'rules' => ''
+                'rules' => []
             ]
         ],
         'lenguages' => [
@@ -276,19 +276,19 @@ return [
                         'type' => 'text',
                         'title' => 'title',
                         'description' => 'Titulo del producto',
-                        'rules' => ''
+                        'rules' => []
                     ],
                     'description' => [
                         'type' => 'textarea',
                         'title' => 'description',
                         'description' => 'Descripcion',
-                        'rules' => ''
+                        'rules' =>  ['required_with:title']
                     ],
                     'slug' => [
                         'type' => 'text',
                         'title' => 'Slug',
                         'description' => 'Caracteristicas Tecnicas',
-                        'rules' => ['required']
+                        'rules' =>  ['required_with:title']
                     ]
                 ]
             ]

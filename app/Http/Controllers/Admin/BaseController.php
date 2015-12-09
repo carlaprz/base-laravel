@@ -69,7 +69,7 @@ abstract class BaseController extends Controller
         $repo = App::make($this->repositoryName);
 
         $resource = $repo->find($id);
-        
+
         $rules = get_rules_from($this->resourceName);
         $data = $this->prepareData(Input::all(), $request);
 
@@ -110,19 +110,29 @@ abstract class BaseController extends Controller
     {
         $langs = langs_array();
         $errors = [];
-        
+
         if (!empty($id)) {
+
+            $parent = $data['parent'];
             foreach ($rules as $key => $rulesArray) {
-                foreach ($rulesArray as $subKey => $rule) {
-                    if (is_array($rule)) {                        
-                        foreach ($rule as $subsubKey => $value) {
-                            if (preg_match("/unique:/i", $value)) {
-                                $rules[$key][$subKey][$subsubKey] = str_replace("{unique:id}", $id, $value);
+                if (is_array($rulesArray)) {
+                    foreach ($rulesArray as $subKey => $rule) {
+                        if (is_array($rule)) {
+                            foreach ($rule as $subsubKey => $value) {
+                                if (preg_match("/unique:id/i", $value)) {
+                                    $rules[$key][$subKey][$subsubKey] = str_replace("{unique:id}", $id, $value);
+                                }
+                                if (preg_match("/unique:parent/i", $value)) {
+                                    $rules[$key][$subKey][$subsubKey] = str_replace("{unique:parent}", $parent, $value);
+                                }
                             }
-                        }
-                    } else {
-                        if (preg_match("/unique:/i", $rule)) {
-                            $rules[$key] = str_replace("{unique:id}", $id, $value);
+                        } else {
+                            if (preg_match("/unique:id/i", $rule)) {
+                                $rules[$key] = str_replace("{unique:id}", $id, $value);
+                            }
+                            if (preg_match("/unique:parent/i", $value)) {
+                               $rules[$key]  = str_replace("{unique:parent}", $parent, $value);
+                            }
                         }
                     }
                 }
@@ -132,15 +142,16 @@ abstract class BaseController extends Controller
         foreach ($data as $key => $value) {
             if (is_array($value)) {
                 if (in_array($key, $langs)) {
-                   $errors[] = Validator::make($value, $rules[$key]);
+                    $errors[] = Validator::make($value, $rules[$key]);
                     unset($data[$key]);
                     unset($rules[$key]);
                 }
             }
         }
+        dd($rules);
 
         $errors[] = Validator::make($data, $rules);
-        
+        dd($errors);
         return $errors;
     }
 
@@ -153,7 +164,7 @@ abstract class BaseController extends Controller
         //generate slugs
         $data = $this->generateSlugs($data);
         $data = $this->clearDescription($data);
-        
+
         //generate parent 
         $data = $this->generateParent($data);
 
@@ -205,9 +216,9 @@ abstract class BaseController extends Controller
     private function generateSlugs( $data )
     {
         $fields = get_slug_from($this->resourceName);
-        if (!empty($fields)){
+        if (!empty($fields)) {
             $langs = all_langs();
-            foreach ($langs as $lang){
+            foreach ($langs as $lang) {
                 $slug = [];
                 if (key_exists($lang->code, $data)) {
                     foreach ($fields as $field) {

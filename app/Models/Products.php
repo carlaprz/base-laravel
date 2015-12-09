@@ -15,6 +15,7 @@ final class Products extends Model implements ModelInterface
     const IMAGE_PATH = 'files/products/';
 
     public $translatedAttributes = ['products_id', 'locale', 'title', 'description', 'data_sheet', 'data_comercial', 'data_iom', 'data_drawing', 'description_sheet', 'slug'];
+   
     protected $fillable = ['category_id', 'image', 'thumb', 'active', 'products_id', 'locale', 'title', 'description', 'data_sheet', 'data_comercial', 'data_iom', 'description_sheet', 'data_drawing', 'slug'];
     protected $appends = ["es", "en", "fr", "categoryName", "categorySlug"];
 
@@ -75,12 +76,6 @@ final class Products extends Model implements ModelInterface
     {
         $parent = $this->getCategory();
         return $parent->slug;
-    }
-
-    //ALL
-    public function add( $data )
-    {
-        
     }
 
     public function addBeforeValidation( $data, $rules )
