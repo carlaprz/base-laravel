@@ -112,8 +112,9 @@ abstract class BaseController extends Controller
         $errors = [];
 
         if (!empty($id)) {
-
-            $parent = $data['parent'];
+           
+            $parent = isset($data['parent'])?$data['parent']:'';
+            
             foreach ($rules as $key => $rulesArray) {
                 if (is_array($rulesArray)) {
                     foreach ($rulesArray as $subKey => $rule) {
@@ -132,11 +133,11 @@ abstract class BaseController extends Controller
                                 $rules[$key][$subKey][$subsubKey] = $val;
                             }
                         } else {
-                            $val = $value;
+                            $val = $rule;
                             if (preg_match("/unique:id/i", $rule)) {
                                 $val = str_replace("{unique:id}", $id, $val);
                             }
-                            if (preg_match("/unique:parent/i", $value)) {
+                            if (preg_match("/unique:parent/i", $rule)) {
                                $val = str_replace("{unique:parent}", $parent, $val);
                             }
                             
