@@ -13,14 +13,16 @@
 Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['localizationRedirect', 'localize']
         ], function()
 {
+
+    
     Route::get(LaravelLocalization::transRoute('routes.home'), [
         'as' => 'home',
         'uses' => 'WelcomeController@index'
     ]);
 
-    Route::get(LaravelLocalization::transRoute('routes.caca'), [
-        'as' => 'caca',
-        'uses' => 'WelcomeController@caca'
+    Route::get(LaravelLocalization::transRoute('routes.hello'), [
+        'as' => 'hello',
+        'uses' => 'WelcomeController@hello'
     ]);
 });
 

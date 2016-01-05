@@ -1,7 +1,8 @@
 <?php
 
 return [
-     'home' => 'home'
+     'home' => '',
+     'hello' => 'hello'
 ];
 
 

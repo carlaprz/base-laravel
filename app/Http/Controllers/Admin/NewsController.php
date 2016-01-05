@@ -12,9 +12,8 @@ class NewsController extends BaseController
     protected $pathFile = 'files/news/';
     protected $filesDimensions = [
         'image' => ['w' => 640, 'h' => 581]
-        
     ];
-    
+
     public function index()
     {
         $fluxesHead = [

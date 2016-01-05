@@ -1,40 +1,32 @@
-<?php namespace App\Http\Controllers;
+<?php
 
-class WelcomeController extends Controller {
+namespace App\Http\Controllers;
 
-	/*
-	|--------------------------------------------------------------------------
-	| Welcome Controller
-	|--------------------------------------------------------------------------
-	|
-	| This controller renders the "marketing page" for the application and
-	| is configured to only allow guests. Like most of the other sample
-	| controllers, you are free to modify or remove it as you desire.
-	|
-	*/
+use App;
+use LaravelLocalization;
+use Request;
 
-	/**
-	 * Create a new controller instance.
-	 *
-	 * @return void
-	 */
-	public function __construct()
-	{
-		$this->middleware('guest');
-	}
+class WelcomeController extends Controller
+{
 
-	/**
-	 * Show the application welcome screen to the user.
-	 *
-	 * @return Response
-	 */
-	public function index()
-	{
-            
-            return view('welcome');
-	}
-        public function caca(){
-           echo ' caca';
-        }
+    public function index()
+    {
+        return view('welcome');
+    }
+
+    public function hello()
+    {
+        echo '<h1>Estoy en el idioma: ' . App::getLocale() . '<h1/>';
+        echo '<h2>Link home: ' . LaravelLocalization::getLocalizedURL(App::getLocale(), route('home')) . '<h2/>';
+        echo ' IDIOMAS: <ul>';
+
+        echo '  <li>
+                <a href = "' . LaravelLocalization::getLocalizedURL('es', Request::url()) . '">es</a>
+               </li>
+                 <li>
+                <a href = "' . LaravelLocalization::getLocalizedURL('en', Request::url()) . '">en</a>
+               </li>';
+        echo '<ul>';
+    }
 
 }

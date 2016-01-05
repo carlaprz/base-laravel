@@ -1,6 +1,6 @@
 <?php
 
 return [
-    'home' => 'inicio',
-    'caca' => 'caca'
+    'home' => '',
+    'hello' => 'hola'
 ];
