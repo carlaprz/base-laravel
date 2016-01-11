@@ -327,7 +327,7 @@ return [
             ]
         ]
     ],
-    'cupons' => [
+    'coupons' => [
         'name' => 'Cupones de descuento',
         'for_files' => false,
         'description' => 'Administración de cupones de descuento',
@@ -339,21 +339,21 @@ return [
                 'description' => 'Introduce el código de descuento',
                 'rules' => ['required']
             ],
-            'date_start' => [
+            'start' => [
                 'type' => 'datetime',
                 'title' => 'Fecha de inicio',
                 'description' => 'Fecha en la que el descuento empieza a ser aplicable',
                 'rules' => ['required']
             ],
-            'date_end' => [
+            'end' => [
                 'type' => 'datetime',
                 'title' => 'Fecha de fin',
                 'description' => 'Fecha en la que el descuento deja de ser aplicable',
                 'rules' => ''
             ],
-            'type' => [
-                'type' => 'select',
-                'title' => 'Tipo',
+            'porcentage' => [
+                'type' => 'radio',
+                'title' => 'Procentaje',
                 'description' => 'Tipo de descuento',
                 'rules' => ['required']
             ],
@@ -364,9 +364,9 @@ return [
                 'rules' => ['required']
             ],
             'active' => [
-                'type' => 'numeric',
-                'title' => 'Valor del descuento',
-                'description' => 'Valor que se le descontará al cliente',
+                'type' => 'radio',
+                'title' => 'Activo',
+                'description' => 'Estado del cupon',
                 'rules' => ['required']
             ],
         ]

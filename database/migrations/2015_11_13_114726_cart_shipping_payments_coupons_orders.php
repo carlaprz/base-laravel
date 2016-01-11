@@ -16,7 +16,7 @@ class CartShippingPaymentsCouponsOrders extends Migration
         $ecommerce = Config::get('configMigrations.ecommerce');
 
         if ($ecommerce['cart']) {
-           
+
             Schema::create('carts', function(Blueprint $table)
             {
                 $table->increments('id');
@@ -38,7 +38,7 @@ class CartShippingPaymentsCouponsOrders extends Migration
 
             //SHIPPING
             if ($ecommerce['cart_opcion']['shipping']) {
-              
+
                 Schema::create('shipping_zones', function($table)
                 {
                     $table->increments('id');
@@ -97,14 +97,15 @@ class CartShippingPaymentsCouponsOrders extends Migration
             $this->insertPayment();
 
             if ($ecommerce['cart_opcion']['coupons']) {
-               
+
                 Schema::create('coupons', function(Blueprint $table)
                 {
                     $table->increments('id');
                     $table->string('code', 15)->unique();
-                    $table->date('date_start')->nullable();
-                    $table->date('date_end')->nullable();
+                    $table->date('start')->nullable();
+                    $table->date('end')->nullable();
                     $table->float('discount');
+                    $table->boolean('percentage')->default(0);
                     $table->boolean('active')->default(0);
                     $table->timestamps();
                 });
@@ -181,7 +182,7 @@ class CartShippingPaymentsCouponsOrders extends Migration
 
 
             if ($ecommerce['cart_opcion']['coupons']) {
-               
+
                 Schema::create('orders_coupons', function(Blueprint $table)
                 {
                     $table->increments('id');

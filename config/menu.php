@@ -54,10 +54,8 @@ return [
         'resource' => 'orders'
     ],
     [
-        'route' => 'admin.payments.index',
-        'create' => 'admin.payments.create',
+        'route' => 'admin.payments.index',       
         'edit' => 'admin.payments.edit',
-        'delete' => 'admin.payments.delete',
         'icon' => 'fa fa-credit-card',
         'name' => 'Metodos de pago',
         'resource' => 'payments'

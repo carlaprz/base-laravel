@@ -15,7 +15,7 @@ final class Categories extends Model implements ModelInterface
     public $timestamps = true;
     public $translatedAttributes = [ 'title', 'meta_title', 'meta_description', 'slug'];
     protected $fillable = ['parent', 'active', 'title', 'meta_title', 'meta_description', 'slug'];
-    protected $appends = ["es", "en", "fr", "parentName"];
+    protected $appends = ["es", "en", "parentName"];
 
     public function getParent()
     {
@@ -30,20 +30,15 @@ final class Categories extends Model implements ModelInterface
     public function getEsAttribute()
     {
         App::setLocale('es');
-        return ['title' => $this->title, 'meta_title' => $this->meta_title, 'meta_description' => $this->meta_description];
+        return ['title' => $this->title, 'slug' => $this->slug , 'meta_title' => $this->meta_title, 'meta_description' => $this->meta_description];
     }
 
     public function getEnAttribute()
     {
         App::setLocale('en');
-        return ['title' => $this->title, 'meta_title' => $this->meta_title, 'meta_description' => $this->meta_description];
+        return ['title' => $this->title, 'slug' => $this->slug ,'meta_title' => $this->meta_title, 'meta_description' => $this->meta_description];
     }
 
-    public function getFrAttribute()
-    {
-        App::setLocale('fr');
-        return ['title' => $this->title, 'meta_title' => $this->meta_title, 'meta_description' => $this->meta_description];
-    }
 
     public function getparentNameAttribute()
     {

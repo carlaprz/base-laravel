@@ -43,6 +43,7 @@ final class FormGenerator
     public function generate( $config, array $defaultData = [] )
     {
         $data = (array) config($this->generateConfigFileName($config));
+        
         $form = new Form($data['name'], $data['description'], $data['editor'], $data);
 
 
@@ -70,12 +71,9 @@ final class FormGenerator
     }
 
     private function getValue( array $data, $name )
-    {
-
+    {        
         $dataAux = explode('[', $name);
-
         if (count($dataAux) > 1) {
-
             $name = str_replace('[', '', $dataAux[0]);
             $secondname = str_replace(']', '', $dataAux[1]);
             return array_key_exists($name, $data) ? isset($data[$name][$secondname]) ? $data[$name][$secondname] : null : null;
@@ -102,7 +100,7 @@ final class FormGenerator
         $value = empty($value_dafault) ? $this->getValue($defaultData, $name) :$value_dafault ;
         
         $fieldClass = $this->fieldClass($fieldData['type']);
-        var_dump($value);
+        
         return new $fieldClass($name, $title, $description, $value, $rules);
     }
 

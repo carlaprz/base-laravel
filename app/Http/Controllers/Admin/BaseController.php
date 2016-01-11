@@ -37,7 +37,7 @@ abstract class BaseController extends Controller
     {
         $repo = App::make($this->repositoryName);
         $data = $repo->find($id);
-       
+
         return view('admin.form.form', [
             'form' => $formBuilder->generate(
                     $this->resourceName, $data->toArray()
@@ -73,7 +73,7 @@ abstract class BaseController extends Controller
 
         $rules = get_rules_from($this->resourceName);
         $data = $this->prepareData(Input::all(), $request);
-
+       
         $validations = $this->prepareValidate($data, $rules, $resource->id);
         if (!empty($validations) && is_object($validations)) {
             return back()->withInput()->withErrors($validations);
@@ -81,7 +81,7 @@ abstract class BaseController extends Controller
 
         $data = $this->clearLang($data);
 
-        //dd($data);
+
         $resource->update($data);
 
         $route = resource_home($this->resourceName);
@@ -177,7 +177,7 @@ abstract class BaseController extends Controller
 
         //generate slugs
         $data = $this->generateSlugs($data);
-
+       
         $data = $this->clearDescription($data);
 
         //generate parent 
@@ -185,7 +185,7 @@ abstract class BaseController extends Controller
 
         $data = $this->removePrev($data);
 
-       
+
         //$data = $this->clearLang($data);
 
         return $data;
@@ -233,39 +233,42 @@ abstract class BaseController extends Controller
     {
         $fields = get_autocomplete_from($this->resourceName);
         if (!empty($fields)) {
-                $langs = all_langs();
-                foreach ($langs as $lang) {
-                    foreach ($fields as $keyOrigin => $keyCopy ) {
-                        if(empty($data[$lang->code][$keyOrigin]) && !empty($data[$lang->code][$keyCopy])){
-                            $data[$lang->code][$keyOrigin] = $data[$lang->code][$keyCopy];
-                        }
-                    }
-                }
-       }        
-       return $data;
-    }
-
-    private function generateSlugs( $data )
-    {
-        if (empty($data['slug'])) {
-            $fields = get_slug_from($this->resourceName);
-            if (!empty($fields)) {
-                $langs = all_langs();
-                foreach ($langs as $lang) {
-                    $slug = [];
-                    if (key_exists($lang->code, $data)) {
-                        foreach ($fields as $field) {
-                            if (isset($data[$lang->code][$field]) && !empty($data[$lang->code][$field])) {
-                                $slug[$lang->code][] = slugify($data[$lang->code][$field]);
-                            }
-                        }
-                    }
-                    if (isset($slug[$lang->code]) && is_array($slug[$lang->code])) {
-                        $data[$lang->code]['slug'] = implode('/', $slug[$lang->code]);
+            $langs = all_langs();
+            foreach ($langs as $lang) {
+                foreach ($fields as $keyOrigin => $keyCopy) {
+                    if (empty($data[$lang->code][$keyOrigin]) && !empty($data[$lang->code][$keyCopy])) {
+                        $data[$lang->code][$keyOrigin] = $data[$lang->code][$keyCopy];
                     }
                 }
             }
         }
+        return $data;
+    }
+
+    private function generateSlugs( $data )
+    {
+        $fields = get_slug_from($this->resourceName);
+        if (!empty($fields)) {
+            $langs = all_langs();
+            foreach ($langs as $lang) {
+                $slug = [];
+                if (key_exists($lang->code, $data)) {
+                    foreach ($fields as $field) {
+                        if (isset($data[$lang->code][$field]) && !empty($data[$lang->code][$field])) {
+                            if (empty($data[$lang->code]['slug'])) {
+                                $slug[$lang->code][] = slugify($data[$lang->code][$field]);
+                            }else{
+                                 $slug[$lang->code][] = $data[$lang->code]['slug'];
+                            }
+                        }
+                    }
+                }
+                if (isset($slug[$lang->code]) && is_array($slug[$lang->code])) {
+                    $data[$lang->code]['slug'] = implode('/', $slug[$lang->code]);
+                }
+            }
+        }
+
 
         return $data;
     }

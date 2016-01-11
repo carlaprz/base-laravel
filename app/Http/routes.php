@@ -195,17 +195,7 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => ['aut
         'as' => 'admin.payments.index',
         'uses' => 'PaymentsController@index'
     ]);
-
-    Route::get('payments/create', [
-        'as' => 'admin.payments.create',
-        'uses' => 'PaymentsController@create'
-    ]);
-
-    Route::post('payments/create', [
-        'as' => 'admin.payments.save',
-        'uses' => 'PaymentsController@save'
-    ]);
-
+ 
     Route::get('payments/edit/{id}', [
         'as' => 'admin.payments.edit',
         'uses' => 'PaymentsController@edit'
@@ -216,9 +206,29 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => ['aut
         'uses' => 'PaymentsController@update'
     ]);
 
-    Route::get('payments/delete/{id}', [
-        'as' => 'admin.payments.delete',
-        'uses' => 'PaymentsController@delete'
+     Route::get('coupons/create', [
+        'as' => 'admin.coupons.create',
+        'uses' => 'CouponsController@create'
+    ]);
+
+    Route::post('coupons/create', [
+        'as' => 'admin.coupons.save',
+        'uses' => 'CouponsController@save'
+    ]);
+
+    Route::get('coupons/edit/{id}', [
+        'as' => 'admin.coupons.edit',
+        'uses' => 'CouponsController@edit'
+    ]);
+
+    Route::post('coupons/edit/{id}', [
+        'as' => 'admin.coupons.update',
+        'uses' => 'CouponsController@update'
+    ]);
+
+    Route::get('coupons/delete/{id}', [
+        'as' => 'admin.coupons.delete',
+        'uses' => 'CouponsController@delete'
     ]);
 
     Route::get('shippingZones', [
@@ -316,30 +326,7 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => ['aut
         'uses' => 'CouponsController@index'
     ]);
 
-    Route::get('coupons/create', [
-        'as' => 'admin.coupons.create',
-        'uses' => 'CouponsController@create'
-    ]);
-
-    Route::post('coupons/create', [
-        'as' => 'admin.coupons.save',
-        'uses' => 'CouponsController@save'
-    ]);
-
-    Route::get('coupons/edit/{id}', [
-        'as' => 'admin.coupons.edit',
-        'uses' => 'CouponsController@edit'
-    ]);
-
-    Route::post('coupons/edit/{id}', [
-        'as' => 'admin.coupons.update',
-        'uses' => 'CouponsController@update'
-    ]);
-
-    Route::get('coupons/delete/{id}', [
-        'as' => 'admin.coupons.delete',
-        'uses' => 'CouponsController@delete'
-    ]);
+   
 
     Route::get('faqsCategories', [
         'as' => 'admin.faqsCategories.index',

@@ -82,7 +82,7 @@ function current_route_has( $thing, $currentKey = 'menu' )
             return array_key_exists($thing, $section) ? $section[$thing] : false;
         }
     }
-
+    
     return false;
 }
 
