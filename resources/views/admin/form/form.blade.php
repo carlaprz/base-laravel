@@ -182,8 +182,7 @@
         } ?>  
                 
         if($("#div_fields_price").length > 0) {
-            console.log('cac');
-            $("#div_fields_price a").trigger("click");
+           $("#div_fields_price a").trigger("click");
         }
         
          $(document).on('keydown', '.onlyNumbers', function (event) {
