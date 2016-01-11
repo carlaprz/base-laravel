@@ -28,8 +28,7 @@ return [
         'cart' => true,
         'cart_opcion' => [
             'shipping' => true,
-            'coupons' => true,
-            'pricexlanguages' => false, // DONT DID
+            'coupons' => true
         ]
     ],
     'faqs' => true,

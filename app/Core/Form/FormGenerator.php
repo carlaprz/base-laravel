@@ -102,7 +102,7 @@ final class FormGenerator
         $value = empty($value_dafault) ? $this->getValue($defaultData, $name) :$value_dafault ;
         
         $fieldClass = $this->fieldClass($fieldData['type']);
-
+        var_dump($value);
         return new $fieldClass($name, $title, $description, $value, $rules);
     }
 

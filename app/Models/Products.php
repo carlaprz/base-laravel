@@ -102,26 +102,26 @@ final class Products extends Model implements ModelInterface
 
     //Metodos FRONT
 
-    public function allProductsActive()
+    public function allActive()
     {
         return $this->where('active', '=', 1)->get();
     }
 
-    public function findProductsByCategoryId( $categoryId )
+    public function findByCategoryId( $categoryId )
     {
         return $this->where('category_id', '=', $categoryId)
                         ->where('active', '=', 1)
                         ->get();
     }
 
-    public function findProductsByCategories( $categories = [] )
+    public function findByCategories( $categories = [] )
     {
         return $this->wherein('category_id', $categories)
                         ->where('active', '=', 1)
                         ->get();
     }
 
-    public function findProductBySlug( $slug )
+    public function findBySlug( $slug )
     {
         return $this->select('products.*')
                         ->join(DB::raw('products_translations ct'), 'ct.products_id', '=', 'products.id')
@@ -131,7 +131,7 @@ final class Products extends Model implements ModelInterface
                         ->first();
     }
 
-    public function SearchProduct( $search )
+    public function search( $search )
     {
         return $this->select('products.*')
                         ->join(DB::raw('products_translations ct'), 'ct.products_id', '=', 'products.id')

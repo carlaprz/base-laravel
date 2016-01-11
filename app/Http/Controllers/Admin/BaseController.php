@@ -37,6 +37,7 @@ abstract class BaseController extends Controller
     {
         $repo = App::make($this->repositoryName);
         $data = $repo->find($id);
+       
         return view('admin.form.form', [
             'form' => $formBuilder->generate(
                     $this->resourceName, $data->toArray()
