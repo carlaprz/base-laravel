@@ -6,7 +6,7 @@ use DB;
 use App;
 use App\Interfaces\ModelInterface;
 use Illuminate\Database\Eloquent\Model;
-use Validator;
+
 
 final class News extends Model implements ModelInterface
 {

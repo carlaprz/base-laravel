@@ -79,6 +79,8 @@ abstract class BaseController extends Controller
         }
 
         $data = $this->clearLang($data);
+        
+        //dd($data);
         $resource->update($data);
 
         $route = resource_home($this->resourceName);
@@ -129,7 +131,7 @@ abstract class BaseController extends Controller
                                     $val= str_replace("{unique:parent}", $parent, $val);
                                     
                                 }
-                                echo 'value: '.$val.'<br/>';
+                                //echo 'value: '.$val.'<br/>';
                                 $rules[$key][$subKey][$subsubKey] = $val;
                             }
                         } else {

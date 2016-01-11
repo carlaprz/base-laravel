@@ -14,10 +14,14 @@ final class Products extends Model implements ModelInterface
 
     const IMAGE_PATH = 'files/products/';
 
-    public $translatedAttributes = ['products_id', 'locale', 'title', 'description', 'data_sheet', 'data_comercial', 'data_iom', 'data_drawing', 'description_sheet', 'slug'];
-   
-    protected $fillable = ['category_id', 'image', 'thumb', 'active', 'products_id', 'locale', 'title', 'description', 'data_sheet', 'data_comercial', 'data_iom', 'description_sheet', 'data_drawing', 'slug'];
+    public $translatedAttributes = ['products_id', 'locale', 'title', 'description', 'slug'];
+    protected $fillable = ['category_id', 'image', 'thumb', 'active', 'products_id', 'locale', 'title', 'description', 'slug'];
     protected $appends = ["es", "en", "fr", "categoryName", "categorySlug"];
+
+    public function add( $data )
+    {
+        return $this->create($data);
+    }
 
     public function getCategory()
     {
@@ -76,89 +80,6 @@ final class Products extends Model implements ModelInterface
     {
         $parent = $this->getCategory();
         return $parent->slug;
-    }
-
-    public function addBeforeValidation( $data, $rules )
-    {
-        $validated = $this->validate($data, false, $rules);
-        if ($validated['error'] == false) {
-            return $this->create($data);
-        } else {
-            return $validated;
-        }
-    }
-
-    public function updateBeforeValidation( $data, $id, $rules )
-    {
-        $validated = $this->validate($data, $id, $rules);
-        if ($validated['error'] == false) {
-            return $this->update($data);
-        } else {
-            return $validated;
-        }
-    }
-
-    private function validate( $data, $id = null, $rules )
-    {
-
-        $langs = all_langs();
-        $errors = [];
-
-        foreach ($rules as $key => $value) {
-            if (is_array($value)) {
-                foreach ($value as $field => $rule) {
-                    if ($rule == 'required') {
-                        if (isset($data[$key]) && empty($data[$key][$field])) {
-                            $text = $field;
-                            if ($field == 'title') {
-                                $text = 'nombre';
-                            }
-                            $errors['error'][] = 'El campo ' . $text . ' en el idioma "' . strtoupper($key) . '" es obligatorio.';
-                        }
-                    }
-                }
-            } else {
-                if ($value == 'required') {
-                    if (isset($data[$key]) && empty($data[$key])) {
-                        $text = $key;
-                        if ($key == 'category_id') {
-                            $text = 'categoria';
-                        }
-
-                        $errors['error'][] = 'El campo ' . $text . ' es obligatorio.';
-                    }
-                }
-            }
-        }
-        // dd($errors);
-
-        $queryValidation = $this->select('*')->join(DB::raw('products_translations ct'), 'ct.products_id', '=', 'products.id');
-        foreach ($langs as $lang) {
-            if (isset($data[$lang->code]) && isset($data[$lang->code]['title']) && !empty($data[$lang->code]['title'])) {
-                $queryValidation = $queryValidation->orWhere(function($query) use( $lang, $data, $id)
-                {
-                    $query = $query->where('ct.locale', '=', $lang->code)
-                            ->Where('ct.title', '=', $data[$lang->code]['title']);
-                    
-                    return $query;
-                });
-            }
-        }
-
-        if (isset($id)) {
-            $queryValidation = $queryValidation->where('ct.products_id', '<>', $id);
-        }
-
-        $data = $queryValidation->get();
-        if (count($data) > 0) {
-            $errors['error'][] = 'Ya existe un producto con ese titulo .';
-        }
-
-        if (!empty($errors)) {
-            return $errors;
-        }
-
-        return true;
     }
 
     public function getThumbAttribute( $thumb )

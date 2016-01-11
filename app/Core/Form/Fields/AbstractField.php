@@ -11,13 +11,15 @@ abstract class AbstractField implements Field
     private $title;
     private $description;
     private $value;
+    private $rules;
 
-    public function __construct( $name, $title = null, $description = null, $value = null )
+    public function __construct( $name, $title = null, $description = null, $value = null, $rules = null )
     {
         $this->name = $name;
         $this->title = $title;
         $this->description = $description;
         $this->value = $value;
+        $this->rules = $rules;
     }
 
     public function name()
@@ -45,11 +47,13 @@ abstract class AbstractField implements Field
     public function before()
     {
         if (!empty($this->title)) {
-            return "
-            <label>
-                {$this->title()}
-            </label>
-        ";
+            $return = "<label>" . $this->title();
+            if (is_array($this->rules) && array_search("required", $this->rules) !== false) {
+                $return.= " (*) :";
+            }
+            $return .= "</label>";
+
+            return $return;
         }
     }
 

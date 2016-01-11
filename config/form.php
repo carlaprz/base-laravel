@@ -69,25 +69,25 @@ return [
         'for_files' => true,
         'description' => 'Administración de Noticias',
         'editor' => true,
-        'slug' => ['title'], 
+        'slug' => ['title'],
         'fields' => [
             'image' => [
                 'type' => 'image_file',
-                'title' => 'Image:',
+                'title' => 'Image',
                 'description' => 'Introduzca la imagen Principal de la noticia',
                 'rules' => ['required']
             ],
             'order' => [
                 'type' => 'numeric',
-                'title' => 'Orden:',
+                'title' => 'Prioridad',
                 'description' => 'Introduzca el orden en caso de destacar',
                 'rules' => ['numeric']
             ],
             'publish' => [
                 'type' => 'datetime',
-                'title' => 'Fecha de publicacion:',
+                'title' => 'Fecha de publicacion',
                 'description' => 'Introduzca la fecha de publicacion',
-                'rules' => ['required','date_format:Y-m-d H:i']
+                'rules' => ['required', 'date_format:Y-m-d H:i']
             ],
             'active' => [
                 'type' => 'radio',
@@ -103,11 +103,11 @@ return [
                         'type' => 'text',
                         'title' => 'Titulo',
                         'description' => 'Titulo',
-                        'rules' => ['required','unique:news_translations,title,{unique:id},news_id,locale,es']
+                        'rules' => ['required', 'unique:news_translations,title,{unique:id},news_id,locale,es']
                     ],
                     'description' => [
                         'type' => 'textarea',
-                        'title' => 'Descripcion',
+                        'title' => 'Descripción',
                         'description' => 'Descripcion',
                         'rules' => ['required']
                     ]
@@ -157,7 +157,7 @@ return [
                         'type' => 'text',
                         'title' => 'Nombre',
                         'description' => 'Nombre',
-                        'rules' => ['required','unique:categories_translations,title,{unique:id},categories_id,locale,es,parent,{unique:parent}']
+                        'rules' => ['required', 'unique:categories_translations,title,{unique:id},categories_id,locale,es,parent,{unique:parent}']
                     ],
                     'meta_title' => [
                         'type' => 'text',
@@ -183,7 +183,7 @@ return [
                     ],
                     'meta_title' => [
                         'type' => 'text',
-                        'title' => 'Meta title ',
+                        'title' => 'Meta title',
                         'description' => 'Meta title',
                         'rules' => []
                     ],
@@ -201,14 +201,14 @@ return [
         'name' => 'Productos',
         'for_files' => true,
         'description' => 'Administración de Productos',
-        'slug' => false,
+        'slug' => ['title'],
         'editor' => true,
         'fields' => [
             'active' => [
                 'type' => 'radio',
                 'title' => 'Activo',
                 'description' => 'Estado',
-                'rules' => []
+                'rules' => ['required']
             ],
             'category_id' => [
                 'type' => 'select',
@@ -218,33 +218,15 @@ return [
             ],
             'image' => [
                 'type' => 'image_file',
-                'title' => 'Image:',
+                'title' => 'Imagen para el detalle del producto',
                 'description' => 'Introduzca la imagen del producto',
                 'rules' => ['required']
             ],
             'thumb' => [
                 'type' => 'image_file',
-                'title' => 'Thumb para el listado:',
+                'title' => 'Imagen para el listado de productos',
                 'description' => 'Introduzca la imagen del producto para el listado',
                 'rules' => ['required']
-            ],
-            'pvp' => [
-                'type' => 'numeric',
-                'title' => 'Precio del producto:',
-                'description' => 'Introduzca el precio del producto',
-                'rules' => ['required']
-            ],
-            'pvp_discounted' => [
-                'type' => 'numeric',
-                'title' => 'Precio del producto descontado:',
-                'description' => 'Introduzca el precio descontado del producto en caso de que lo tenga',
-                'rules' => []
-            ],
-            'iva' => [
-                'type' => 'numeric',
-                'title' => '% de impuesto:',
-                'description' => 'Introduzca el valor del impuesto en porcentaje',
-                'rules' => []
             ]
         ],
         'lenguages' => [
@@ -252,20 +234,20 @@ return [
                 'fields' => [
                     'title' => [
                         'type' => 'text',
-                        'title' => 'title',
+                        'title' => 'Titulo',
                         'description' => 'Titulo del producto',
                         'rules' => ['required']
                     ],
                     'description' => [
                         'type' => 'textarea',
-                        'title' => 'description',
+                        'title' => 'Descripción',
                         'description' => 'Descripcion',
                         'rules' => ''
                     ],
                     'slug' => [
                         'type' => 'text',
-                        'title' => 'Slug',
-                        'description' => 'Caracteristicas Tecnicas',
+                        'title' => 'Url amigable',
+                        'description' => 'Url amigable,en caso de no completarlo se completara con el nombre del producto.',
                         'rules' => ['required']
                     ]
                 ]
@@ -274,21 +256,48 @@ return [
                 'fields' => [
                     'title' => [
                         'type' => 'text',
-                        'title' => 'title',
+                        'title' => 'Title',
                         'description' => 'Titulo del producto',
                         'rules' => []
                     ],
                     'description' => [
                         'type' => 'textarea',
-                        'title' => 'description',
+                        'title' => 'Description',
                         'description' => 'Descripcion',
-                        'rules' =>  ['required_with:title']
+                        'rules' => ['required_with:title']
                     ],
                     'slug' => [
                         'type' => 'text',
-                        'title' => 'Slug',
-                        'description' => 'Caracteristicas Tecnicas',
-                        'rules' =>  ['required_with:title']
+                        'title' => 'Friendly url',
+                        'description' => 'Friendly url',
+                        'rules' => ['required_with:title']
+                    ]
+                ]
+            ]
+        ],
+        "multipleRelationships" => [
+            'price' => [
+                'name' => 'Precios:',
+                'for_files' => true,
+                'description' => 'Administración de Precios',
+                'fields' => [
+                    'pvp' => [
+                        'type' => 'numeric',
+                        'title' => 'Precio del producto',
+                        'description' => 'Introduzca el precio del producto',
+                        'rules' => ['required']
+                    ],
+                    'pvp_discounted' => [
+                        'type' => 'numeric',
+                        'title' => 'Precio del producto descontado',
+                        'description' => 'Introduzca el precio descontado del producto en caso de que lo tenga',
+                        'rules' => []
+                    ],
+                    'iva' => [
+                        'type' => 'numeric',
+                        'title' => '% de impuesto',
+                        'description' => 'Introduzca el valor del impuesto en porcentaje',
+                        'rules' => []
                     ]
                 ]
             ]

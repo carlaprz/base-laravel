@@ -4,5 +4,3 @@ return [
      'home' => '',
      'hello' => 'hello'
 ];
-
-

@@ -38,7 +38,7 @@ final class Form
 
     public function fields( $type )
     {
-        return isset($this->fields[$type]) ? $this->fields[$type] : null;
+       return isset($this->fields[$type]) ? $this->fields[$type] : null;
     }
 
     public function editor()

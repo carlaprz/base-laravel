@@ -31,28 +31,31 @@
                       @if ($form->isForFiles())
                       enctype="multipart/form-data"
                       @endif
-                      >
-
-                      @foreach ($form->fields('generals') as $field)
-                      
-                      <div class="row">
-                        <div class="col-lg-12">
-                         
-                            <div class="form-group <?php echo (is_object($field) && get_class($field) == "App\Core\Form\Fields\Datetime")?"datepicker":''; ?>">
-                                
-                                {!! $field->before() !!}
-                                {!! $field->render() !!}
-                                {!! $field->after() !!}
+                      >                      
+                      <div class="generals"> 
+                            <div class="lenguages_title active" id="div_field_generals">
+                                <span>Campos Generales</span> <a class="toggle" style="cursor:pointer;" data-parent="div_field_generals" data-class='toggle_field_generals'><span class="fa arrow"></span></a>
                             </div>
-                        </div>
+
+                            @foreach ($form->fields('generals') as $field)
+                            <div class="row toggle_field_generals">
+                              <div class="col-lg-12">
+                                  <div class="form-group <?php echo (is_object($field) && get_class($field) == "App\Core\Form\Fields\Datetime")?"datepicker":''; ?>">
+                                      {!! $field->before() !!}
+                                      {!! $field->render() !!}
+                                      {!! $field->after() !!}
+                                  </div>
+                              </div>
+                          </div>
+                        @endforeach
                     </div>
-                    @endforeach
+                    
                     
                     @foreach(all_langs() as $languages)
                     @if(null !== ($form->fields($languages->code)))
                     <div class="langueages"> 
-                        <div class="lenguages_title active" id="div_title_{{$languages->code}}">
-                            <span>Campos en el idioma {{$languages->name}}</span> <a href="#" class="toggle " data-parent="div_title_{{$languages->code}}" data-class='toggle_container_{{$languages->code}}'><span class="fa arrow"></span></a>
+                        <div class="lenguages_title active" id="div_fields_{{$languages->code}}">
+                            <span>Campos en el idioma {{$languages->name}}</span> <a class="toggle" style="cursor:pointer;" data-parent="div_fields_{{$languages->code}}" data-class='toggle_container_{{$languages->code}}'><span class="fa arrow"></span></a>
                         </div>
 
                         @foreach ($form->fields($languages->code) as $field)
@@ -69,9 +72,29 @@
                     </div>    
                     @endif
                     @endforeach
+                    
+                    @if($form->fields('price'))
+                        <div class="relationships"> 
+                            <div class="lenguages_title active" id="div_fields_price">
+                                <span>Precio</span> <a class="toggle" style="cursor:pointer;" data-parent="div_fields_price" data-class='toggle_container_price'><span class="fa arrow"></span></a>
+                            </div>
+
+                            @foreach($form->fields('price') as $field)
+                            <div class="row toggle_container_price">
+                              <div class="col-lg-12">
+                                    <div class="form-group <?php echo (is_object($field) && get_class($field) == "App\Core\Form\Fields\Datetime")?"datepicker":''; ?>">
+                                      {!! $field->before() !!}
+                                      {!! $field->render() !!}
+                                      {!! $field->after() !!}
+                                   </div>
+                              </div>
+                            </div>
+                             @endforeach
+                       </div>                        
+                    @endif
 
                     @if(!isset($details))
-                    <button class="btn btn-success">Guardar</button>
+                        <button class="btn btn-success">Guardar</button>
                     @endif
 
                     <input type="hidden" name="_token" id="csrf-token" value="{{ Session::token() }}" />
@@ -147,6 +170,21 @@
             }
             $('.' + element).toggle('slow');
         });
+        
+        <?php
+        foreach (all_langs() as $languages) {
+            if (null !== ($form->fields($languages->code))) { ?>
+                if($("#div_fields_<?php echo $languages->code?>").length > 0) {
+                    $("#div_fields_<?php echo $languages->code?> a").trigger("click");
+                }
+        <?php 
+            }
+        } ?>  
+                
+        if($("#div_fields_price").length > 0) {
+            console.log('cac');
+            $("#div_fields_price a").trigger("click");
+        }
         
          $(document).on('keydown', '.onlyNumbers', function (event) {
             if (event.keyCode == 46 || event.keyCode == 8 || event.keyCode == 9 || event.keyCode == 27 || event.keyCode == 13 || (event.keyCode == 65 && event.ctrlKey === true) || (event.keyCode >= 35 && event.keyCode <= 39)) {
