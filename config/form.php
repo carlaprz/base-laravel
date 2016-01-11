@@ -136,6 +136,7 @@ return [
         'for_files' => false,
         'description' => 'Administración de Categorias',
         'editor' => false,
+        'autocomplete' => ['meta_title' => 'title'],
         'slug' => ['title'],
         'fields' => [
             'parent' => [
@@ -159,6 +160,12 @@ return [
                         'description' => 'Nombre',
                         'rules' => ['required', 'unique:categories_translations,title,{unique:id},categories_id,locale,es,parent,{unique:parent}']
                     ],
+                    'slug' => [
+                        'type' => 'text',
+                        'title' => 'Url amigable',
+                        'description' => 'Url amigable,en caso de no completarlo se completara con el nombre.',
+                        'rules' => ['required']
+                    ],
                     'meta_title' => [
                         'type' => 'text',
                         'title' => 'Meta Titulo ',
@@ -180,6 +187,12 @@ return [
                         'title' => 'Name',
                         'description' => 'Name',
                         'rules' => ['unique:categories_translations,title,{unique:id},categories_id,locale,en,parent,{unique:parent}']
+                    ],
+                    'slug' => [
+                        'type' => 'text',
+                        'title' => 'Friendly url',
+                        'description' => 'Friendly url',
+                        'rules' => ['required_with:title']
                     ],
                     'meta_title' => [
                         'type' => 'text',
@@ -209,6 +222,24 @@ return [
                 'title' => 'Activo',
                 'description' => 'Estado',
                 'rules' => ['required']
+            ],
+            'pvp' => [
+                'type' => 'numeric',
+                'title' => 'Precio del producto',
+                'description' => 'Introduzca el precio del producto',
+                'rules' => ['required']
+            ],
+            'pvp_discounted' => [
+                'type' => 'numeric',
+                'title' => 'Precio del producto descontado',
+                'description' => 'Introduzca el precio descontado del producto en caso de que lo tenga',
+                'rules' => []
+            ],
+            'iva' => [
+                'type' => 'numeric',
+                'title' => '% de impuesto',
+                'description' => 'Introduzca el valor del impuesto en porcentaje',
+                'rules' => []
             ],
             'category_id' => [
                 'type' => 'select',
@@ -275,33 +306,6 @@ return [
                 ]
             ]
         ],
-        "multipleRelationships" => [
-            'price' => [
-                'name' => 'Precios:',
-                'for_files' => true,
-                'description' => 'Administración de Precios',
-                'fields' => [
-                    'pvp' => [
-                        'type' => 'numeric',
-                        'title' => 'Precio del producto',
-                        'description' => 'Introduzca el precio del producto',
-                        'rules' => ['required']
-                    ],
-                    'pvp_discounted' => [
-                        'type' => 'numeric',
-                        'title' => 'Precio del producto descontado',
-                        'description' => 'Introduzca el precio descontado del producto en caso de que lo tenga',
-                        'rules' => []
-                    ],
-                    'iva' => [
-                        'type' => 'numeric',
-                        'title' => '% de impuesto',
-                        'description' => 'Introduzca el valor del impuesto en porcentaje',
-                        'rules' => []
-                    ]
-                ]
-            ]
-        ]
     ],
     'payments' => [
         'name' => 'Métodos de pago',

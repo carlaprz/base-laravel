@@ -79,7 +79,7 @@ abstract class BaseController extends Controller
         }
 
         $data = $this->clearLang($data);
-        
+
         //dd($data);
         $resource->update($data);
 
@@ -114,9 +114,9 @@ abstract class BaseController extends Controller
         $errors = [];
 
         if (!empty($id)) {
-           
-            $parent = isset($data['parent'])?$data['parent']:'';
-            
+
+            $parent = isset($data['parent']) ? $data['parent'] : '';
+
             foreach ($rules as $key => $rulesArray) {
                 if (is_array($rulesArray)) {
                     foreach ($rulesArray as $subKey => $rule) {
@@ -126,10 +126,9 @@ abstract class BaseController extends Controller
                                 if (preg_match("/unique:id/i", $value)) {
                                     $val = str_replace("{unique:id}", $id, $val);
                                 }
-                                
+
                                 if (preg_match("/unique:parent/i", $value)) {
-                                    $val= str_replace("{unique:parent}", $parent, $val);
-                                    
+                                    $val = str_replace("{unique:parent}", $parent, $val);
                                 }
                                 //echo 'value: '.$val.'<br/>';
                                 $rules[$key][$subKey][$subsubKey] = $val;
@@ -140,17 +139,17 @@ abstract class BaseController extends Controller
                                 $val = str_replace("{unique:id}", $id, $val);
                             }
                             if (preg_match("/unique:parent/i", $rule)) {
-                               $val = str_replace("{unique:parent}", $parent, $val);
+                                $val = str_replace("{unique:parent}", $parent, $val);
                             }
-                            
-                            $rules[$key]= $val;
+
+                            $rules[$key] = $val;
                         }
                     }
                 }
             }
         }
-       
-        
+
+
         foreach ($data as $key => $value) {
             if (is_array($value)) {
                 if (in_array($key, $langs)) {
@@ -160,9 +159,9 @@ abstract class BaseController extends Controller
                 }
             }
         }
-        
+
         $errors[] = Validator::make($data, $rules);
-       
+
         return $errors;
     }
 
@@ -172,8 +171,12 @@ abstract class BaseController extends Controller
             $data = FileServices::uploadFilesRequest($request, $data, $this->pathFile, $this->filesDimensions);
         }
 
+        //generate autocomplete
+        $data = $this->generateAutocomplete($data);
+
         //generate slugs
         $data = $this->generateSlugs($data);
+
         $data = $this->clearDescription($data);
 
         //generate parent 
@@ -181,6 +184,7 @@ abstract class BaseController extends Controller
 
         $data = $this->removePrev($data);
 
+       
         //$data = $this->clearLang($data);
 
         return $data;
@@ -224,22 +228,40 @@ abstract class BaseController extends Controller
         return $data;
     }
 
-    private function generateSlugs( $data )
+    private function generateAutocomplete( $data )
     {
-        $fields = get_slug_from($this->resourceName);
+        $fields = get_autocomplete_from($this->resourceName);
         if (!empty($fields)) {
-            $langs = all_langs();
-            foreach ($langs as $lang) {
-                $slug = [];
-                if (key_exists($lang->code, $data)) {
-                    foreach ($fields as $field) {
-                        if (isset($data[$lang->code][$field]) && !empty($data[$lang->code][$field])) {
-                            $slug[$lang->code][] = slugify($data[$lang->code][$field]);
+                $langs = all_langs();
+                foreach ($langs as $lang) {
+                    foreach ($fields as $keyOrigin => $keyCopy ) {
+                        if(empty($data[$lang->code][$keyOrigin]) && !empty($data[$lang->code][$keyCopy])){
+                            $data[$lang->code][$keyOrigin] = $data[$lang->code][$keyCopy];
                         }
                     }
                 }
-                if (isset($slug[$lang->code]) && is_array($slug[$lang->code])) {
-                    $data[$lang->code]['slug'] = implode('/', $slug[$lang->code]);
+       }        
+       return $data;
+    }
+
+    private function generateSlugs( $data )
+    {
+        if (empty($data['slug'])) {
+            $fields = get_slug_from($this->resourceName);
+            if (!empty($fields)) {
+                $langs = all_langs();
+                foreach ($langs as $lang) {
+                    $slug = [];
+                    if (key_exists($lang->code, $data)) {
+                        foreach ($fields as $field) {
+                            if (isset($data[$lang->code][$field]) && !empty($data[$lang->code][$field])) {
+                                $slug[$lang->code][] = slugify($data[$lang->code][$field]);
+                            }
+                        }
+                    }
+                    if (isset($slug[$lang->code]) && is_array($slug[$lang->code])) {
+                        $data[$lang->code]['slug'] = implode('/', $slug[$lang->code]);
+                    }
                 }
             }
         }

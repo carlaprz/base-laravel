@@ -190,6 +190,36 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => ['aut
         'as' => 'admin.orders.delete',
         'uses' => 'OrdersController@delete'
     ]);
+    
+    Route::get('payments', [
+        'as' => 'admin.payments.index',
+        'uses' => 'PaymentsController@index'
+    ]);
+
+    Route::get('payments/create', [
+        'as' => 'admin.payments.create',
+        'uses' => 'PaymentsController@create'
+    ]);
+
+    Route::post('payments/create', [
+        'as' => 'admin.payments.save',
+        'uses' => 'PaymentsController@save'
+    ]);
+
+    Route::get('payments/edit/{id}', [
+        'as' => 'admin.payments.edit',
+        'uses' => 'PaymentsController@edit'
+    ]);
+
+    Route::post('payments/edit/{id}', [
+        'as' => 'admin.payments.update',
+        'uses' => 'PaymentsController@update'
+    ]);
+
+    Route::get('payments/delete/{id}', [
+        'as' => 'admin.payments.delete',
+        'uses' => 'PaymentsController@delete'
+    ]);
 
     Route::get('shippingZones', [
         'as' => 'admin.shippingZones.index',

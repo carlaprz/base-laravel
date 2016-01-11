@@ -68,7 +68,7 @@ class CartShippingPaymentsCouponsOrders extends Migration
                     $table->float('min_pvp');
                     $table->float('max_pvp');
                     $table->integer('shipping_zone_id')->unsigned();
-                    $table->boolean('activated')->default(0);
+                    $table->boolean('active')->default(0);
                     $table->timestamps();
 
                     $table->foreign('shipping_zone_id')->references('id')->on('shipping_zones');
@@ -79,7 +79,7 @@ class CartShippingPaymentsCouponsOrders extends Migration
             {
                 $table->increments('id');
                 $table->text('name');
-                $table->boolean('activated')->default(0);
+                $table->boolean('active')->default(0);
                 $table->timestamps();
             });
 
@@ -105,7 +105,7 @@ class CartShippingPaymentsCouponsOrders extends Migration
                     $table->date('date_start')->nullable();
                     $table->date('date_end')->nullable();
                     $table->float('discount');
-                    $table->boolean('activated')->default(0);
+                    $table->boolean('active')->default(0);
                     $table->timestamps();
                 });
 

@@ -117,6 +117,10 @@ function get_slug_from( $from )
     return config('form.' . $from . '.slug');
 }
 
+function get_autocomplete_from ($from) {
+    return config('form.' . $from . '.autocomplete');
+}
+
 function resource_home( $resource )
 {
     $route = 'admin.home';

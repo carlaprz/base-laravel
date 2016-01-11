@@ -61,16 +61,6 @@ final class FormGenerator
             }
         }
         
-        if (isset($data['multipleRelationships'])) {
-            foreach ($data['multipleRelationships'] as $key => $value) {
-                foreach ($value['fields'] as $name => $fieldData) {
-                    $name = $key . '[' . $name . ']';
-                    $field = $this->generateField($name, $defaultData, $fieldData);
-                    $form->addField($key, $field);
-                }
-            }
-        }        
-
         return $form;
     }
 
@@ -107,15 +97,10 @@ final class FormGenerator
     {
         $title = $fieldData['title'];
         $description = $fieldData['description'];
-        $rules = $fieldData['rules'];
+        $rules = isset($fieldData['rules'])?$fieldData['rules']: NULL;  
         $value_dafault = isset($fieldData['value']) ? $fieldData['value'] : NULL;
+        $value = empty($value_dafault) ? $this->getValue($defaultData, $name) :$value_dafault ;
         
-        if (empty($value_dafault)) {
-            $value = $this->getValue($defaultData, $name);
-        } else {
-            $value = $value_dafault;
-        }
-
         $fieldClass = $this->fieldClass($fieldData['type']);
 
         return new $fieldClass($name, $title, $description, $value, $rules);

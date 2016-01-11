@@ -73,26 +73,6 @@
                     @endif
                     @endforeach
                     
-                    @if($form->fields('price'))
-                        <div class="relationships"> 
-                            <div class="lenguages_title active" id="div_fields_price">
-                                <span>Precio</span> <a class="toggle" style="cursor:pointer;" data-parent="div_fields_price" data-class='toggle_container_price'><span class="fa arrow"></span></a>
-                            </div>
-
-                            @foreach($form->fields('price') as $field)
-                            <div class="row toggle_container_price">
-                              <div class="col-lg-12">
-                                    <div class="form-group <?php echo (is_object($field) && get_class($field) == "App\Core\Form\Fields\Datetime")?"datepicker":''; ?>">
-                                      {!! $field->before() !!}
-                                      {!! $field->render() !!}
-                                      {!! $field->after() !!}
-                                   </div>
-                              </div>
-                            </div>
-                             @endforeach
-                       </div>                        
-                    @endif
-
                     @if(!isset($details))
                         <button class="btn btn-success">Guardar</button>
                     @endif
@@ -179,13 +159,9 @@
                 }
         <?php 
             }
-        } ?>  
-                
-        if($("#div_fields_price").length > 0) {
-           $("#div_fields_price a").trigger("click");
-        }
+        } ?>
         
-         $(document).on('keydown', '.onlyNumbers', function (event) {
+        $(document).on('keydown', '.onlyNumbers', function (event) {
             if (event.keyCode == 46 || event.keyCode == 8 || event.keyCode == 9 || event.keyCode == 27 || event.keyCode == 13 || (event.keyCode == 65 && event.ctrlKey === true) || (event.keyCode >= 35 && event.keyCode <= 39)) {
                 return;
             } else {

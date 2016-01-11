@@ -50,8 +50,17 @@ return [
         'edit' => 'admin.orders.edit',
         'delete' => 'admin.orders.delete',
         'icon' => 'fa fa-shopping-cart',
-        'name' => 'orders',
+        'name' => 'Ordenes de Compra',
         'resource' => 'orders'
+    ],
+    [
+        'route' => 'admin.payments.index',
+        'create' => 'admin.payments.create',
+        'edit' => 'admin.payments.edit',
+        'delete' => 'admin.payments.delete',
+        'icon' => 'fa fa-credit-card',
+        'name' => 'Metodos de pago',
+        'resource' => 'payments'
     ],
     [
         'dropdown' => true,
