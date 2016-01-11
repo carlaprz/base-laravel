@@ -30,12 +30,10 @@ class CartShippingPaymentsCouponsOrders extends Migration
             {
                 $table->increments('id');
                 $table->integer('cart_id')->unsigned();
-                $table->integer('products_salable_id')->unsigned();
                 $table->text('product_description');
                 $table->integer('cant')->unsigned();
                 $table->timestamps();
                 $table->foreign('cart_id')->references('id')->on('carts');
-                $table->foreign('products_salable_id')->references('id')->on('products_salable');
             });
 
             //SHIPPING

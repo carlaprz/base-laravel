@@ -21,6 +21,9 @@ class Products extends Migration
 
                 $table->string('image');
                 $table->string('thumb');
+                $table->float('pvp')->unsigned();
+                $table->float('pvp_discounted')->unsigned();
+                $table->float('iva')->unsigned();
                 $table->boolean('active')->default(1);
 
                 $table->timestamps();
@@ -53,21 +56,21 @@ class Products extends Migration
                 $table->foreign('products_id')->references('id')->on('products');
             });
 
-            $cart = Config::get('configMigrations.ecommerce.cart');
-            if ($cart) {
-                Schema::create('products_salable', function(Blueprint $table)
-                {
-                    $table->increments('id');
-                    $table->integer('products_id')->unsigned();
+            /* $cart = Config::get('configMigrations.ecommerce.cart');
+              if ($cart) {
+              Schema::create('products_salable', function(Blueprint $table)
+              {
+              $table->increments('id');
+              $table->integer('products_id')->unsigned();
 
-                    $table->float('pvp')->unsigned();
-                    $table->float('pvp_discounted')->unsigned();
-                    $table->float('iva')->unsigned();
+              $table->float('pvp')->unsigned();
+              $table->float('pvp_discounted')->unsigned();
+              $table->float('iva')->unsigned();
 
-                    $table->timestamps();
-                    $table->foreign('products_id')->references('id')->on('products');
-                });
-            }
+              $table->timestamps();
+              $table->foreign('products_id')->references('id')->on('products');
+              });
+              } */
         }
     }
 
@@ -78,14 +81,16 @@ class Products extends Migration
      */
     public function down()
     {
+
         $products = Config::get('configMigrations.ecommerce.products');
         if ($products) {
 
+            /* Schema::drop('products_translations');
+              $cart = Config::get('configMigrations.ecommerce.cart');
+              if ($cart) {
+              Schema::drop('products_salable');
+              } */
             Schema::drop('products_translations');
-            $cart = Config::get('configMigrations.ecommerce.cart');
-            if ($cart) {
-                Schema::drop('products_salable');
-            }
             Schema::drop('products');
         }
     }
