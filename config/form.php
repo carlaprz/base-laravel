@@ -314,29 +314,35 @@ return [
         'slug' => false,
         'editor' => false,
         'fields' => [
+            'reference' => [
+                'type' => 'textDisabled',
+                'title' => 'Referencia',
+                'description' => 'Introduzca la referencia',
+                'rules' => ['required']
+            ],
             'total_pvp' => [
                 'type' => 'numericDisabled',
                 'title' => 'Precio del producto',
                 'description' => 'Introduzca el precio del producto',
-                'rules' => ['required']
+                'rules' => ['']
+            ],
+            'pvpName' => [
+                'type' => 'textDisabled',
+                'title' => 'Método de pago',
+                'description' => 'Metodo de pago',
+                'rules' => ['']
             ],
             'total_iva' => [
                 'type' => 'numericDisabled',
                 'title' => 'Precio del producto descontado',
                 'description' => 'Introduzca el precio descontado del producto en caso de que lo tenga',
-                'rules' => ['required']
+                'rules' => ['']
             ],
             'status' => [
                 'type' => 'selectDisabled',
                 'title' => 'Estado',
                 'description' => 'orders_status',
-                'rules' => ['required']
-            ],
-            'total_pvp' => [
-                'type' => 'numericDisabled',
-                'title' => 'Precio del producto',
-                'description' => 'Introduzca el precio del producto',
-                'rules' => ['required']
+                'rules' => ['']
             ],
             'total_iva' => [
                 'type' => 'numericDisabled',
