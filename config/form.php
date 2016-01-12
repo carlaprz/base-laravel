@@ -469,5 +469,103 @@ return [
                 'rules' => ['required']
             ],
         ]
-    ]
+    ],
+    'shippingZones' => [
+        'name' => 'Zonas de envío',
+        'for_files' => false,
+        'description' => 'Administración de las zonas de envíos',
+        'editor' => false,
+        'fields' => [
+            'name' => [
+                'type' => 'text',
+                'title' => 'Nombre',
+                'description' => 'Introduce el nombre de la zona de envío',
+                'rules' => ['required']
+            ]
+        ]
+    ],
+    'shippingCountries' => [
+        'name' => 'Países de envío',
+        'for_files' => false,
+        'description' => 'Administración de países de envío',
+        'editor' => false,
+        'fields' => [
+            'code' => [
+                'type' => 'text',
+                'title' => 'Código',
+                'description' => 'Introduce el nombre del país de envío',
+                'rules' => ['required']
+            ],
+            'name' => [
+                'type' => 'text',
+                'title' => 'Nombre',
+                'description' => 'Introduce el nombre del país de envío',
+                'rules' => ['required']
+            ],
+            'shipping_zone' => [
+                'type' => 'select',
+                'title' => 'Zone',
+                'description' => 'all_zones',
+                'rules' => ['required']
+            ]
+        ]
+    ],
+    'shippingCosts' => [
+        'name' => 'Costes de envío',
+        'for_files' => false,
+        'description' => 'Administración de costes de envío',
+        'editor' => false,
+        'fields' => [
+            'name' => [
+                'type' => 'text',
+                'title' => 'Nombre',
+                'description' => 'Introduce el nombre del coste de envío',
+                'rules' => ['required']
+            ],
+            'pvp' => [
+                'type' => 'numeric',
+                'title' => 'Precio',
+                'description' => 'Introduce el precio del coste de envío',
+                'rules' => ['required']
+            ],
+            'units' => [
+                'type' => 'numeric',
+                'title' => 'Unidades',
+                'description' => 'Introduce las unidades tendrá el coste de envío',
+                'rules' => ['required']
+            ],
+            'shipping_zone' => [
+                'type' => 'select',
+                'title' => 'Zona',
+                'description' => 'all_zones',
+                'rules' => ['required']
+            ],
+            'active' => [
+                'type' => 'radio',
+                'title' => 'Activo',
+                'description' => 'Estado',
+                'rules' => ['required']
+            ]
+        ]
+    ],
+    'payments' => [
+        'name' => 'Métodos de pago',
+        'for_files' => false,
+        'description' => 'Administración de métodos de pago',
+        'editor' => false,
+        'fields' => [
+            'name' => [
+                'type' => 'text',
+                'title' => 'Nombre',
+                'description' => 'Introduce el nombre del método de pago',
+                'rules' => ['required']
+            ],
+            'active' => [
+                'type' => 'radio',
+                'title' => 'Activo',
+                'description' => 'Estado',
+                'rules' => ['required']
+            ]
+        ]
+    ],
 ];

@@ -11,7 +11,7 @@ final class ShippingCountries extends Model implements ModelInterface
 {
 
     public $timestamps = true;
-    protected $fillable = ['name', 'shipping_zone'];
+    protected $fillable = ['code','name', 'shipping_zone'];
     protected $appends = ["zoneName"];
 
 
