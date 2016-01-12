@@ -168,14 +168,14 @@ class CartShippingPaymentsCouponsOrders extends Migration
             {
                 $table->increments('id');
                 $table->integer('order_id')->unsigned();
-                $table->string('shopper_name', 255);
-                $table->string('shopper_lastname', 255);
-                $table->string('shopper_email', 255);
-                $table->string('shopper_address', 175);
-                $table->string('shopper_postalcode', 5);
-                $table->string('shopper_city', 175);
-                $table->string('shopper_province', 175);
-                $table->string('shopper_telephone', 15);
+                $table->string('shipping_name', 255);
+                $table->string('shipping_lastname', 255);
+                $table->string('shipping_email', 255);
+                $table->string('shipping_address', 175);
+                $table->string('shipping_postalcode', 5);
+                $table->string('shipping_city', 175);
+                $table->string('shipping_province', 175);
+                $table->string('shipping_telephone', 15);
                 $table->timestamps();
                 $table->foreign('order_id')->references('id')->on('orders');
             });
