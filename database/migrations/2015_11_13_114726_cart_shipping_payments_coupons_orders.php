@@ -65,8 +65,7 @@ class CartShippingPaymentsCouponsOrders extends Migration
                     $table->increments('id');
                     $table->string('name', 55);
                     $table->float('pvp');
-                    $table->float('min_pvp');
-                    $table->float('max_pvp');
+                    $table->integer('units');
                     $table->integer('shipping_zone_id')->unsigned();
                     $table->boolean('active')->default(0);
                     $table->timestamps();
