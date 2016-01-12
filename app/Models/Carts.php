@@ -11,7 +11,7 @@ final class Carts extends Model implements ModelInterface
     protected $table = 'carts';
     protected $fillable = ['user_id'];
 
-    public function getUser()
+    public function user()
     {
         return $this->belongsTo(User::class, 'user_id', 'id')->get();
     }

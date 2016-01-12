@@ -11,17 +11,20 @@ class OrdersController extends BaseController
     protected $repositoryName = Orders::class;
     protected $pathFile = 'files/products/';
     protected $filesDimensions = [
-        'image' => ['w' => 564,'h' => 384],
-        'thumb' => ['w' => 424,'h' => 362],
+        'image' => ['w' => 564, 'h' => 384],
+        'thumb' => ['w' => 424, 'h' => 362],
     ];
-  
 
     public function index()
     {
         $fluxesHead = [
             'id' => 'id',
-            'title' => 'Nombre',
-            'active' => 'Activo'
+            'reference' => 'Referencia',
+            'total_pvp' => 'Total pedido',
+            'pvpName' => 'Metodo de pago pedido',
+            'userNameLastname' => 'Cliente',
+            'created_at' => 'Fecha de compra',
+            'statusName' => 'Estado',
         ];
 
         return view('admin.datatable', [
@@ -31,7 +34,5 @@ class OrdersController extends BaseController
             'header' => $fluxesHead
         ]);
     }
-
-  
 
 }
