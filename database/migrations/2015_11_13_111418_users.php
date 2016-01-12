@@ -30,7 +30,7 @@ class Users extends Migration
             $table->string('email')->unique();
             $table->string('password', 60);
 
-            $table->string('address', 175)->nullable();
+            $table->string('address', 175);
             $table->string('postalcode', 5);
             $table->string('city', 175);
             $table->string('telephone', 15);
@@ -65,7 +65,12 @@ class Users extends Migration
                 'password' => bcrypt('MM6665MM'),
                 'rol' => 1,
                 'status' => 1,
-                'created_at' => date("Y-m-d H:s:i")
+                'created_at' => date("Y-m-d H:s:i"),
+                'address' => 'Marques de Mulhacen 11',
+                'postalcode' => '08034',
+                'city' => 'Barcelona',
+                'telephone' => '936350620',
+                'province' => 'Barcelona'
             ],
             [
                 'name' => 'Carla Perez',
@@ -73,7 +78,12 @@ class Users extends Migration
                 'password' => bcrypt('123456'),
                 'rol' => 1,
                 'status' => 1,
-                'created_at' => date("Y-m-d H:s:i")
+                'created_at' => date("Y-m-d H:s:i"),
+                'address' => 'Marques de Mulhacen 11',
+                'postalcode' => '08034',
+                'city' => 'Barcelona',
+                'telephone' => '936350620',
+                'province' => 'Barcelona'
             ],
             [
                 'name' => 'Pau Garcia',
@@ -81,7 +91,12 @@ class Users extends Migration
                 'password' => bcrypt('123456'),
                 'rol' => 1,
                 'status' => 1,
-                'created_at' => date("Y-m-d H:s:i")
+                'created_at' => date("Y-m-d H:s:i"),
+                'address' => 'Marques de Mulhacen 11',
+                'postalcode' => '08034',
+                'city' => 'Barcelona',
+                'telephone' => '936350620',
+                'province' => 'Barcelona'
             ],
             [
                 'name' => 'Manel Domenech',
@@ -89,7 +104,12 @@ class Users extends Migration
                 'password' => bcrypt('123456'),
                 'rol' => 1,
                 'status' => 1,
-                'created_at' => date("Y-m-d H:s:i")
+                'created_at' => date("Y-m-d H:s:i"),
+                'address' => 'Marques de Mulhacen 11',
+                'postalcode' => '08034',
+                'city' => 'Barcelona',
+                'telephone' => '936350620',
+                'province' => 'Barcelona'
             ],
             [
                 'name' => 'Guest',
@@ -97,7 +117,12 @@ class Users extends Migration
                 'password' => bcrypt('123456'),
                 'rol' => 2,
                 'status' => 1,
-                'created_at' => date("Y-m-d H:s:i")
+                'created_at' => date("Y-m-d H:s:i"),
+                'address' => 'Marques de Mulhacen 11',
+                'postalcode' => '08034',
+                'city' => 'Barcelona',
+                'telephone' => '936350620',
+                'province' => 'Barcelona'
             ]
         ];
 
