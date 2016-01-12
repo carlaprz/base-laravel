@@ -17,32 +17,32 @@ final class Orders extends Model implements ModelInterface
     protected $fillable = ['reference', 'cart_id', 'total_pvp', 'total_iva', 'status', 'observations', 'bill'];
     protected $appends = ['pvpName', 'userNameLastname','statusName']; 
 
-    public function detail()
+    private function detail()
     {
         return $this->belongsTo(OrdersDetails::class, 'order_id', 'id')->get();
     }
 
-    public function payment()
+    private function payment()
     {
         return $this->hasMany(OrdersPayments::class, 'order_id', 'id')->get();
     }
 
-    public function coupon()
+    private function coupon()
     {
         return $this->belongsTo(Coupons::class, 'id', 'coupon_id')->get();
     }
 
-    public function cart()
+    private function cart()
     {
         return $this->belongsTo(Carts::class, 'cart_id', 'id')->get();
     }
 
-    public function status()
+    private function status()
     {
         return $this->belongsTo(OrdersStatus::class, 'status', 'id')->get();
     }
 
-    public function getUser()
+    private function getUser()
     {
         return $this->cart()->first()->user()->first();
     }

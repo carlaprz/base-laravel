@@ -267,7 +267,7 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => ['aut
     ]);
 
     Route::get('shippingCountries/create', [
-        'as' => 'admin.shippingZones.create',
+        'as' => 'admin.shippingCountries.create',
         'uses' => 'ShippingCountriesController@create'
     ]);
 
