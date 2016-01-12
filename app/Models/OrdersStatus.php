@@ -8,6 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 final class OrdersStatus extends Model implements ModelInterface
 {
 
+        protected $table = 'orders_status';
+
     protected $fillable = ['description'];
 
     public function add( $data )

@@ -15,6 +15,7 @@ final class Orders extends Model implements ModelInterface
 
     protected $table = 'orders';
     protected $fillable = ['reference', 'cart_id', 'total_pvp', 'total_iva', 'status', 'observations', 'bill'];
+    protected $appends = ['pvpName', 'userNameLastname','statusName']; 
 
     public function detail()
     {
@@ -23,7 +24,7 @@ final class Orders extends Model implements ModelInterface
 
     public function payment()
     {
-        return $this->belongsTo(OrdersPayments::class, 'order_id', 'id')->get();
+        return $this->hasMany(OrdersPayments::class, 'order_id', 'id')->get();
     }
 
     public function coupon()
@@ -43,14 +44,15 @@ final class Orders extends Model implements ModelInterface
 
     public function getUser()
     {
-        return $this->cart()->firts()->user();
+        return $this->cart()->first()->user()->first();
     }
 
     // List BACKEND
 
     public function getPvpNameAttribute()
     {
-        $payment = $this->payment()->first()->getPayment()->first();
+        $payment = $this->payment()->first()->payment()->first();
+       
         return $payment->name;
     }
 

@@ -30,10 +30,12 @@ class CartShippingPaymentsCouponsOrders extends Migration
             {
                 $table->increments('id');
                 $table->integer('cart_id')->unsigned();
+                $table->integer('product_id')->unsigned();
                 $table->text('product_description');
                 $table->integer('cant')->unsigned();
                 $table->timestamps();
                 $table->foreign('cart_id')->references('id')->on('carts');
+                $table->foreign('product_id')->references('id')->on('products');
             });
 
             //SHIPPING
@@ -139,7 +141,7 @@ class CartShippingPaymentsCouponsOrders extends Migration
                 $table->float('total_pvp');
                 $table->float('total_iva');
                 $table->float('shipping_pvp');
-                
+
                 $table->integer('status')->unsigned();
                 $table->string('observations', 255);
                 $table->boolean('bill')->default(0);
