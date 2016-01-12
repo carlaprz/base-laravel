@@ -307,6 +307,105 @@ return [
             ]
         ],
     ],
+    'orders' => [
+        'name' => 'Ordenes de Compra',
+        'for_files' => true,
+        'description' => 'Administración de Ordenes de compra',
+        'slug' => false,
+        'editor' => false,
+        'fields' => [
+            'total_pvp' => [
+                'type' => 'numericDisabled',
+                'title' => 'Precio del producto',
+                'description' => 'Introduzca el precio del producto',
+                'rules' => ['required']
+            ],
+            'total_iva' => [
+                'type' => 'numericDisabled',
+                'title' => 'Precio del producto descontado',
+                'description' => 'Introduzca el precio descontado del producto en caso de que lo tenga',
+                'rules' => ['required']
+            ],
+            'status' => [
+                'type' => 'selectDisabled',
+                'title' => 'Estado',
+                'description' => 'orders_status',
+                'rules' => ['required']
+            ],
+            'total_pvp' => [
+                'type' => 'numericDisabled',
+                'title' => 'Precio del producto',
+                'description' => 'Introduzca el precio del producto',
+                'rules' => ['required']
+            ],
+            'total_iva' => [
+                'type' => 'numericDisabled',
+                'title' => 'Precio del producto descontado',
+                'description' => 'Introduzca el precio descontado del producto en caso de que lo tenga',
+                'rules' => []
+            ],
+            'status' => [
+                'type' => 'numericDisabled',
+                'title' => '% de impuesto',
+                'description' => 'Introduzca el valor del impuesto en porcentaje',
+                'rules' => []
+            ],
+            'total_pvp' => [
+                'type' => 'numericDisabled',
+                'title' => 'Precio del producto',
+                'description' => 'Introduzca el precio del producto',
+                'rules' => ['required']
+            ],
+            'total_iva' => [
+                'type' => 'numericDisabled',
+                'title' => 'Precio del producto descontado',
+                'description' => 'Introduzca el precio descontado del producto en caso de que lo tenga',
+                'rules' => []
+            ],
+            'status' => [
+                'type' => 'numericDisabled',
+                'title' => '% de impuesto',
+                'description' => 'Introduzca el valor del impuesto en porcentaje',
+                'rules' => []
+            ],
+            'total_pvp' => [
+                'type' => 'numericDisabled',
+                'title' => 'Precio del producto',
+                'description' => 'Introduzca el precio del producto',
+                'rules' => ['required']
+            ],
+            'total_iva' => [
+                'type' => 'numericDisabled',
+                'title' => 'Precio del producto descontado',
+                'description' => 'Introduzca el precio descontado del producto en caso de que lo tenga',
+                'rules' => []
+            ],
+            'status' => [
+                'type' => 'numericDisabled',
+                'title' => '% de impuesto',
+                'description' => 'Introduzca el valor del impuesto en porcentaje',
+                'rules' => []
+            ],
+            'total_pvp' => [
+                'type' => 'numericDisabled',
+                'title' => 'Precio del producto',
+                'description' => 'Introduzca el precio del producto',
+                'rules' => ['required']
+            ],
+            'total_iva' => [
+                'type' => 'numericDisabled',
+                'title' => 'Precio del producto descontado',
+                'description' => 'Introduzca el precio descontado del producto en caso de que lo tenga',
+                'rules' => []
+            ],
+            'status' => [
+                'type' => 'numericDisabled',
+                'title' => '% de impuesto',
+                'description' => 'Introduzca el valor del impuesto en porcentaje',
+                'rules' => []
+            ]
+        ],
+    ],
     'payments' => [
         'name' => 'Métodos de pago',
         'for_files' => false,
