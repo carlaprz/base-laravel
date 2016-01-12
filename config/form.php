@@ -351,7 +351,7 @@ return [
                 'description' => 'Fecha en la que el descuento deja de ser aplicable',
                 'rules' => ''
             ],
-            'porcentage' => [
+            'percentage' => [
                 'type' => 'radio',
                 'title' => 'Procentaje',
                 'description' => 'Tipo de descuento',

@@ -4,6 +4,9 @@ namespace App\Models;
 
 use App\Interfaces\ModelInterface;
 use Illuminate\Database\Eloquent\Model;
+use DB;
+use App;
+
 
 final class Coupons extends Model implements ModelInterface
 {
@@ -14,26 +17,15 @@ final class Coupons extends Model implements ModelInterface
     {
         return $this->create($data);
     }
-    
-    public function getCodeAtttribute( $value )
+    public function getStartAttribute( $value )
     {
-        die($value);
         $value = explode(':', $value);
         unset($value[2]);
         return implode(':', $value);
     }
 
-    public function getStartAtttribute( $value )
+    public function getEndAttribute( $value )
     {
-        die($value);
-        $value = explode(':', $value);
-        unset($value[2]);
-        return implode(':', $value);
-    }
-
-    public function getEndAtttribute( $value )
-    {
-        die($value);
         $value = explode(':', $value);
         unset($value[2]);
         return implode(':', $value);
