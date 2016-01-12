@@ -30,7 +30,7 @@ class Users extends Migration
             $table->string('email')->unique();
             $table->string('password', 60);
 
-            $table->string('address', 175);
+            $table->string('address', 175)->nullable();
             $table->string('postalcode', 5);
             $table->string('city', 175);
             $table->string('telephone', 15);
