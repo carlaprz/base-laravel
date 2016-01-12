@@ -16,7 +16,7 @@ final class OrdersPayments extends Model implements ModelInterface
         return $this->belongsTo(Orders::class, 'order_id', 'id')->get();
     }
     
-    public function getPayment()
+    public function payment()
     {
         return $this->belongsTo(Payments::class, 'payment_id', 'id')->get();
     }
