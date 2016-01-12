@@ -138,7 +138,8 @@ class CartShippingPaymentsCouponsOrders extends Migration
 
                 $table->float('total_pvp');
                 $table->float('total_iva');
-
+                $table->float('shipping_pvp');
+                
                 $table->integer('status')->unsigned();
                 $table->string('observations', 255);
                 $table->boolean('bill')->default(0);
@@ -231,8 +232,8 @@ class CartShippingPaymentsCouponsOrders extends Migration
             ));
         }
     }
-    
-     private function insertStatus()
+
+    private function insertStatus()
     {
         $status = json_decode(file_get_contents(__DIR__ . '/status.php'));
 
