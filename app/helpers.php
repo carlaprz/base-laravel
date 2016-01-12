@@ -3,6 +3,7 @@
 use App\Models\Languages;
 use App\Models\Categories;
 use App\Models\UserStatus;
+use App\Models\OrdersStatus;
 
 function current_lang()
 {
@@ -82,7 +83,7 @@ function current_route_has( $thing, $currentKey = 'menu' )
             return array_key_exists($thing, $section) ? $section[$thing] : false;
         }
     }
-    
+
     return false;
 }
 
@@ -117,7 +118,8 @@ function get_slug_from( $from )
     return config('form.' . $from . '.slug');
 }
 
-function get_autocomplete_from ($from) {
+function get_autocomplete_from( $from )
+{
     return config('form.' . $from . '.autocomplete');
 }
 
@@ -219,12 +221,24 @@ function users_status()
     return $toReturn;
 }
 
-function langs_array(){
+function langs_array()
+{
     $langs = all_langs();
     $data = [];
-    foreach ($langs as $lang){
+    foreach ($langs as $lang) {
         $data[$lang->id] = $lang->code;
     }
-    
+
+    return $data;
+}
+
+function orders_status()
+{
+    $repo = app(OrdersStatus::class);
+    $status = $repo->all();
+    foreach ($status as $state) {
+        $data[$state->id] = $state->description;
+    }
+
     return $data;
 }

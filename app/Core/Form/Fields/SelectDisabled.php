@@ -1,6 +1,6 @@
 <?php namespace App\Core\Form\Fields;
 
-final class Select extends AbstractField
+final class SelectDisabled extends AbstractField
 {
     public function render()
     {

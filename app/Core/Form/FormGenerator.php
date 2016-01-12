@@ -17,6 +17,7 @@ use App\Core\Form\Fields\File;
 use App\Core\Form\Fields\URLImage;
 use App\Core\Form\Fields\Hidden;
 use App\Core\Form\Fields\Datetime;
+use App\Core\Form\Fields\SelectDisabled;
 
 final class FormGenerator
 {
@@ -36,6 +37,7 @@ final class FormGenerator
         'url_image' => URLImage::class,
         'radio' => Radio::class,
         'select' => Select::class,
+        'selectDisabled' => SelectDisabled::class,
         'hidden' => Hidden::class,
         'datetime' => Datetime::class
     ];
@@ -43,7 +45,7 @@ final class FormGenerator
     public function generate( $config, array $defaultData = [] )
     {
         $data = (array) config($this->generateConfigFileName($config));
-        
+
         $form = new Form($data['name'], $data['description'], $data['editor'], $data);
 
 
@@ -61,7 +63,7 @@ final class FormGenerator
                 }
             }
         }
-        
+
         return $form;
     }
 
@@ -71,7 +73,7 @@ final class FormGenerator
     }
 
     private function getValue( array $data, $name )
-    {        
+    {
         $dataAux = explode('[', $name);
         if (count($dataAux) > 1) {
             $name = str_replace('[', '', $dataAux[0]);
@@ -95,12 +97,12 @@ final class FormGenerator
     {
         $title = $fieldData['title'];
         $description = $fieldData['description'];
-        $rules = isset($fieldData['rules'])?$fieldData['rules']: NULL;  
+        $rules = isset($fieldData['rules']) ? $fieldData['rules'] : NULL;
         $value_dafault = isset($fieldData['value']) ? $fieldData['value'] : NULL;
-        $value = empty($value_dafault) ? $this->getValue($defaultData, $name) :$value_dafault ;
-        
+        $value = empty($value_dafault) ? $this->getValue($defaultData, $name) : $value_dafault;
+
         $fieldClass = $this->fieldClass($fieldData['type']);
-        
+
         return new $fieldClass($name, $title, $description, $value, $rules);
     }
 
