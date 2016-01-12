@@ -51,10 +51,10 @@ class CartShippingPaymentsCouponsOrders extends Migration
                     $table->increments('id');
                     $table->string('code', 5);
                     $table->string('name', 255);
-                    $table->integer('shipping_zone_id')->unsigned();
+                    $table->integer('shipping_zone')->unsigned();
                     $table->timestamps();
 
-                    $table->foreign('shipping_zone_id')->references('id')->on('shipping_zones');
+                    $table->foreign('shipping_zone')->references('id')->on('shipping_zones');
                 });
 
                 $this->insertZones();
@@ -66,11 +66,11 @@ class CartShippingPaymentsCouponsOrders extends Migration
                     $table->string('name', 55);
                     $table->float('pvp');
                     $table->integer('units');
-                    $table->integer('shipping_zone_id')->unsigned();
+                    $table->integer('shipping_zone')->unsigned();
                     $table->boolean('active')->default(0);
                     $table->timestamps();
 
-                    $table->foreign('shipping_zone_id')->references('id')->on('shipping_zones');
+                    $table->foreign('shipping_zone')->references('id')->on('shipping_zones');
                 });
             }
 
@@ -217,7 +217,7 @@ class CartShippingPaymentsCouponsOrders extends Migration
             DB::table('shipping_countries')->insert(array(
                 'code' => $country->code,
                 'name' => $country->name,
-                'shipping_zone_id' => $country->zone_id
+                'shipping_zone' => $country->zone_id
             ));
         }
     }
