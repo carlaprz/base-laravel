@@ -19,7 +19,7 @@ class ShippingCostsController extends BaseController
             'pvp' => 'Precio',
             'units' => 'Cantidad de productos',
             'shipping_zone' => 'Zona de envío',
-            'activated' => 'Activo',
+            'active' => 'Activo',
         ];
 
         return view('admin.datatable', [

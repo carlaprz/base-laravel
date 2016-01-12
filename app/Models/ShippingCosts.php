@@ -11,7 +11,7 @@ final class ShippingCosts extends Model implements ModelInterface
 {
 
     public $timestamps = true;
-    protected $fillable = ['name'];
+    protected $fillable = ['name', 'pvp', 'units', 'shipping_zone', 'active'];
 
     //ALL
     public function add( $data )

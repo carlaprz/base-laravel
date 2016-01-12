@@ -11,7 +11,7 @@ use App;
 final class Coupons extends Model implements ModelInterface
 {
 
-    protected $fillable = ['id', 'code', 'start', 'end', 'discount', 'active', 'percentage'];
+    protected $fillable = ['code', 'start', 'end', 'discount', 'active', 'percentage'];
 
     public function add( $data )
     {

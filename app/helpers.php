@@ -4,6 +4,7 @@ use App\Models\Languages;
 use App\Models\Categories;
 use App\Models\UserStatus;
 use App\Models\OrdersStatus;
+use App\Models\ShippingZones;
 
 function current_lang()
 {
@@ -238,6 +239,17 @@ function orders_status()
     $status = $repo->all();
     foreach ($status as $state) {
         $data[$state->id] = $state->description;
+    }
+
+    return $data;
+}
+
+function all_zones()
+{
+    $repo = app(ShippingZones::class);
+    $status = $repo->all();
+    foreach ($status as $state) {
+        $data[$state->id] = $state->name;
     }
 
     return $data;
