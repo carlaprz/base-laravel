@@ -39,19 +39,7 @@
         </a>
 
     </div>
-    <div class="col-md-3 col-sm-12 col-xs-12">
-        <a href="{{route('admin.jobs.index')}}" style="color:#FFF">
-            <div class="panel panel-primary text-center no-boder bg-color-brown">
-                <div class="panel-body">
-                    <i class="fa fa-users fa-5x"></i>
-                    <h3>{{$cant['jobs']}}</h3>
-                </div>
-                <div class="panel-footer back-footer-brown">
-                    Bolsa de trabajos
-                </div>
-            </div>
-        </a>
-    </div>
+    
     <div class="col-md-3 col-sm-12 col-xs-12">
         <a href="{{route('admin.news.index')}}" style="color:#FFF">
             <div class="panel panel-primary text-center no-boder bg-color-red">

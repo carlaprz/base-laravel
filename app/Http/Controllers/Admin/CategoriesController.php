@@ -11,8 +11,6 @@ class CategoriesController extends BaseController
     protected $resourceName = 'categories';
     protected $repositoryName = Categories::class;
 
-    // protected $pathImage = 'images/banners/';
-
     public function index()
     {
         App::setLocale('es');

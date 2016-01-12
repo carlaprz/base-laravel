@@ -55,22 +55,6 @@ class Products extends Migration
                 $table->unique(['slug', 'locale']);
                 $table->foreign('products_id')->references('id')->on('products');
             });
-
-            /* $cart = Config::get('configMigrations.ecommerce.cart');
-              if ($cart) {
-              Schema::create('products_salable', function(Blueprint $table)
-              {
-              $table->increments('id');
-              $table->integer('products_id')->unsigned();
-
-              $table->float('pvp')->unsigned();
-              $table->float('pvp_discounted')->unsigned();
-              $table->float('iva')->unsigned();
-
-              $table->timestamps();
-              $table->foreign('products_id')->references('id')->on('products');
-              });
-              } */
         }
     }
 
@@ -84,12 +68,6 @@ class Products extends Migration
 
         $products = Config::get('configMigrations.ecommerce.products');
         if ($products) {
-
-            /* Schema::drop('products_translations');
-              $cart = Config::get('configMigrations.ecommerce.cart');
-              if ($cart) {
-              Schema::drop('products_salable');
-              } */
             Schema::drop('products_translations');
             Schema::drop('products');
         }

@@ -15,6 +15,11 @@ final class Payments extends Model implements ModelInterface
         return $this->create($data);
     }
 
+    public function orders()
+    {
+        return $this->hasMany(OrdersPayments::class, 'payment_id');
+    }
+
     //Metodos FRONT
     public function allActive()
     {

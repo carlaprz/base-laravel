@@ -123,6 +123,12 @@ class CartShippingPaymentsCouponsOrders extends Migration
                 });
             }
 
+            Schema::create('orders_status', function(Blueprint $table)
+            {
+                $table->increments('id');
+                $table->string('description');
+                $table->timestamps();
+            });
 
             Schema::create('orders', function(Blueprint $table)
             {
@@ -134,13 +140,14 @@ class CartShippingPaymentsCouponsOrders extends Migration
                 $table->float('total_pvp');
                 $table->float('total_iva');
 
-                $table->integer('status')->default(0);
+                $table->integer('status')->unsigned();
                 $table->string('observations', 255);
                 $table->boolean('bill')->default(0);
 
                 $table->timestamps();
 
                 $table->foreign('cart_id')->references('id')->on('carts');
+                $table->foreign('status')->references('id')->on('orders_status');
             });
 
             Schema::create('orders_payments', function(Blueprint $table)
@@ -183,16 +190,9 @@ class CartShippingPaymentsCouponsOrders extends Migration
 
             if ($ecommerce['cart_opcion']['coupons']) {
 
-                Schema::create('orders_coupons', function(Blueprint $table)
+                Schema::table('orders', function(Blueprint $table)
                 {
-                    $table->increments('id');
-                    $table->integer('order_id')->unsigned();
-                    $table->integer('coupon_id')->unsigned();
-                    $table->float('discount');
-
-                    $table->timestamps();
-                    $table->foreign('order_id')->references('id')->on('orders');
-                    $table->foreign('coupon_id')->references('id')->on('coupons');
+                    $table->string('coupon_id')->nullable();
                 });
             }
         }
@@ -232,6 +232,17 @@ class CartShippingPaymentsCouponsOrders extends Migration
             ));
         }
     }
+    
+     private function insertStatus()
+    {
+        $status = json_decode(file_get_contents(__DIR__ . '/status.php'));
+
+        foreach ($status as $statu) {
+            DB::table('orders_status')->insert(array(
+                'desciption' => $statu->description
+            ));
+        }
+    }
 
     /**
      * Reverse the migrations.
@@ -244,13 +255,17 @@ class CartShippingPaymentsCouponsOrders extends Migration
 
         if ($ecommerce['cart']) {
             if ($ecommerce['cart_opcion']['coupons']) {
-                Schema::drop('orders_coupons');
+                Schema::table('orders', function(Blueprint $table)
+                {
+                    $table->dropColumn('coupon_id');
+                });
             }
 
             Schema::drop('orders_details');
             Schema::drop('orders_payments');
 
             Schema::drop('orders');
+            Schema::drop('orders_status');
 
             if ($ecommerce['cart_opcion']['coupons']) {
                 Schema::drop('coupons_translations');
