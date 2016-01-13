@@ -12,6 +12,7 @@ final class Form
     private $description;
     private $editor;
     private $data = [];
+    private $dataShow = [];
 
     public function __construct( $name, $description, $editor, $data = [] )
     {
@@ -55,6 +56,14 @@ final class Form
     {
         return (array_key_exists('for_files', $this->data) &&
                 $this->data['for_files']);
+    }
+    
+    public function addDataShow ($show){
+        $this->dataShow[] = $show;
+    }
+    
+     public function getDataShow (){
+        return $this->dataShow;
     }
 
 }

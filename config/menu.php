@@ -46,7 +46,7 @@ return [
     ],
     [
         'route' => 'admin.orders.index',
-        'edit' => 'admin.orders.edit',
+        'details' => 'admin.orders.details',
         'icon' => 'fa fa-shopping-cart',
         'name' => 'Ordenes de Compra',
         'resource' => 'orders'

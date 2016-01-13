@@ -27,6 +27,7 @@ class Users extends Migration
         {
             $table->increments('id');
             $table->string('name');
+            $table->string('lastname');
             $table->string('email')->unique();
             $table->string('password', 60);
 
@@ -61,6 +62,7 @@ class Users extends Migration
         $users = [
             [
                 'name' => 'Thatzad',
+                'lastname' => 'Thatzad',
                 'email' => 'informacion@thatzad.com',
                 'password' => bcrypt('MM6665MM'),
                 'rol' => 1,
@@ -73,7 +75,8 @@ class Users extends Migration
                 'province' => 'Barcelona'
             ],
             [
-                'name' => 'Carla Perez',
+                'name' => 'Carla',
+                'lastname' => 'Perez',
                 'email' => 'carla.perez@thatzad.com',
                 'password' => bcrypt('123456'),
                 'rol' => 1,
@@ -86,7 +89,8 @@ class Users extends Migration
                 'province' => 'Barcelona'
             ],
             [
-                'name' => 'Pau Garcia',
+                'name' => 'Pau',
+                'lastname' => 'Garcia',
                 'email' => 'pau.garcia@thatzad.com',
                 'password' => bcrypt('123456'),
                 'rol' => 1,
@@ -99,7 +103,8 @@ class Users extends Migration
                 'province' => 'Barcelona'
             ],
             [
-                'name' => 'Manel Domenech',
+                'name' => 'Manel',
+                'lastname' => 'Domenech',
                 'email' => 'manel.domenech@thatzad.com',
                 'password' => bcrypt('123456'),
                 'rol' => 1,
@@ -113,6 +118,7 @@ class Users extends Migration
             ],
             [
                 'name' => 'Guest',
+                'lastname' => 'Domenech',
                 'email' => 'guest@thatzad.com',
                 'password' => bcrypt('123456'),
                 'rol' => 2,

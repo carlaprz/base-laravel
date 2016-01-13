@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Models\Orders;
+use App;
+use App\Core\Form\FormGenerator;
 
 class OrdersController extends BaseController
 {
@@ -32,6 +34,19 @@ class OrdersController extends BaseController
             'title' => 'Ordenes de Compra',
             'pageTitle' => 'Listado de ordenes de compra',
             'header' => $fluxesHead
+        ]);
+    }
+
+    public function details(FormGenerator $formBuilder, $id )
+    {
+        $repo = App::make($this->repositoryName);
+        $data = $repo->find($id);
+
+        return view('admin.form.form', [
+            'form' => $formBuilder->generate(
+                    $this->resourceName, $data->toArray()
+            ),
+            'details' => true
         ]);
     }
 

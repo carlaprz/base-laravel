@@ -47,13 +47,14 @@ final class FormGenerator
         $data = (array) config($this->generateConfigFileName($config));
 
         $form = new Form($data['name'], $data['description'], $data['editor'], $data);
-
-
+        //ADD GENERALS DATA
         foreach ($data['fields'] as $name => $fieldData) {
             $field = $this->generateField($name, $defaultData, $fieldData);
             $form->addField('generals', $field);
         }
-
+        $form->addDataShow('generals');
+        
+        //ADD LENGUAGES DATA
         if (isset($data['lenguages'])) {
             foreach ($data['lenguages'] as $key => $value) {
                 foreach ($value['fields'] as $name => $fieldData) {
@@ -61,6 +62,19 @@ final class FormGenerator
                     $field = $this->generateField($name, $defaultData, $fieldData);
                     $form->addField($key, $field);
                 }
+                $form->addDataShow($key);
+            }
+        }
+        
+        //ADD SPECIAL DATA
+        if (isset($data['dataShow'])) {
+            foreach ($data['dataShow'] as $otherData) {
+                foreach ($data[$otherData]['fields'] as $name => $fieldData) {
+                    $name = $otherData . '[' . $name . ']';
+                    $field = $this->generateField($name, $defaultData, $fieldData);
+                    $form->addField($otherData, $field);
+                }
+                $form->addDataShow($otherData);
             }
         }
 

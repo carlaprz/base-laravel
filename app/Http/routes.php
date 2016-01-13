@@ -1,4 +1,5 @@
 <?php
+
 /*
   |--------------------------------------------------------------------------
   | Application Routes
@@ -13,7 +14,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['lo
         ], function()
 {
 
-    
+
     Route::get(LaravelLocalization::transRoute('routes.home'), [
         'as' => 'home',
         'uses' => 'WelcomeController@index'
@@ -165,36 +166,16 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => ['aut
         'uses' => 'OrdersController@index'
     ]);
 
-    Route::get('orders/create', [
-        'as' => 'admin.orders.create',
-        'uses' => 'OrdersController@create'
-    ]);
-
-    Route::post('orders/create', [
-        'as' => 'admin.orders.save',
-        'uses' => 'OrdersController@save'
-    ]);
-
-    Route::get('orders/edit/{id}', [
-        'as' => 'admin.orders.edit',
-        'uses' => 'OrdersController@edit'
-    ]);
-
-    Route::post('orders/edit/{id}', [
-        'as' => 'admin.orders.update',
-        'uses' => 'OrdersController@update'
-    ]);
-
-    Route::get('orders/delete/{id}', [
-        'as' => 'admin.orders.delete',
-        'uses' => 'OrdersController@delete'
+    Route::get('orders/details/{id}', [
+        'as' => 'admin.orders.details',
+        'uses' => 'OrdersController@details'
     ]);
     
     Route::get('payments', [
         'as' => 'admin.payments.index',
         'uses' => 'PaymentsController@index'
     ]);
- 
+
     Route::get('payments/edit/{id}', [
         'as' => 'admin.payments.edit',
         'uses' => 'PaymentsController@edit'
@@ -205,7 +186,7 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => ['aut
         'uses' => 'PaymentsController@update'
     ]);
 
-     Route::get('coupons/create', [
+    Route::get('coupons/create', [
         'as' => 'admin.coupons.create',
         'uses' => 'CouponsController@create'
     ]);
@@ -325,7 +306,7 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => ['aut
         'uses' => 'CouponsController@index'
     ]);
 
-   
+
 
     Route::get('faqsCategories', [
         'as' => 'admin.faqsCategories.index',

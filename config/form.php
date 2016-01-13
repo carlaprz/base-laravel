@@ -313,6 +313,7 @@ return [
         'description' => 'Administración de Ordenes de compra',
         'slug' => false,
         'editor' => false,
+        'dataShow' => ['shipping'],
         'fields' => [
             'status' => [
                 'type' => 'select',
@@ -323,7 +324,7 @@ return [
             'reference' => [
                 'type' => 'textDisabled',
                 'title' => 'Referencia',
-                'description' => 'Introduzca la referencia',
+                'description' => '',
                 'rules' => ['']
             ],
             'pvpName' => [
@@ -335,78 +336,80 @@ return [
             'total_pvp' => [
                 'type' => 'numericDisabled',
                 'title' => 'Total pvp',
-                'description' => 'Introduzca el precio del producto',
+                'description' => '',
                 'rules' => ['']
-            ],            
+            ],
             'total_iva' => [
                 'type' => 'numericDisabled',
                 'title' => 'Total IVA',
                 'description' => '',
                 'rules' => ['']
             ],
-            
             'userNameLastName' => [
                 'type' => 'textDisabled',
                 'title' => 'Cliente',
                 'description' => '',
                 'rules' => []
             ],
-            
-            'total_pvp' => [
-                'type' => 'numericDisabled',
-                'title' => 'Precio del producto',
-                'description' => 'Introduzca el precio del producto',
-                'rules' => ['required']
-            ],
-            'total_iva' => [
-                'type' => 'numericDisabled',
-                'title' => 'Precio del producto descontado',
-                'description' => 'Introduzca el precio descontado del producto en caso de que lo tenga',
-                'rules' => []
-            ],
-            'status' => [
-                'type' => 'numericDisabled',
-                'title' => '% de impuesto',
-                'description' => 'Introduzca el valor del impuesto en porcentaje',
-                'rules' => []
-            ],
-            'total_pvp' => [
-                'type' => 'numericDisabled',
-                'title' => 'Precio del producto',
-                'description' => 'Introduzca el precio del producto',
-                'rules' => ['required']
-            ],
-            'total_iva' => [
-                'type' => 'numericDisabled',
-                'title' => 'Precio del producto descontado',
-                'description' => 'Introduzca el precio descontado del producto en caso de que lo tenga',
-                'rules' => []
-            ],
-            'status' => [
-                'type' => 'numericDisabled',
-                'title' => '% de impuesto',
-                'description' => 'Introduzca el valor del impuesto en porcentaje',
-                'rules' => []
-            ],
-            'total_pvp' => [
-                'type' => 'numericDisabled',
-                'title' => 'Precio del producto',
-                'description' => 'Introduzca el precio del producto',
-                'rules' => ['required']
-            ],
-            'total_iva' => [
-                'type' => 'numericDisabled',
-                'title' => 'Precio del producto descontado',
-                'description' => 'Introduzca el precio descontado del producto en caso de que lo tenga',
-                'rules' => []
-            ],
-            'status' => [
-                'type' => 'numericDisabled',
-                'title' => '% de impuesto',
-                'description' => 'Introduzca el valor del impuesto en porcentaje',
-                'rules' => []
-            ]
         ],
+        "shipping" => [
+            'fields' => [
+                'shipping_name' => [
+                    'type' => 'textDisabled',
+                    'title' => 'Nombre de envio',
+                    'description' => '',
+                    'rules' => ['']
+                ],
+                'shipping_lastname' => [
+                    'type' => 'textDisabled',
+                    'title' => 'Apellido de envio',
+                    'description' => '',
+                    'rules' => ['']
+                ],
+                'shipping_email' => [
+                    'type' => 'textDisabled',
+                    'title' => 'Email de envio',
+                    'description' => '',
+                    'rules' => ['']
+                ],
+                'shipping_telephone' => [
+                    'type' => 'textDisabled',
+                    'title' => 'Telefono de envio',
+                    'description' => '',
+                    'rules' => ['']
+                ],
+                'shipping_address' => [
+                    'type' => 'textDisabled',
+                    'title' => 'Dirreccion de envio',
+                    'description' => '',
+                    'rules' => ['']
+                ],
+                'shipping_postalcode' => [
+                    'type' => 'textDisabled',
+                    'title' => 'Codigo postal de envio',
+                    'description' => '',
+                    'rules' => ['']
+                ],
+                'shipping_city' => [
+                    'type' => 'textDisabled',
+                    'title' => 'Ciudad de envio',
+                    'description' => '',
+                    'rules' => ['']
+                ],
+                'shipping_province' => [
+                    'type' => 'textDisabled',
+                    'title' => 'Provincia de envio',
+                    'description' => '',
+                    'rules' => ['']
+                ],
+                'shipping_country_name' => [
+                    'type' => 'textDisabled',
+                    'title' => 'Pais de envio',
+                    'description' => '',
+                    'rules' => ['']
+                ],
+            ],
+        ],  
     ],
     'payments' => [
         'name' => 'Métodos de pago',

@@ -12,7 +12,11 @@
 <div class="row">
     <div class="col-lg-12">
         <div class="panel panel-default">
-            <div class="panel-heading">Completa los campos</div>
+            @if(!isset($details))
+                <div class="panel-heading">Completa los campos</div>
+            @else
+                <div class="panel-heading">Detalle</div>
+            @endif
             <div class="panel-body">
                 @if (is_object($errors) && $errors->count()>0)
                 <div class="alert alert-danger">
@@ -26,52 +30,36 @@
                     </ul>
                 </div>
                 @endif
-                <form method="post"
-                      action=""
-                      @if ($form->isForFiles())
-                      enctype="multipart/form-data"
-                      @endif
-                      >                      
-                      <div class="generals"> 
-                            <div class="lenguages_title active" id="div_field_generals">
-                                <span>Campos Generales</span> <a class="toggle" style="cursor:pointer;" data-parent="div_field_generals" data-class='toggle_field_generals'><span class="fa arrow"></span></a>
-                            </div>
-
-                            @foreach ($form->fields('generals') as $field)
-                            <div class="row toggle_field_generals">
-                              <div class="col-lg-12">
-                                  <div class="form-group <?php echo (is_object($field) && get_class($field) == "App\Core\Form\Fields\Datetime")?"datepicker":''; ?>">
-                                      {!! $field->before() !!}
-                                      {!! $field->render() !!}
-                                      {!! $field->after() !!}
-                                  </div>
-                              </div>
-                          </div>
-                        @endforeach
-                    </div>
-                    
-                    
-                    @foreach(all_langs() as $languages)
-                    @if(null !== ($form->fields($languages->code)))
-                    <div class="langueages"> 
-                        <div class="lenguages_title active" id="div_fields_{{$languages->code}}">
-                            <span>Campos en el idioma {{$languages->name}}</span> <a class="toggle" style="cursor:pointer;" data-parent="div_fields_{{$languages->code}}" data-class='toggle_container_{{$languages->code}}'><span class="fa arrow"></span></a>
-                        </div>
-
-                        @foreach ($form->fields($languages->code) as $field)
-                        <div class="row toggle_container_{{$languages->code}}" >
-                            <div class="col-lg-12">
-                                <div class="form-group">
-                                    {!! $field->before() !!}
-                                    {!! $field->render() !!}
-                                    {!! $field->after() !!}
+                 @if ($form->isForFiles())
+                    <form method="post" action="" enctype="multipart/form-data" > 
+                 @else
+                    <form method="post" action="" > 
+                 @endif
+                    @if($form->getDataShow())
+                        @foreach($form->getDataShow() as $datashow)
+                            <div class="{{$datashow}}">                          
+                                <div class="lenguages_title active" id="div_field_{{$datashow}}">
+                                    @if($datashow === 'generals')
+                                        <span>Datos generales</span> 
+                                    @else
+                                        <span>Datos "{{$datashow}}" </span>
+                                    @endif
+                                    <a class="toggle" style="cursor:pointer;" data-parent="div_field_{{$datashow}}" data-class='toggle_field_{{$datashow}}'><span class="fa arrow"></span></a>
                                 </div>
-                            </div>
-                        </div>
+                                @foreach ($form->fields($datashow) as $field)
+                                    <div class="row toggle_field_{{$datashow}}">
+                                      <div class="col-lg-12">
+                                          <div class="form-group <?php echo (is_object($field) && get_class($field) == "App\Core\Form\Fields\Datetime")?"datepicker":''; ?>">
+                                              {!! $field->before() !!}
+                                              {!! $field->render() !!}
+                                              {!! $field->after() !!}
+                                          </div>
+                                      </div>
+                                    </div>
+                                @endforeach
+                            </div> 
                         @endforeach
-                    </div>    
-                    @endif
-                    @endforeach
+                   @endif
                     
                     @if(!isset($details))
                         <button class="btn btn-success">Guardar</button>
@@ -152,10 +140,10 @@
         });
         
         <?php
-        foreach (all_langs() as $languages) {
-            if (null !== ($form->fields($languages->code))) { ?>
-                if($("#div_fields_<?php echo $languages->code?>").length > 0) {
-                    $("#div_fields_<?php echo $languages->code?> a").trigger("click");
+        foreach ($form->getDataShow() as $dataHide) {            
+            if (null !== $dataHide && $dataHide!== 'generals') { ?>
+                if($("#div_field_<?php echo $dataHide?>").length > 0) {
+                    $("#div_field_<?php echo $dataHide?> a").trigger("click");
                 }
         <?php 
             }

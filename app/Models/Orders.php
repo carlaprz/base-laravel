@@ -16,11 +16,11 @@ final class Orders extends Model implements ModelInterface
 
     protected $table = 'orders';
     protected $fillable = ['reference', 'cart_id', 'total_pvp', 'total_iva', 'status', 'observations', 'bill'];
-    protected $appends = ['pvpName', 'linkUser', 'statusName'];
+    protected $appends = ['pvpName', 'linkUser', 'statusName', 'userNameLastName' ,'shipping'];
 
     private function detail()
     {
-        return $this->belongsTo(OrdersDetails::class, 'order_id', 'id')->get();
+        return $this->hasOne(OrdersDetails::class, 'order_id', 'id')->get();
     }
 
     private function payment()
@@ -60,7 +60,14 @@ final class Orders extends Model implements ModelInterface
     public function getLinkUserAttribute()
     {
         $user = $this->getUser();
-        return "<a href='" . route('admin.users.edit', $user->id) . "'>" . $user->name . ' ' . $user->lastname;
+        return "<a href='" . route('admin.users.edit', $user->id) . "'>" . $user->name . ' ' . $user->lastname."</a>";
+    }
+    
+    
+    public function getUserNameLastnameAttribute()
+    {
+        $user = $this->getUser();
+        return  $user->name . ' ' . $user->lastname;
     }
 
     public function getStatusNameAttribute()
@@ -73,6 +80,12 @@ final class Orders extends Model implements ModelInterface
         $date = new DateTime($this->create_at);
         return $date->format('d/m/Y H:i');
     }
+    
+    public function getShippingAttribute()
+    {
+        return $this->detail()->first()->toArray();
+    }
+    
 
     //Metodos FRONT
 
