@@ -31,6 +31,8 @@ class CartShippingPaymentsCouponsOrders extends Migration
                 $table->increments('id');
                 $table->integer('cart_id')->unsigned();
                 $table->integer('product_id')->unsigned();
+                $table->float('pvp');
+                $table->float('iva');
                 $table->text('product_description');
                 $table->integer('cant')->unsigned();
                 $table->timestamps();

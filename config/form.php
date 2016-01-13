@@ -308,22 +308,22 @@ return [
         ],
     ],
     'orders' => [
-        'name' => 'Ordenes de Compra',
+        'name' => 'Pedidos',
         'for_files' => true,
-        'description' => 'Administración de Ordenes de compra',
+        'description' => 'Administración de Pedidos',
         'slug' => false,
         'editor' => false,
-        'dataShow' => ['shipping'],
+        'dataShow' => ['products','shipping'],
         'fields' => [
             'status' => [
-                'type' => 'select',
+                'type' => 'selectDisabled',
                 'title' => 'Estado',
                 'description' => 'orders_status',
                 'rules' => ['']
             ],
             'reference' => [
                 'type' => 'textDisabled',
-                'title' => 'Referencia',
+                'title' => 'Codigo pedido',
                 'description' => '',
                 'rules' => ['']
             ],
@@ -335,19 +335,38 @@ return [
             ],
             'total_pvp' => [
                 'type' => 'numericDisabled',
-                'title' => 'Total pvp',
+                'title' => 'Importe total',
                 'description' => '',
                 'rules' => ['']
             ],
             'total_iva' => [
                 'type' => 'numericDisabled',
-                'title' => 'Total IVA',
+                'title' => 'IVA total',
                 'description' => '',
                 'rules' => ['']
             ],
             'userNameLastName' => [
                 'type' => 'textDisabled',
                 'title' => 'Cliente',
+                'description' => '',
+                'rules' => []
+            ],
+            'cupon_code' => [
+                'type' => 'textDisabled',
+                'title' => 'Cupon de descuento',
+                'description' => '',
+                'rules' => []
+            ],
+            
+            'bill' => [
+                'type' => 'radioDisabled',
+                'title' => 'Factura',
+                'description' => '',
+                'rules' => []
+            ],
+            'cant_products' => [
+                'type' => 'textDisabled',
+                'title' => 'Total de Productos',
                 'description' => '',
                 'rules' => []
             ],
@@ -409,7 +428,48 @@ return [
                     'rules' => ['']
                 ],
             ],
-        ],  
+        ],
+        "products" => [
+            "loop" => true,
+            "fields" => [
+                'link' => [
+                    'type' => 'link',
+                    'title' => 'Producto Link',
+                    'description' => '',
+                    'rules' => ['']
+                ],
+                'product_description' => [
+                    'type' => 'textDisabled',
+                    'title' => 'Producto Descripcion',
+                    'description' => '',
+                    'rules' => ['']
+                ],
+                'pvp' => [
+                    'type' => 'textDisabled',
+                    'title' => 'Precio',
+                    'description' => '',
+                    'rules' => ['']
+                ],
+                'iva' => [
+                    'type' => 'textDisabled',
+                    'title' => 'iva',
+                    'description' => '',
+                    'rules' => ['']
+                ],
+                'cant' => [
+                    'type' => 'textDisabled',
+                    'title' => 'Unidades',
+                    'description' => '',
+                    'rules' => ['']
+                ],                
+                'separacion' => [
+                    'type' => 'line',
+                    'title' => '',
+                    'description' => '',
+                    'rules' => ['']
+                ],
+            ],
+        ]
     ],
     'payments' => [
         'name' => 'Métodos de pago',

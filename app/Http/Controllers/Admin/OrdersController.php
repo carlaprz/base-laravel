@@ -21,18 +21,18 @@ class OrdersController extends BaseController
     {
         $fluxesHead = [
             'id' => 'id',
-            'reference' => 'Referencia',
-            'total_pvp' => 'Total pedido',
+            'reference' => 'Codigo pedido',
+            'total_pvp' => 'Importe total',
             'pvpName' => 'Metodo de pago',
             'linkUser' => 'Cliente',
-            'created_at' => 'Fecha de compra',
+            'created_at' => 'Fecha',
             'statusName' => 'Estado',
         ];
 
         return view('admin.datatable', [
             'data' => Orders::all(),
-            'title' => 'Ordenes de Compra',
-            'pageTitle' => 'Listado de ordenes de compra',
+            'title' => 'Pedidos',
+            'pageTitle' => 'Listado de Pedidos',
             'header' => $fluxesHead
         ]);
     }

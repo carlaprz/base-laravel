@@ -16,11 +16,12 @@ final class Orders extends Model implements ModelInterface
 
     protected $table = 'orders';
     protected $fillable = ['reference', 'cart_id', 'total_pvp', 'total_iva', 'status', 'observations', 'bill'];
-    protected $appends = ['pvpName', 'linkUser', 'statusName', 'userNameLastName' ,'shipping'];
+    protected $appends = ['pvpName', 'linkUser', 'statusName', 'userNameLastName', 'shipping', 'cupon_code',
+        'cant_products', 'products'];
 
     private function detail()
     {
-        return $this->hasOne(OrdersDetails::class, 'order_id', 'id')->get();
+        return $this->hasOne(OrdersDetails::class, 'order_id', 'id')->first();
     }
 
     private function payment()
@@ -30,22 +31,22 @@ final class Orders extends Model implements ModelInterface
 
     private function coupon()
     {
-        return $this->belongsTo(Coupons::class, 'id', 'coupon_id')->get();
+        return $this->belongsTo(Coupons::class, 'coupon_id', 'id')->first();
     }
 
     private function cart()
     {
-        return $this->belongsTo(Carts::class, 'cart_id', 'id')->get();
+        return $this->belongsTo(Carts::class, 'cart_id', 'id')->first();
     }
 
     private function status()
     {
-        return $this->belongsTo(OrdersStatus::class, 'status', 'id')->get();
+        return $this->belongsTo(OrdersStatus::class, 'status', 'id')->first();
     }
 
-    private function getUser()
+    private function user()
     {
-        return $this->cart()->first()->user()->first();
+        return $this->cart()->user();
     }
 
     // List BACKEND
@@ -59,20 +60,19 @@ final class Orders extends Model implements ModelInterface
 
     public function getLinkUserAttribute()
     {
-        $user = $this->getUser();
-        return "<a href='" . route('admin.users.edit', $user->id) . "'>" . $user->name . ' ' . $user->lastname."</a>";
+        $user = $this->user();
+        return "<a href='" . route('admin.users.edit', $user->id) . "'>" . $user->name . ' ' . $user->lastname . "</a>";
     }
-    
-    
+
     public function getUserNameLastnameAttribute()
     {
-        $user = $this->getUser();
-        return  $user->name . ' ' . $user->lastname;
+        $user = $this->user();
+        return $user->name . ' ' . $user->lastname;
     }
 
     public function getStatusNameAttribute()
     {
-        return $this->status()->first()->description;
+        return $this->status()->description;
     }
 
     public function getCreatedAtAttribute()
@@ -80,12 +80,25 @@ final class Orders extends Model implements ModelInterface
         $date = new DateTime($this->create_at);
         return $date->format('d/m/Y H:i');
     }
-    
+
     public function getShippingAttribute()
     {
-        return $this->detail()->first()->toArray();
+        return $this->detail()->toArray();
+    }
+
+    public function getCuponCodeAttribute()
+    {
+        return isset($this->coupon()->code)?$this->coupon()->first()->code:false;
+    }
+
+    public function getCantProductsAttribute()
+    {
+        return count($this->cart()->cartProducts());
     }
     
+    public function getProductsAttribute(){
+      return $this->cart()->products();
+    }
 
     //Metodos FRONT
 

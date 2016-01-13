@@ -39,7 +39,7 @@ final class Form
 
     public function fields( $type )
     {
-       return isset($this->fields[$type]) ? $this->fields[$type] : null;
+        return isset($this->fields[$type]) ? $this->fields[$type] : null;
     }
 
     public function editor()
@@ -57,12 +57,14 @@ final class Form
         return (array_key_exists('for_files', $this->data) &&
                 $this->data['for_files']);
     }
-    
-    public function addDataShow ($show){
-        $this->dataShow[] = $show;
+
+    public function addDataShow( $show, $loop = false )
+    {
+       $this->dataShow[] = [ 'title' => $show, 'loop' => $loop];
     }
-    
-     public function getDataShow (){
+
+    public function getDataShow()
+    {
         return $this->dataShow;
     }
 

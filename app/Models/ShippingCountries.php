@@ -11,9 +11,8 @@ final class ShippingCountries extends Model implements ModelInterface
 {
 
     public $timestamps = true;
-    protected $fillable = ['code','name', 'shipping_zone'];
+    protected $fillable = ['code', 'name', 'shipping_zone'];
     protected $appends = ["zoneName"];
-
 
     private function zone()
     {
@@ -24,7 +23,10 @@ final class ShippingCountries extends Model implements ModelInterface
 
     public function getZoneNameAttribute()
     {
-      return $this->zone()->first()->name;
+        if (isset($this->zone()->first()->name)) {
+            return $this->zone()->first()->name;
+        }
+        return false;
     }
 
     //ALL
@@ -32,11 +34,5 @@ final class ShippingCountries extends Model implements ModelInterface
     {
         return $this->create($data);
     }
-
-
-
-
-
-
 
 }

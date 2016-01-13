@@ -15,7 +15,7 @@
             @if(!isset($details))
                 <div class="panel-heading">Completa los campos</div>
             @else
-                <div class="panel-heading">Detalle</div>
+                <div class="panel-heading">Detalle del  {{ substr($form->name(), 0, -1) }} </div>
             @endif
             <div class="panel-body">
                 @if (is_object($errors) && $errors->count()>0)
@@ -35,29 +35,40 @@
                  @else
                     <form method="post" action="" > 
                  @endif
-                    @if($form->getDataShow())
-                        @foreach($form->getDataShow() as $datashow)
-                            <div class="{{$datashow}}">                          
-                                <div class="lenguages_title active" id="div_field_{{$datashow}}">
-                                    @if($datashow === 'generals')
+                    @if(is_array($form->getDataShow()))
+                        
+                        @foreach($form->getDataShow() as $datashow )    
+                        
+                            <div class="{{$datashow["title"]}}">                          
+                                <div class="lenguages_title active" id="div_field_{{$datashow["title"]}}">
+                                    @if($datashow["title"] === 'generals')
                                         <span>Datos generales</span> 
+                                    @elseif($datashow["title"] === 'shipping')
+                                        <span>Datos de envio</span> 
+                                    @elseif($datashow["title"] === 'products')
+                                        <span>Productos del pedido</span> 
+                                    @elseif(in_array($datashow["title"],langs_array()))
+                                        <span>Datos  en el iodioma "{{$datashow["title"]}}" </span>
                                     @else
-                                        <span>Datos "{{$datashow}}" </span>
+                                        <span>Datos "{{$datashow["title"]}}" </span>
                                     @endif
-                                    <a class="toggle" style="cursor:pointer;" data-parent="div_field_{{$datashow}}" data-class='toggle_field_{{$datashow}}'><span class="fa arrow"></span></a>
+                                    <a class="toggle" style="cursor:pointer;" data-parent="div_field_{{$datashow["title"]}}" data-class='toggle_field_{{$datashow["title"]}}'><span class="fa arrow"></span></a>
                                 </div>
-                                @foreach ($form->fields($datashow) as $field)
-                                    <div class="row toggle_field_{{$datashow}}">
-                                      <div class="col-lg-12">
-                                          <div class="form-group <?php echo (is_object($field) && get_class($field) == "App\Core\Form\Fields\Datetime")?"datepicker":''; ?>">
-                                              {!! $field->before() !!}
-                                              {!! $field->render() !!}
-                                              {!! $field->after() !!}
-                                          </div>
-                                      </div>
-                                    </div>
-                                @endforeach
-                            </div> 
+                                    
+                                    @foreach ($form->fields($datashow["title"]) as $field)
+                                        <div class="row toggle_field_{{$datashow["title"]}}">
+                                         <div class="col-lg-12">
+                                             <div class="form-group <?php echo (is_object($field) && get_class($field) == "App\Core\Form\Fields\Datetime")?"datepicker":''; ?>">
+                                                 {!! $field->before() !!}
+                                                 {!! $field->render() !!}
+                                                 {!! $field->after() !!}
+                                             </div>
+                                         </div>
+                                       </div>
+
+                                   @endforeach 
+                                
+                            </div>
                         @endforeach
                    @endif
                     
@@ -141,9 +152,9 @@
         
         <?php
         foreach ($form->getDataShow() as $dataHide) {            
-            if (null !== $dataHide && $dataHide!== 'generals') { ?>
-                if($("#div_field_<?php echo $dataHide?>").length > 0) {
-                    $("#div_field_<?php echo $dataHide?> a").trigger("click");
+            if (null !== $dataHide["title"] && $dataHide["title"]!== 'generals') { ?>
+                if($("#div_field_<?php echo $dataHide["title"]?>").length > 0) {
+                    $("#div_field_<?php echo $dataHide["title"]?> a").trigger("click");
                 }
         <?php 
             }
