@@ -39,7 +39,7 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
      */
     protected $hidden = ['password', 'remember_token'];
     
-    protected $appends = ['statusName'];
+    protected $appends = ['statusName' ];
 
     private function rol()
     {
@@ -61,6 +61,7 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
         return $this->where('rol', 2)->get();
     }
 
+    
     public function add( $data )
     {
         return $this->create($data);
@@ -81,4 +82,6 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
     public function getStatusNameAttribute(){
         return $this->status()->name;
     }
+    
+    
 }

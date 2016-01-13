@@ -58,6 +58,24 @@
                 
                 @if ($detailsRoute = current_route_has('details'))
                     <a class="btn  btn-small btn-primary" title="Detalle" href="{{ route($detailsRoute, $content['id']) }}">
+                        <i class="glyphicon glyphicon-list-alt"  > </i>
+                    </a>
+                @endif
+                
+                @if (isset($editComments))
+                   <a class="btn btn-small btn-primary" title="Editar" href="{{route($editComments,$content['id'])}}">
+                        <i class="glyphicon glyphicon-pencil"  > </i>
+                    </a>
+                @endif
+                
+                @if (isset($bill))
+                   <a class="btn btn-small btn-primary" title="Editar" href="{{route($bill,$content['id'])}}">
+                        <i class="glyphicon glyphicon-print"  > </i>
+                    </a>
+                @endif
+                
+                @if (isset($changeStatus))
+                   <a class="btn btn-small btn-primary" title="Editar" href="{{route($changeStatus,$content['id'])}}">
                         <i class="glyphicon glyphicon-pencil"  > </i>
                     </a>
                 @endif

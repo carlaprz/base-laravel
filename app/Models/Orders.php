@@ -17,7 +17,7 @@ final class Orders extends Model implements ModelInterface
     protected $table = 'orders';
     protected $fillable = ['reference', 'cart_id', 'total_pvp', 'total_iva', 'status', 'observations', 'bill'];
     protected $appends = ['pvpName', 'linkUser', 'statusName', 'userNameLastName', 'shipping', 'cupon_code',
-        'cant_products', 'products'];
+        'cant_products', 'products', 'country_name'];
 
     private function detail()
     {
@@ -44,7 +44,7 @@ final class Orders extends Model implements ModelInterface
         return $this->belongsTo(OrdersStatus::class, 'status', 'id')->first();
     }
 
-    private function user()
+    public function user()
     {
         return $this->cart()->user();
     }
@@ -88,16 +88,26 @@ final class Orders extends Model implements ModelInterface
 
     public function getCuponCodeAttribute()
     {
-        return isset($this->coupon()->code)?$this->coupon()->first()->code:false;
+        return isset($this->coupon()->code) ? $this->coupon()->first()->code : false;
     }
 
     public function getCantProductsAttribute()
     {
         return count($this->cart()->cartProducts());
     }
-    
-    public function getProductsAttribute(){
-      return $this->cart()->products();
+
+    public function getProductsAttribute()
+    {
+        return $this->cart()->products();
+    }
+
+    public function getCountryNameAttribute()
+    {
+        if (isset($this->detail()->shipping_country_name)) {
+            return $this->detail()->shipping_country_name;
+        }else{
+            return false;
+        }
     }
 
     //Metodos FRONT

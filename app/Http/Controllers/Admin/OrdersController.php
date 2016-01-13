@@ -33,11 +33,34 @@ class OrdersController extends BaseController
             'data' => Orders::all(),
             'title' => 'Pedidos',
             'pageTitle' => 'Listado de Pedidos',
-            'header' => $fluxesHead
+            'header' => $fluxesHead,
+            'changeStatus' => "admin.orders.editstatus",
+            'bill' => "admin.orders.bill",
         ]);
     }
 
     public function details(FormGenerator $formBuilder, $id )
+    {
+        $repo = App::make($this->repositoryName);
+        $data = $repo->find($id);
+       
+        return view('admin.form.form', [
+            'form' => $formBuilder->generate(
+                    $this->resourceName, $data->toArray()
+            ),
+            'details' => true
+        ]);
+    }
+    
+    public function bill( $id )
+    {
+        $repo = App::make($this->repositoryName);
+        $data = $repo->find($id);
+
+        return view('admin.bill',["data"=>$data, "user" => $data->user(), "shipping" => $data->getShippingAttribute(), "products" => $data->getProductsAttribute()]);
+    }
+    
+    public function editstatus(FormGenerator $formBuilder, $id )
     {
         $repo = App::make($this->repositoryName);
         $data = $repo->find($id);
@@ -49,5 +72,4 @@ class OrdersController extends BaseController
             'details' => true
         ]);
     }
-
 }

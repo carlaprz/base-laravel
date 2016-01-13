@@ -440,7 +440,7 @@ return [
                 ],
                 'product_description' => [
                     'type' => 'textDisabled',
-                    'title' => 'Producto Descripcion',
+                    'title' => 'Producto nombre',
                     'description' => '',
                     'rules' => ['']
                 ],
