@@ -9,13 +9,14 @@ use App\Models\OrdersPayments;
 use App\Models\Coupons;
 use App\Models\Carts;
 use App\Models\OrdersStatus;
+use DateTime;
 
 final class Orders extends Model implements ModelInterface
 {
 
     protected $table = 'orders';
     protected $fillable = ['reference', 'cart_id', 'total_pvp', 'total_iva', 'status', 'observations', 'bill'];
-    protected $appends = ['pvpName', 'userNameLastname','statusName']; 
+    protected $appends = ['pvpName', 'linkUser', 'statusName'];
 
     private function detail()
     {
@@ -52,19 +53,25 @@ final class Orders extends Model implements ModelInterface
     public function getPvpNameAttribute()
     {
         $payment = $this->payment()->first()->payment()->first();
-       
+
         return $payment->name;
     }
 
-    public function getUserNameLastnameAttribute()
+    public function getLinkUserAttribute()
     {
         $user = $this->getUser();
-        return $user->name . ' ' . $user->lastname;
+        return "<a href='" . route('admin.users.edit', $user->id) . "'>" . $user->name . ' ' . $user->lastname;
     }
 
     public function getStatusNameAttribute()
     {
         return $this->status()->first()->description;
+    }
+
+    public function getCreatedAtAttribute()
+    {
+        $date = new DateTime($this->create_at);
+        return $date->format('d/m/Y H:i');
     }
 
     //Metodos FRONT

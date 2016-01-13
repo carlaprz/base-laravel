@@ -21,8 +21,8 @@ class OrdersController extends BaseController
             'id' => 'id',
             'reference' => 'Referencia',
             'total_pvp' => 'Total pedido',
-            'pvpName' => 'Metodo de pago pedido',
-            'userNameLastname' => 'Cliente',
+            'pvpName' => 'Metodo de pago',
+            'linkUser' => 'Cliente',
             'created_at' => 'Fecha de compra',
             'statusName' => 'Estado',
         ];

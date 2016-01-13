@@ -314,16 +314,16 @@ return [
         'slug' => false,
         'editor' => false,
         'fields' => [
+            'status' => [
+                'type' => 'select',
+                'title' => 'Estado',
+                'description' => 'orders_status',
+                'rules' => ['']
+            ],
             'reference' => [
                 'type' => 'textDisabled',
                 'title' => 'Referencia',
                 'description' => 'Introduzca la referencia',
-                'rules' => ['required']
-            ],
-            'total_pvp' => [
-                'type' => 'numericDisabled',
-                'title' => 'Precio del producto',
-                'description' => 'Introduzca el precio del producto',
                 'rules' => ['']
             ],
             'pvpName' => [
@@ -332,30 +332,26 @@ return [
                 'description' => 'Metodo de pago',
                 'rules' => ['']
             ],
+            'total_pvp' => [
+                'type' => 'numericDisabled',
+                'title' => 'Total pvp',
+                'description' => 'Introduzca el precio del producto',
+                'rules' => ['']
+            ],            
             'total_iva' => [
                 'type' => 'numericDisabled',
-                'title' => 'Precio del producto descontado',
-                'description' => 'Introduzca el precio descontado del producto en caso de que lo tenga',
+                'title' => 'Total IVA',
+                'description' => '',
                 'rules' => ['']
             ],
-            'status' => [
-                'type' => 'selectDisabled',
-                'title' => 'Estado',
-                'description' => 'orders_status',
-                'rules' => ['']
-            ],
-            'total_iva' => [
-                'type' => 'numericDisabled',
-                'title' => 'Precio del producto descontado',
-                'description' => 'Introduzca el precio descontado del producto en caso de que lo tenga',
+            
+            'userNameLastName' => [
+                'type' => 'textDisabled',
+                'title' => 'Cliente',
+                'description' => '',
                 'rules' => []
             ],
-            'status' => [
-                'type' => 'numericDisabled',
-                'title' => '% de impuesto',
-                'description' => 'Introduzca el valor del impuesto en porcentaje',
-                'rules' => []
-            ],
+            
             'total_pvp' => [
                 'type' => 'numericDisabled',
                 'title' => 'Precio del producto',
