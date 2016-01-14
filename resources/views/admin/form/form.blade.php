@@ -48,7 +48,7 @@
                                     @elseif($datashow["title"] === 'products')
                                         <span>Productos del pedido</span> 
                                     @elseif(in_array($datashow["title"],langs_array()))
-                                        <span>Datos  en el iodioma "{{$datashow["title"]}}" </span>
+                                        <span>Datos  en el idioma "{{$datashow["title"]}}" </span>
                                     @else
                                         <span>Datos "{{$datashow["title"]}}" </span>
                                     @endif

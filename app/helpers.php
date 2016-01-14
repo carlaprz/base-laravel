@@ -6,6 +6,7 @@ use App\Models\UserStatus;
 use App\Models\OrdersStatus;
 use App\Models\ShippingZones;
 use App\Models\ShippingCountries;
+use App\Models\Payments;
 
 function current_lang()
 {
@@ -261,6 +262,17 @@ function all_countries()
     $countries = $repo->all();
     foreach ($countries as $country) {
         $data[$country->id] = $country->name;
+    }
+    return $data;
+}
+
+
+function all_method_payment()
+{
+    $repo = app(Payments::class);
+    $payments = $repo->all();
+    foreach ($payments as $payment) {
+        $data[$payment->id] = $payment->name;
     }
     return $data;
 }

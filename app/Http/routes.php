@@ -106,7 +106,17 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => ['aut
         'as' => 'admin.products.index',
         'uses' => 'ProductsController@index'
     ]);
+    
+    Route::post('products', [
+        'as' => 'admin.products.add_filters',
+        'uses' => 'ProductsController@addFilters'
+    ]);
 
+    Route::get('products/excel', [
+        'as' => 'admin.products.excel',
+        'uses' => 'ProductsController@excel'
+    ]);
+    
     Route::get('products/create', [
         'as' => 'admin.products.create',
         'uses' => 'ProductsController@create'
@@ -164,6 +174,16 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => ['aut
     Route::get('orders', [
         'as' => 'admin.orders.index',
         'uses' => 'OrdersController@index'
+    ]);
+    
+    Route::post('orders', [
+        'as' => 'admin.orders.add_filters',
+        'uses' => 'OrdersController@addFilters'
+    ]);
+
+    Route::get('orders/excel', [
+        'as' => 'admin.orders.excel',
+        'uses' => 'OrdersController@excel'
     ]);
 
     Route::get('orders/bill/{id}', [
