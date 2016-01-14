@@ -122,5 +122,14 @@ return [
                 'name' => 'Faqs',
             ]
         ]
+    ],
+    [
+        'route'     => 'admin.banners.index',
+        'create'    => 'admin.banners.create',
+        'edit'      => 'admin.banners.edit',
+        'delete'    => 'admin.banners.delete',
+        'icon'      => 'fa fa-picture-o',
+        'name'      => 'Banners',
+        'resource'  => 'banners'
     ]
 ];

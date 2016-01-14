@@ -34,7 +34,8 @@ class News extends Migration
                 $table->string('locale')->index();
 
                 $table->string('title');
-                $table->longText('description');
+                $table->string('description')->nullable();
+                $table->longText('content');
                 $table->string('slug');
                 $table->timestamps();
 
