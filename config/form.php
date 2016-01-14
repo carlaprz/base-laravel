@@ -49,6 +49,12 @@ return [
                 'description' => 'Introduzca el nombre de la provincia',
                 'rules' => ['required']
             ],
+            'country_id' => [
+                'type' => 'select',
+                'title' => 'Pais',
+                'description' => 'all_countries',
+                'rules' => ['required']
+            ],
             'rol' => [
                 'title' => '',
                 'description' => '',

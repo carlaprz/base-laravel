@@ -15,7 +15,7 @@ final class Products extends Model implements ModelInterface
     const IMAGE_PATH = 'files/products/';
 
     public $translatedAttributes = ['products_id', 'locale', 'title', 'description', 'slug'];
-    protected $fillable = ['category_id', 'image', 'thumb', 'active', 'products_id', 'locale', 'title', 'description', 'slug'];
+    protected $fillable = ['category_id', 'image', 'thumb', 'active', 'products_id', 'pvp', 'pvp_discounted', 'iva', 'locale', 'title', 'description', 'slug'];
     protected $appends = ["es", "en", "fr", "categoryName", "categorySlug"];
 
     public function add( $data )

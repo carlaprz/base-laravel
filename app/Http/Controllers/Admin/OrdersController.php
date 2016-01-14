@@ -23,6 +23,7 @@ class OrdersController extends BaseController
             'id' => 'id',
             'reference' => 'Codigo pedido',
             'total_pvp' => 'Importe total',
+            'product_name' => 'Producto',
             'pvpName' => 'Metodo de pago',
             'linkUser' => 'Cliente',
             'created_at' => 'Fecha',

@@ -18,6 +18,7 @@ class CategoriesController extends BaseController
             'id' => 'id',
             'title' => 'Nombre',
             'parentName' => 'Categoria Padre',
+            'slug' => 'Url amigable',
             'active' => 'Activo'
         ];
 

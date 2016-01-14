@@ -11,6 +11,8 @@ use App\Models\UserRoles;
 use App\Models\UserStatus;
 use Validator;
 use App\Interfaces\ModelInterface;
+use App\Models\ShippingCountries;
+use App\Models\Carts;
 
 class User extends Model implements AuthenticatableContract, CanResetPasswordContract, ModelInterface
 {
@@ -30,7 +32,7 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
      * 
      * @var array
      */
-    protected $fillable = ['name', 'email', 'password', 'address', 'postalcode', 'city', 'telephone', 'province', 'rol', 'status'];
+    protected $fillable = ['name', 'email', 'password', 'address', 'postalcode', 'city', 'telephone', 'province', 'country_id', 'rol', 'status'];
 
     /**
      * The attributes excluded from the model's JSON form.
@@ -38,8 +40,7 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
      * @var array
      */
     protected $hidden = ['password', 'remember_token'];
-    
-    protected $appends = ['statusName' ];
+    protected $appends = ['statusName', 'countryName', 'cantOrders'];
 
     private function rol()
     {
@@ -49,6 +50,16 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
     private function status()
     {
         return $this->belongsTo(UserStatus::class, 'status', 'id')->first();
+    }
+
+    private function country()
+    {
+        return $this->belongsTo(ShippingCountries::class, 'country_id', 'id')->get();
+    }
+
+    private function carts()
+    {
+        return $this->hasMany(Carts::class)->get();
     }
 
     public function isAdmin()
@@ -61,7 +72,6 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
         return $this->where('rol', 2)->get();
     }
 
-    
     public function add( $data )
     {
         return $this->create($data);
@@ -69,19 +79,35 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
 
     public function validate( $data, $rules, $id = null )
     {
-        if(isset($rules["email"]) && !empty($id)){
-            foreach ($rules["email"] as $key => $rul){
-                if(preg_match("/unique:/i",$rul)){
-                 $rules["email"][$key] = $rul.','.$id;
+        if (isset($rules["email"]) && !empty($id)) {
+            foreach ($rules["email"] as $key => $rul) {
+                if (preg_match("/unique:/i", $rul)) {
+                    $rules["email"][$key] = $rul . ',' . $id;
                 }
             }
         }
         return Validator::make($data, $rules);
     }
-    
-    public function getStatusNameAttribute(){
+
+    public function getStatusNameAttribute()
+    {
         return $this->status()->name;
     }
-    
-    
+
+    public function getCountryNameAttribute()
+    {
+        if (isset($this->country()->first()->name)) {
+            return $this->country()->first()->name;
+        }
+        return false;
+    }
+
+    public function getCantOrdersAttribute()
+    {
+        $carts = $this->carts();
+        if (isset($carts) && !empty($carts)) {
+            return count($carts);
+        }
+        return 0;
+    }
 }

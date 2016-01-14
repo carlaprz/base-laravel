@@ -63,7 +63,7 @@
                 @endif
                 
                 @if (isset($editComments))
-                   <a class="btn btn-small btn-primary" title="Editar" href="{{route($editComments,$content['id'])}}">
+                   <a class="btn btn-small btn-primary" title="Editar comentarios" href="{{route($editComments,$content['id'])}}">
                         <i class="glyphicon glyphicon-pencil"  > </i>
                     </a>
                 @endif

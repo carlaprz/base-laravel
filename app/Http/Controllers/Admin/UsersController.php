@@ -21,6 +21,10 @@ class UsersController extends BaseController
         $fluxesHead = [
             'id' => 'id',
             'name' => 'Nombre',
+            'lastname' => 'Apellido',
+            'email' => 'Email',
+            'countryName' => 'Pais',
+            'cantOrders' => 'Pedidos',
             'statusName' => 'Estado'
         ];
 

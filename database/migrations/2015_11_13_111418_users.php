@@ -36,7 +36,7 @@ class Users extends Migration
             $table->string('city', 175);
             $table->string('telephone', 15);
             $table->string('province', 175);
-
+            $table->integer('country_id');
             $table->rememberToken();
             $table->timestamps();
 

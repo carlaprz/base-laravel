@@ -19,6 +19,9 @@ class NewsController extends BaseController
         $fluxesHead = [
             'id' => 'id',
             'title' => 'Titulo',
+            'publish' => 'Fecha de publicacion',      
+            'slug' => 'Url amigable',
+            'order' => 'Prioridad',            
             'active' => 'Activo'
         ];
 

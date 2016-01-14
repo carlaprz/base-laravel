@@ -23,9 +23,10 @@ body {
 
 #page-inner {
     width: 100%;
-    margin: 10px 20px 10px 0px;
+    margin: 0;
+    //margin: 10px 20px 10px 0px;
     background-color: transparent;
-    padding: 10px;
+    padding-top: 10px;
     min-height: 1200px;
 }
 
@@ -68,7 +69,8 @@ p {
 ------------------------------------------------*/
 .page-header {
     padding-bottom: 9px;
-    margin: 10px 0 45px;
+    margin-top: 10px;
+    //margin: 10px 0 45px;
     border-bottom: 1px solid #c7d1dd;
 }
 
@@ -466,7 +468,7 @@ ul.nav.nav-second-level.collapse.in {
 @media (min-width: 768px) {
     #page-wrapper {
         margin: 0 0 0 260px;
-        padding: 15px 30px;
+        padding: 0px 30px;
         min-height: 1200px;
 
     }
@@ -688,4 +690,12 @@ ul.nav.nav-second-level.collapse.in {
     border-color: #ddd;
     font-weight: bold;
     padding-right: 1%;
+}
+
+.btn {
+    padding: 4px 8px !important;
+}
+
+.row {
+    margin-right: 0px!important; 
 }

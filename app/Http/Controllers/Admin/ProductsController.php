@@ -25,6 +25,9 @@ class ProductsController extends BaseController
         $fluxesHead = [
             'id' => 'id',
             'title' => 'Nombre',
+            'categoryName' => 'Categoria',
+            'pvp' => 'Precio',
+            'slug' => 'Url Amigable',
             'active' => 'Activo'
         ];
 

@@ -17,7 +17,7 @@ final class Orders extends Model implements ModelInterface
     protected $table = 'orders';
     protected $fillable = ['reference', 'cart_id', 'total_pvp', 'total_iva', 'status', 'observations', 'bill'];
     protected $appends = ['pvpName', 'linkUser', 'statusName', 'userNameLastName', 'shipping', 'cupon_code',
-        'cant_products', 'products', 'country_name'];
+        'cant_products', 'products', 'country_name', 'product_name'];
 
     private function detail()
     {
@@ -105,7 +105,17 @@ final class Orders extends Model implements ModelInterface
     {
         if (isset($this->detail()->shipping_country_name)) {
             return $this->detail()->shipping_country_name;
-        }else{
+        } else {
+            return false;
+        }
+    }
+
+    public function getProductNameAttribute()
+    {
+        $products = $this->cart()->products();
+        if (!empty($products)) {
+            return $products[0]['product_description'];
+        } else {
             return false;
         }
     }
