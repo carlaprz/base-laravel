@@ -56,13 +56,13 @@ return [
     [
         'route' => 'admin.payments.index',
         'edit' => 'admin.payments.edit',
-        'icon' => 'fa fa-credit-card',
+        'icon' => 'credit-card',
         'name' => 'Metodos de pago',
         'resource' => 'payments'
     ],
     [
         'dropdown' => true,
-        'icon' => 'fa fa-road',
+        'icon' => 'fa fa-truck',
         'name' => 'Gastos de envio',
         'childs' => [
             [
