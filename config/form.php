@@ -116,6 +116,12 @@ return [
                         'title' => 'Descripción',
                         'description' => 'Descripcion',
                         'rules' => ['required']
+                    ],
+                    'content' => [
+                        'type' => 'textarea',
+                        'title' => 'Contenido',
+                        'description' => 'Contenido de la noticia',
+                        'rules' => ['required']
                     ]
                 ]
             ],
@@ -130,7 +136,13 @@ return [
                     'description' => [
                         'type' => 'textarea',
                         'title' => 'Description',
-                        'description' => 'Description',
+                        'description' => 'Short text for preview the new',
+                        'rules' => ['required_with:title']
+                    ],
+                    'content' => [
+                        'type' => 'textarea',
+                        'title' => 'Content',
+                        'description' => 'Content of the new',
                         'rules' => ['required_with:title']
                     ]
                 ]
@@ -654,4 +666,48 @@ return [
             ]
         ]
     ],
+    'banners' => [
+        'name' => 'Banners',
+        'for_files' => true,
+        'description' => 'Administración de banners',
+        'editor' => false,
+        'fields' => [
+            'name' => [
+                'type' => 'text',
+                'title' => 'Nombre',
+                'description' => 'Introduce el nombre del banner',
+                'rules' => ['required']
+            ],
+            'text' => [
+                'type' => 'text',
+                'title' => 'Texto',
+                'description' => 'Introduce el texto del banner',
+                'rules' => ''
+            ],
+            'link' => [
+                'type' => 'text',
+                'title' => 'Enlace',
+                'description' => 'Enlace del banner',
+                'rules' => ''
+            ],
+            'image' => [
+                'type' => 'image_file',
+                'title' => 'Imagen del banner',
+                'description' => 'Imagen del banner. Deberá tener las medidas exactas especificadas por diseño.',
+                'rules' => ['required']
+            ],
+            'priority' => [
+                'type' => 'numeric',
+                'title' => 'Prioridad',
+                'description' => 'Tipo de descuento',
+                'rules' => ['required', 'numeric']
+            ],
+            'active' => [
+                'type' => 'radio',
+                'title' => 'Activo',
+                'description' => 'Estado del banner',
+                'rules' => ['required']
+            ]
+        ]
+    ]
 ];

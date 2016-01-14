@@ -201,6 +201,11 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => ['aut
         'uses' => 'PaymentsController@update'
     ]);
 
+    Route::get('coupons', [
+        'as' => 'admin.coupons.index',
+        'uses' => 'CouponsController@index'
+    ]);
+
     Route::get('coupons/create', [
         'as' => 'admin.coupons.create',
         'uses' => 'CouponsController@create'
@@ -225,6 +230,40 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => ['aut
         'as' => 'admin.coupons.delete',
         'uses' => 'CouponsController@delete'
     ]);
+
+
+
+    Route::get('banners', [
+        'as' => 'admin.banners.index',
+        'uses' => 'BannersController@index'
+    ]);
+
+    Route::get('banners/create', [
+        'as' => 'admin.banners.create',
+        'uses' => 'BannersController@create'
+    ]);
+
+    Route::post('banners/create', [
+        'as' => 'admin.banners.save',
+        'uses' => 'BannersController@save'
+    ]);
+
+    Route::get('banners/edit/{id}', [
+        'as' => 'admin.banners.edit',
+        'uses' => 'BannersController@edit'
+    ]);
+
+    Route::post('banners/edit/{id}', [
+        'as' => 'admin.banners.update',
+        'uses' => 'BannersController@update'
+    ]);
+
+    Route::get('banners/delete/{id}', [
+        'as' => 'admin.banners.delete',
+        'uses' => 'BannersController@delete'
+    ]);
+
+
 
     Route::get('shippingZones', [
         'as' => 'admin.shippingZones.index',
@@ -314,11 +353,6 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => ['aut
     Route::get('shippingCosts/delete/{id}', [
         'as' => 'admin.shippingCosts.delete',
         'uses' => 'ShippingCostsController@delete'
-    ]);
-
-    Route::get('coupons', [
-        'as' => 'admin.coupons.index',
-        'uses' => 'CouponsController@index'
     ]);
 
 

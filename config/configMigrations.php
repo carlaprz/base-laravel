@@ -32,4 +32,5 @@ return [
         ]
     ],
     'faqs' => true,
+    'banners' => true,
 ];

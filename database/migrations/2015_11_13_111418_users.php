@@ -72,6 +72,7 @@ class Users extends Migration
                 'postalcode' => '08034',
                 'city' => 'Barcelona',
                 'telephone' => '936350620',
+                'country_id' => 209,
                 'province' => 'Barcelona'
             ],
             [
@@ -86,6 +87,7 @@ class Users extends Migration
                 'postalcode' => '08034',
                 'city' => 'Barcelona',
                 'telephone' => '936350620',
+                'country_id' => 209,
                 'province' => 'Barcelona'
             ],
             [
@@ -100,6 +102,7 @@ class Users extends Migration
                 'postalcode' => '08034',
                 'city' => 'Barcelona',
                 'telephone' => '936350620',
+                'country_id' => 209,
                 'province' => 'Barcelona'
             ],
             [
@@ -114,6 +117,7 @@ class Users extends Migration
                 'postalcode' => '08034',
                 'city' => 'Barcelona',
                 'telephone' => '936350620',
+                'country_id' => 209,
                 'province' => 'Barcelona'
             ],
             [
@@ -128,6 +132,7 @@ class Users extends Migration
                 'postalcode' => '08034',
                 'city' => 'Barcelona',
                 'telephone' => '936350620',
+                'country_id' => 209,
                 'province' => 'Barcelona'
             ]
         ];
@@ -184,7 +189,7 @@ class Users extends Migration
             ['name' => 'active', 'created_at' => date("Y-m-d H:s:i")],
             ['name' => 'inactive', 'created_at' => date("Y-m-d H:s:i")],
             ['name' => 'waiting confirmation', 'created_at' => date("Y-m-d H:s:i")],
-            [ 'name' => 'deleted', 'created_at' => date("Y-m-d H:s:i")],
+            ['name' => 'deleted', 'created_at' => date("Y-m-d H:s:i")],
             ['name' => 'banned', 'created_at' => date("Y-m-d H:s:i")],
         ];
 
