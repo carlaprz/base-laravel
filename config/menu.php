@@ -47,12 +47,14 @@ return [
     [
         'route' => 'admin.orders.index',
         'details' => 'admin.orders.details',
+        'bill' => 'admin.orders.bill',
+        'editstatus' => 'admin.orders.editstatus',
         'icon' => 'fa fa-shopping-cart',
         'name' => 'Pedidos',
         'resource' => 'orders'
     ],
     [
-        'route' => 'admin.payments.index',       
+        'route' => 'admin.payments.index',
         'edit' => 'admin.payments.edit',
         'icon' => 'fa fa-credit-card',
         'name' => 'Metodos de pago',
@@ -69,7 +71,7 @@ return [
                 'create' => 'admin.shippingZones.create',
                 'edit' => 'admin.shippingZones.edit',
                 'delete' => 'admin.shippingZones.delete',
-                'name' => 'Zonas'                
+                'name' => 'Zonas'
             ],
             [
                 'route' => 'admin.shippingCountries.index',
@@ -109,7 +111,7 @@ return [
                 'create' => 'admin.faqsCategories.create',
                 'edit' => 'admin.faqsCategories.edit',
                 'delete' => 'admin.faqsCategories.delete',
-                'name' => 'Categorias'                
+                'name' => 'Categorias'
             ],
             [
                 'route' => 'admin.faqs.index',
@@ -118,7 +120,7 @@ return [
                 'edit' => 'admin.faqs.edit',
                 'delete' => 'admin.faqs.delete',
                 'name' => 'Faqs',
-            ]            
+            ]
         ]
     ]
 ];

@@ -252,10 +252,8 @@ function all_zones()
     foreach ($status as $state) {
         $data[$state->id] = $state->name;
     }
-
     return $data;
 }
-
 
 function all_countries()
 {
@@ -264,6 +262,5 @@ function all_countries()
     foreach ($countries as $country) {
         $data[$country->id] = $country->name;
     }
-
     return $data;
 }

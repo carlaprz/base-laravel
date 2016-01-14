@@ -319,7 +319,7 @@ return [
         'description' => 'Administración de Pedidos',
         'slug' => false,
         'editor' => false,
-        'dataShow' => ['products','shipping'],
+        'dataShow' => ['products', 'shipping'],
         'fields' => [
             'status' => [
                 'type' => 'selectDisabled',
@@ -363,7 +363,6 @@ return [
                 'description' => '',
                 'rules' => []
             ],
-            
             'bill' => [
                 'type' => 'radioDisabled',
                 'title' => 'Factura',
@@ -467,7 +466,7 @@ return [
                     'title' => 'Unidades',
                     'description' => '',
                     'rules' => ['']
-                ],                
+                ],
                 'separacion' => [
                     'type' => 'line',
                     'title' => '',
@@ -476,6 +475,22 @@ return [
                 ],
             ],
         ]
+    ],
+    'ordersStatus' => [
+        'name' => 'Pedidos',
+        'for_files' => true,
+        'description' => 'Cambiar estado de pedido',
+        'slug' => false,
+        'editor' => false,
+        'dataShow' => false,
+        'fields' => [
+            'status' => [
+                'type' => 'select',
+                'title' => 'Estado',
+                'description' => 'orders_status',
+                'rules' => ['']
+            ],
+        ],
     ],
     'payments' => [
         'name' => 'Métodos de pago',

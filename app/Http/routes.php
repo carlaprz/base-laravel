@@ -165,27 +165,27 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => ['aut
         'as' => 'admin.orders.index',
         'uses' => 'OrdersController@index'
     ]);
-    
+
     Route::get('orders/bill/{id}', [
         'as' => 'admin.orders.bill',
         'uses' => 'OrdersController@bill'
     ]);
-    
+
     Route::get('orders/editstatus/{id}', [
         'as' => 'admin.orders.editstatus',
         'uses' => 'OrdersController@editstatus'
     ]);
-    
+
     Route::post('orders/editstatus/{id}', [
         'as' => 'admin.orders.savestatus',
-        'uses' => 'OrdersController@savestatus'
+        'uses' => 'OrdersController@update'
     ]);
 
     Route::get('orders/details/{id}', [
         'as' => 'admin.orders.details',
         'uses' => 'OrdersController@details'
     ]);
-    
+
     Route::get('payments', [
         'as' => 'admin.payments.index',
         'uses' => 'PaymentsController@index'

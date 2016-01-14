@@ -5,6 +5,9 @@ namespace App\Http\Controllers\Admin;
 use App\Models\Orders;
 use App;
 use App\Core\Form\FormGenerator;
+use Request;
+use Validator;
+use Input;
 
 class OrdersController extends BaseController
 {
@@ -35,16 +38,14 @@ class OrdersController extends BaseController
             'title' => 'Pedidos',
             'pageTitle' => 'Listado de Pedidos',
             'header' => $fluxesHead,
-            'changeStatus' => "admin.orders.editstatus",
-            'bill' => "admin.orders.bill",
         ]);
     }
 
-    public function details(FormGenerator $formBuilder, $id )
+    public function details( FormGenerator $formBuilder, $id )
     {
         $repo = App::make($this->repositoryName);
         $data = $repo->find($id);
-       
+
         return view('admin.form.form', [
             'form' => $formBuilder->generate(
                     $this->resourceName, $data->toArray()
@@ -52,25 +53,26 @@ class OrdersController extends BaseController
             'details' => true
         ]);
     }
-    
+
     public function bill( $id )
     {
         $repo = App::make($this->repositoryName);
         $data = $repo->find($id);
 
-        return view('admin.bill',["data"=>$data, "user" => $data->user(), "shipping" => $data->getShippingAttribute(), "products" => $data->getProductsAttribute()]);
+        return view('admin.bill', ["data" => $data, "user" => $data->user(), "shipping" => $data->getShippingAttribute(), "products" => $data->getProductsAttribute()]);
     }
-    
-    public function editstatus(FormGenerator $formBuilder, $id )
+
+    public function editstatus( FormGenerator $formBuilder, $id )
     {
+      
         $repo = App::make($this->repositoryName);
         $data = $repo->find($id);
 
         return view('admin.form.form', [
-            'form' => $formBuilder->generate(
-                    $this->resourceName, $data->toArray()
-            ),
-            'details' => true
-        ]);
+            'form' => $formBuilder->generate('ordersStatus', $data->toArray()
+        )]);
     }
+
+    
+
 }

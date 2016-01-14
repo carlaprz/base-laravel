@@ -82,7 +82,7 @@ final class FormGenerator
         }
 
         //ADD SPECIAL DATA
-        if (isset($data['dataShow'])) {
+        if (isset($data['dataShow']) && is_array($data['dataShow'])) {
             foreach ($data['dataShow'] as $otherData) {
                 $loopOtherData = isset($data[$otherData]["loop"]) ? isset($data[$otherData]["loop"]) : false;
                 if ($loopOtherData) {
