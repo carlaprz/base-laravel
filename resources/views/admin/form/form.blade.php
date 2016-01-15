@@ -171,7 +171,7 @@
             }
         });
         
-          $(document).on('click', '.datepicker', function () {
+        $(document).on('click', '.datepicker', function () {
             $(this).datetimepicker({
                format: 'YYYY-MM-DD HH:mm' ,
                use24hours: true               

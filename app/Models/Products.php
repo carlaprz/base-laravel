@@ -43,7 +43,7 @@ final class Products extends Model implements ModelInterface
         if (array_key_exists("title", $filters)) {
             $query = $query->join(DB::raw('products_translations ct'), 'ct.products_id', '=', 'products.id')->where('ct.locale', '=', "es");
 
-            if (array_key_exists("title", $filters)) {
+            if (array_key_exists("title", $filters) && !empty($filters["title"])) {
                 $query = $query->where('ct.title', 'like', '%' . $filters["title"] . '%');                       
             }
         }

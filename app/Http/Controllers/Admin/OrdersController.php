@@ -53,6 +53,12 @@ class OrdersController extends BaseController
 
         return back();
     }
+    
+     public function removeFilters()
+    {
+        Session::forget('orders_filters');
+        return back();
+    }
 
     public function excel( Orders $orders, ExcelTransformator $excelTransformator
     )

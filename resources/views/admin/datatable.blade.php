@@ -63,27 +63,34 @@
 @section('scripts')
 <script>
     $(document).ready(function (){
-    @if (!isset($noDataTable))
-            $('#data-table').dataTable({
-    'pageLength': 30,
-            @if (isset($flux))
-            "order": [[ 3, "desc" ]],
-            @ else
-            "order": [[ 0, "desc" ]],
-            @endif
-            @if (isset($totalProductsPerPage))
-            "paging": false,
-            "searching": false
-            @endif
-    });
-            @endif
+            @if (!isset($noDataTable))
+                    $('#data-table').dataTable({
+            'pageLength': 30,
+                    @if (isset($flux))
+                    "order": [[ 3, "desc" ]],
+                    @ else
+                    "order": [[ 0, "desc" ]],
+                    @endif
+                    @if (isset($totalProductsPerPage))
+                    "paging": false,
+                    "searching": false
+                    @endif
+            });
+                    @endif
 
             $('.delete').on('click', function () {
-    if (confirm('Esta seguro de borrar este contenido?')) {
-    return true;
-    }
-    return false;
-    });
+                if (confirm('Esta seguro de borrar este contenido?')) {
+                    return true;
+                    }
+                    return false;
+            });
+            
+            $(document).on('click', '.datepicker', function () {
+                $(this).datetimepicker({
+                   format: 'YYYY-MM-DD HH:mm' ,
+                   use24hours: true               
+                });
+            });
     });
 </script>
 

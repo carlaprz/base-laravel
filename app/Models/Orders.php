@@ -10,6 +10,7 @@ use App\Models\Coupons;
 use App\Models\Carts;
 use App\Models\OrdersStatus;
 use DateTime;
+use DB;
 
 final class Orders extends Model implements ModelInterface
 {
@@ -21,12 +22,52 @@ final class Orders extends Model implements ModelInterface
 
     public function paginate( $num, $filters = [] )
     {
-        return $this->withFilters($filters)->paginate($num);
+        return $this->select('orders.*')->withFilters($filters)->paginate($num);
     }
 
     public function filtered( $filters = [] )
     {
-        return $this->withFilters($filters)->get();
+        return $this->select('orders.*')->withFilters($filters)->get();
+    }
+
+    public function scopeWithFilters( $query, $filters )
+    {
+        if (array_key_exists("payment_id", $filters) && !empty($filters["payment_id"])) {
+            $query = $query->join(DB::raw('orders_payments op'), 'op.order_id', '=', 'orders.id');
+            if (array_key_exists("payment_id", $filters) && !empty($filters["payment_id"])) {
+                $query = $query->where('op.payment_id', '=', $filters["payment_id"]);
+            }
+        }
+
+        if (array_key_exists("user_name", $filters) && !empty($filters["user_name"])) {
+            $query = $query->join(DB::raw('carts c'), 'c.id', '=', 'orders.cart_id')
+                    ->join(DB::raw('users u'), 'c.user_id', '=', 'u.id');
+
+            if (array_key_exists("user_name", $filters) && !empty($filters["user_name"])) {
+
+                $query = $query->Where(function($query) use($filters)
+                {
+                    $query->where('u.name', 'like', '%' . $filters["user_name"] . '%')
+                            ->orWhere('u.lastname', 'like', '%' . $filters["user_name"] . '%')
+                            ->orWhere('u.email', 'like', '%' . $filters["user_name"] . '%');
+                });
+            }
+        }
+
+        foreach ($filters as $filterName => $filterValue) {
+            if (!empty($filterValue) && $filterName !== "payment_id" && $filterName !== "user_name") {
+
+                if ($filterName == 'date_start') {
+                    $query->where('orders.created_at', '>', $filterValue . ':00');
+                } else if ($filterName == 'date_end') {
+                    $query->where('orders.created_at', '<', $filterValue . ':00');
+                } else {
+                    $query = $query->where('orders.'.$filterName, '=', $filterValue);
+                }
+            }
+        }
+
+        return $query->groupBy('orders.id')->orderBy('orders.id', 'desc');
     }
 
     private function detail()
@@ -63,9 +104,11 @@ final class Orders extends Model implements ModelInterface
 
     public function getPvpNameAttribute()
     {
-        $payment = $this->payment()->first()->payment()->first();
-
-        return $payment->name;
+        if (count($this->payment()) > 0) {
+            $payment = $this->payment()->first()->payment()->first();
+            return $payment->name;
+        }
+        return false;
     }
 
     public function getLinkUserAttribute()
@@ -128,17 +171,6 @@ final class Orders extends Model implements ModelInterface
         } else {
             return false;
         }
-    }
-
-    public function scopeWithFilters( $query, $filters )
-    {
-        foreach ($filters as $filterName => $filterValue) {
-            if ($filterValue !== '') {
-                $query = $query->where($filterName, '=', $filterValue);
-            }
-        }
-
-        return $query->orderBy('id', 'desc');
     }
 
     //Metodos FRONT
