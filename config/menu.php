@@ -30,6 +30,7 @@ return [
                 'create' => 'admin.products.create',
                 'edit' => 'admin.products.edit',
                 'delete' => 'admin.products.delete',
+                'excel' => 'admin.products.excel',
                 'name' => 'Productos',
                 'icon' => 'fa fa-shopping-cart',
             ],

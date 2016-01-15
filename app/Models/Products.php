@@ -2,10 +2,10 @@
 
 namespace App\Models;
 
-use App;
 use App\Interfaces\ModelInterface;
 use Illuminate\Database\Eloquent\Model;
 use DB;
+use App;
 
 final class Products extends Model implements ModelInterface
 {
@@ -15,7 +15,7 @@ final class Products extends Model implements ModelInterface
     const IMAGE_PATH = 'files/products/';
 
     public $translatedAttributes = ['products_id', 'locale', 'title', 'description', 'slug'];
-    protected $fillable = ['category_id', 'image', 'thumb', 'active', 'products_id', 'pvp', 'pvp_discounted', 'iva', 'locale', 'title', 'description', 'slug'];
+    protected $fillable = ['category_id', 'reference', 'image', 'thumb', 'active', 'products_id', 'pvp', 'pvp_discounted', 'iva', 'locale', 'title', 'description', 'slug'];
     protected $appends = ["es", "en", "fr", "categoryName", "categorySlug"];
 
     public function add( $data )
@@ -26,6 +26,35 @@ final class Products extends Model implements ModelInterface
     public function getCategory()
     {
         return $this->belongsTo(Categories::class, 'category_id', 'id')->first();
+    }
+
+    public function paginate( $num, $filters = [] )
+    {
+        return $this->withFilters($filters)->paginate($num);
+    }
+
+    public function filtered( $filters = [] )
+    {
+        return $this->withFilters($filters)->get();
+    }
+
+    public function scopeWithFilters( $query, $filters )
+    {
+        if (array_key_exists("title", $filters)) {
+            $query = $query->join(DB::raw('products_translations ct'), 'ct.products_id', '=', 'products.id')->where('ct.locale', '=', "es");
+
+            if (array_key_exists("title", $filters)) {
+                $query = $query->where('ct.title', 'like', '%' . $filters["title"] . '%');                       
+            }
+        }
+        
+        foreach ($filters as $filterName => $filterValue) {
+            if (!empty($filterValue) && $filterName !== "title") {
+                $query = $query->where($filterName, '=', $filterValue);
+            }
+        }
+
+        return $query->groupBy('products.id')->orderBy('products.id', 'desc');
     }
 
     public function getEsAttribute()

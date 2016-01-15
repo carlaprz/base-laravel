@@ -699,3 +699,6 @@ ul.nav.nav-second-level.collapse.in {
 .row {
     margin-right: 0px!important; 
 }
+.note-editor .note-editing-area .note-editable {
+    height: 256px;
+}

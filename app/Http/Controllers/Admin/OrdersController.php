@@ -3,14 +3,15 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Models\Orders;
-use App;
+use App,
+    Session,
+    Input;
 use App\Core\Form\FormGenerator;
-use Request;
-use Validator;
-use Input;
 
 class OrdersController extends BaseController
 {
+
+    const TOTAL_ITEMS_PER_PAGE = 50;
 
     protected $resourceName = 'orders';
     protected $repositoryName = Orders::class;
@@ -20,7 +21,7 @@ class OrdersController extends BaseController
         'thumb' => ['w' => 424, 'h' => 362],
     ];
 
-    public function index()
+    public function index( Orders $orders )
     {
         $fluxesHead = [
             'id' => 'id',
@@ -33,12 +34,36 @@ class OrdersController extends BaseController
             'statusName' => 'Estado',
         ];
 
+
+
         return view('admin.datatable', [
-            'data' => Orders::all(),
+            'data' => $orders->paginate(self::TOTAL_ITEMS_PER_PAGE, Session::get('orders_filters', [])),
             'title' => 'Pedidos',
             'pageTitle' => 'Listado de Pedidos',
             'header' => $fluxesHead,
+            'totalProductsPerPage' => self::TOTAL_ITEMS_PER_PAGE,
+            'extras' => ['admin.filters.orders'],
+            'noDataTable' => true,
         ]);
+    }
+
+    public function addFilters()
+    {
+        Session::set('orders_filters', Input::get('filters'));
+
+        return back();
+    }
+
+    public function excel( Orders $orders, ExcelTransformator $excelTransformator
+    )
+    {
+        $products = $orders->filtered(
+                Session::get('orders_filters', [])
+        );
+
+        $excelTransformator->transform($products->toArray());
+
+        return back();
     }
 
     public function details( FormGenerator $formBuilder, $id )
@@ -64,7 +89,7 @@ class OrdersController extends BaseController
 
     public function editstatus( FormGenerator $formBuilder, $id )
     {
-      
+
         $repo = App::make($this->repositoryName);
         $data = $repo->find($id);
 
@@ -72,7 +97,5 @@ class OrdersController extends BaseController
             'form' => $formBuilder->generate('ordersStatus', $data->toArray()
         )]);
     }
-
-    
 
 }

@@ -19,6 +19,16 @@ final class Orders extends Model implements ModelInterface
     protected $appends = ['pvpName', 'linkUser', 'statusName', 'userNameLastName', 'shipping', 'cupon_code',
         'cant_products', 'products', 'country_name', 'product_name'];
 
+    public function paginate( $num, $filters = [] )
+    {
+        return $this->withFilters($filters)->paginate($num);
+    }
+
+    public function filtered( $filters = [] )
+    {
+        return $this->withFilters($filters)->get();
+    }
+
     private function detail()
     {
         return $this->hasOne(OrdersDetails::class, 'order_id', 'id')->first();
@@ -118,6 +128,17 @@ final class Orders extends Model implements ModelInterface
         } else {
             return false;
         }
+    }
+
+    public function scopeWithFilters( $query, $filters )
+    {
+        foreach ($filters as $filterName => $filterValue) {
+            if ($filterValue !== '') {
+                $query = $query->where($filterName, '=', $filterValue);
+            }
+        }
+
+        return $query->orderBy('id', 'desc');
     }
 
     //Metodos FRONT

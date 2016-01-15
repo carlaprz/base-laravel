@@ -41,6 +41,7 @@
                         
                             <div class="{{$datashow["title"]}}">                          
                                 <div class="lenguages_title active" id="div_field_{{$datashow["title"]}}">
+                                    <a class="toggle" style="cursor:pointer;" data-parent="div_field_{{$datashow["title"]}}" data-class='toggle_field_{{$datashow["title"]}}'>
                                     @if($datashow["title"] === 'generals')
                                         <span>Datos generales</span> 
                                     @elseif($datashow["title"] === 'shipping')
@@ -48,11 +49,11 @@
                                     @elseif($datashow["title"] === 'products')
                                         <span>Productos del pedido</span> 
                                     @elseif(in_array($datashow["title"],langs_array()))
-                                        <span>Datos  en el iodioma "{{$datashow["title"]}}" </span>
+                                        <span>Datos  en el idioma "{{$datashow["title"]}}" </span>
                                     @else
                                         <span>Datos "{{$datashow["title"]}}" </span>
                                     @endif
-                                    <a class="toggle" style="cursor:pointer;" data-parent="div_field_{{$datashow["title"]}}" data-class='toggle_field_{{$datashow["title"]}}'><span class="fa arrow"></span></a>
+                                    <span class="fa arrow"></span></a>
                                 </div>
                                     
                                     @foreach ($form->fields($datashow["title"]) as $field)

@@ -132,7 +132,9 @@ class CartShippingPaymentsCouponsOrders extends Migration
                 $table->string('description');
                 $table->timestamps();
             });
-
+            
+            $this->insertStatus();
+            
             Schema::create('orders', function(Blueprint $table)
             {
                 $table->increments('id');
@@ -187,7 +189,7 @@ class CartShippingPaymentsCouponsOrders extends Migration
 
             Schema::table('orders_details', function(Blueprint $table)
             {
-                $table->integer('shipping_country')->unsigned();
+                $table->integer('shipping_country')->unsigned()->after('shipping_province');
                 $table->foreign('shipping_country')->references('id')->on('shipping_countries');
             });
 
@@ -196,7 +198,7 @@ class CartShippingPaymentsCouponsOrders extends Migration
 
                 Schema::table('orders', function(Blueprint $table)
                 {
-                    $table->string('coupon_id')->nullable();
+                    $table->string('coupon_id')->nullable()->after('id');
                 });
             }
         }
@@ -243,7 +245,7 @@ class CartShippingPaymentsCouponsOrders extends Migration
 
         foreach ($status as $statu) {
             DB::table('orders_status')->insert(array(
-                'desciption' => $statu->description
+                'description' => $statu->description
             ));
         }
     }

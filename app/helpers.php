@@ -7,6 +7,7 @@ use App\Models\OrdersStatus;
 use App\Models\ShippingZones;
 use App\Models\ShippingCountries;
 use App\Models\FaqsCategories;
+use App\Models\Payments;
 
 function current_lang()
 {
@@ -239,6 +240,7 @@ function orders_status()
 {
     $repo = app(OrdersStatus::class);
     $status = $repo->all();
+    $data = [];
     foreach ($status as $state) {
         $data[$state->id] = $state->description;
     }
@@ -266,6 +268,7 @@ function all_countries()
     return $data;
 }
 
+
 function all_faqs_categories()
 {
     $repo = app(FaqsCategories::class);
@@ -274,6 +277,14 @@ function all_faqs_categories()
         $data[$category->id] = $category->title;
     }
     return $data;
+}
 
-
+function all_method_payment()
+{
+    $repo = app(Payments::class);
+    $payments = $repo->all();
+    foreach ($payments as $payment) {
+        $data[$payment->id] = $payment->name;
+    }
+    return $data;
 }

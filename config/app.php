@@ -131,7 +131,8 @@ return [
         'App\Providers\RouteServiceProvider',
         'Dimsav\Translatable\TranslatableServiceProvider',
         'Mcamara\LaravelLocalization\LaravelLocalizationServiceProvider',
-        'Intervention\Image\ImageServiceProvider'
+        'Intervention\Image\ImageServiceProvider',
+        'Maatwebsite\Excel\ExcelServiceProvider',
     ],
     /*
       |--------------------------------------------------------------------------
@@ -178,6 +179,7 @@ return [
         'Validator' => 'Illuminate\Support\Facades\Validator',
         'View' => 'Illuminate\Support\Facades\View',
         'LaravelLocalization' => 'Mcamara\LaravelLocalization\Facades\LaravelLocalization',
-        'Image' => 'Intervention\Image\Facades\Image'
+        'Image' => 'Intervention\Image\Facades\Image',
+        'Excel' => 'Maatwebsite\Excel\Facades\Excel',
     ],
 ];

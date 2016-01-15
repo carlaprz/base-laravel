@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class Banners extends Migration {
+class BannersSlider extends Migration {
 
 	/**
 	 * Run the migrations.
@@ -41,4 +41,5 @@ class Banners extends Migration {
 			Schema::drop('banners');
 		}
 	}
+
 }
