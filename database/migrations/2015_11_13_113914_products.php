@@ -19,7 +19,6 @@ class Products extends Migration
             {
                 $table->increments('id');
                 $table->string('reference');
-                
                 $table->string('image');
                 $table->string('thumb');
                 $table->float('pvp')->unsigned();
