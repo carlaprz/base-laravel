@@ -18,7 +18,7 @@ class Products extends Migration
             Schema::create('products', function(Blueprint $table)
             {
                 $table->increments('id');
-
+                $table->string('reference');
                 $table->string('image');
                 $table->string('thumb');
                 $table->float('pvp')->unsigned();
