@@ -65,7 +65,6 @@ class Products extends Migration
      */
     public function down()
     {
-
         $products = Config::get('configMigrations.ecommerce.products');
         if ($products) {
             Schema::drop('products_translations');

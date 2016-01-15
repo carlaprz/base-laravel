@@ -31,12 +31,6 @@ final class News extends Model implements ModelInterface
         return ['title' => $this->title, 'description' => $this->description];
     }
 
-    public function getFrAttribute()
-    {
-        App::setLocale('fr');
-        return ['title' => $this->title, 'description' => $this->description];
-    }
-
     public function add( $data )
     {
         return $this->create($data);

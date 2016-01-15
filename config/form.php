@@ -715,5 +715,118 @@ return [
                 'rules' => ['required']
             ]
         ]
+    ],
+    'faqsCategories' => [
+        'name' => 'Categorias de FAQs',
+        'for_files' => false,
+        'description' => 'Administración de Categorías de FAQs',
+        'editor' => false,
+        'fields' => [
+            'priority' => [
+                'type' => 'numeric',
+                'title' => 'Prioridad',
+                'description' => 'Prioridad de la categoría en un listado',
+            ],
+            'active' => [
+                'type' => 'radio',
+                'title' => 'Activo',
+                'description' => 'Estado',
+                'rules' => []
+            ]
+        ],
+        'lenguages' => [
+            'es' => [
+                'fields' => [
+                    'title' => [
+                        'type' => 'text',
+                        'title' => 'Título',
+                        'description' => 'Título de la categoría',
+                        'rules' => ['required', 'unique:categories_translations,title,{unique:id},categories_id,locale,es,parent,{unique:parent}']
+                    ],
+                    'description' => [
+                        'type' => 'text',
+                        'title' => 'Descripcion',
+                        'description' => 'Descripcion de la categoría',
+                        'rules' => ['required']
+                    ]
+                ]
+            ],
+            'en' => [
+                'fields' => [
+                    'title' => [
+                        'type' => 'text',
+                        'title' => 'Name',
+                        'description' => 'Name of the category',
+                        'rules' => ['unique:categories_translations,title,{unique:id},categories_id,locale,en,parent,{unique:parent}']
+                    ],
+                    'descriptiton' => [
+                        'type' => 'text',
+                        'title' => 'Description',
+                        'description' => 'Description of the category',
+                        'rules' => ['required_with:title']
+                    ]
+                ]
+            ]
+        ]
+    ],
+    'faqs' => [
+        'name' => 'FAQs',
+        'for_files' => false,
+        'description' => 'Administración de FAQs',
+        'editor' => false,
+        'fields' => [
+            'priority' => [
+                'type' => 'numeric',
+                'title' => 'Prioridad',
+                'description' => 'Prioridad de la categoría en un listado',
+                'rules' => ['required']
+            ],
+            'active' => [
+                'type' => 'radio',
+                'title' => 'Activo',
+                'description' => 'Estado',
+                'rules' => ['required']
+            ],
+            'faqs_categories_id' => [
+                'type' => 'select',
+                'title' => 'Categoría',
+                'description' => 'all_faqs_categories',
+                'rules' => ['required']
+            ]
+        ],
+        'lenguages' => [
+            'es' => [
+                'fields' => [
+                    'question' => [
+                        'type' => 'text',
+                        'title' => 'Pregunta',
+                        'description' => 'Pregunta de la FAQ',
+                        'rules' => ['required', 'unique:categories_translations,title,{unique:id},categories_id,locale,es,parent,{unique:parent}']
+                    ],
+                    'answer' => [
+                        'type' => 'text',
+                        'title' => 'Respuesta',
+                        'description' => 'Respuesta de la FAQ',
+                        'rules' => ['required']
+                    ]
+                ]
+            ],
+            'en' => [
+                'fields' => [
+                    'question' => [
+                        'type' => 'text',
+                        'title' => 'Question',
+                        'description' => 'Name of the FAQ',
+                        'rules' => ['unique:categories_translations,title,{unique:id},categories_id,locale,en,parent,{unique:parent}']
+                    ],
+                    'answer' => [
+                        'type' => 'text',
+                        'title' => 'Answer',
+                        'description' => 'Answer of the FAQ',
+                        'rules' => ['required_with:title']
+                    ]
+                ]
+            ]
+        ]
     ]
 ];
