@@ -15,7 +15,7 @@ final class Products extends Model implements ModelInterface
     const IMAGE_PATH = 'files/products/';
 
     public $translatedAttributes = ['products_id', 'locale', 'title', 'description', 'slug'];
-    protected $fillable = ['category_id', 'image', 'thumb', 'active', 'products_id', 'pvp', 'pvp_discounted', 'iva', 'locale', 'title', 'description', 'slug'];
+    protected $fillable = ['category_id', 'reference', 'image', 'thumb', 'active', 'products_id', 'pvp', 'pvp_discounted', 'iva', 'locale', 'title', 'description', 'slug'];
     protected $appends = ["es", "en", "fr", "categoryName", "categorySlug"];
 
     public function add( $data )
@@ -40,13 +40,14 @@ final class Products extends Model implements ModelInterface
 
     public function scopeWithFilters( $query, $filters )
     {
-        if (array_key_exists("title",$filters)) {
-          
-                $query = $query->join(DB::raw('products_translations ct'), 'ct.products_id', '=', 'products.id')
-                        ->where('ct.title', 'like', '%'.$filters["title"].'%')
-                        ->where('ct.locale', '=', "es");
-            
+        if (array_key_exists("title", $filters)) {
+            $query = $query->join(DB::raw('products_translations ct'), 'ct.products_id', '=', 'products.id')->where('ct.locale', '=', "es");
+
+            if (array_key_exists("title", $filters)) {
+                $query = $query->where('ct.title', 'like', '%' . $filters["title"] . '%');                       
+            }
         }
+        
         foreach ($filters as $filterName => $filterValue) {
             if (!empty($filterValue) && $filterName !== "title") {
                 $query = $query->where($filterName, '=', $filterValue);

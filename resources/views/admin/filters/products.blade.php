@@ -1,8 +1,15 @@
-<div class="panel-heading">
+<div class="panel-heading" style="border:1px solid #ddd; margin:  25px;">
+    <div class="panel-heading" style="padding: 5px;">
+        Buscador de Productos
+    </div>
     <form action="" method="post">
-        
+
         <label for="id-filter" >
             <input class="form-control" type="number" name="filters[id]" id="id-filter" value="{{ Session::get('products_filters.id', '') }}"  placeholder="ID" style="width: 5em;"/>
+        </label>
+
+        <label for="reference-filter" >
+            <input class="form-control" type="text" name="filters[reference]" id="id-filter" value="{{ Session::get('products_filters.reference', '') }}"  placeholder="Referencia" style="width: 9em;"/>
         </label>
 
         <label for="nombre-filter" >
@@ -17,7 +24,7 @@
 
             </select>
         </label>
-        
+
         <label for="category-filter">
             <select  class="form-control" name="filters[category_id]" id="secciones-filter">
                 <option value="">Todas las categorias</option>
@@ -30,8 +37,9 @@
                 @endforeach
             </select>
         </label>
-                
+        <br/>
         <input type="hidden" name="_token" value="{{ csrf_token() }}">
-        <input style="margin-bottom: 5px;" class="btn btn-small btn-primary" type="submit" value="Buscar"/>
-    </form>
+        <input  class="btn btn-small btn-primary" type="submit" value="Buscar"/>
+        <a href="{{ route('admin.products.remove_filters') }}" class="btn btn-primary">Borrar Filtros</a>
+    </form>   
 </div>

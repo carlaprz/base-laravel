@@ -43,6 +43,7 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => ['aut
         'uses' => 'HomeController@Index'
     ]);
 
+    //USERS
     Route::get('users', [
         'as' => 'admin.users.index',
         'uses' => 'UsersController@index'
@@ -73,6 +74,7 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => ['aut
         'uses' => 'UsersController@delete'
     ]);
 
+    //NEWS
     Route::get('news', [
         'as' => 'admin.news.index',
         'uses' => 'NewsController@index'
@@ -102,21 +104,27 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => ['aut
         'uses' => 'NewsController@delete'
     ]);
 
+    //PRODUCTOS
     Route::get('products', [
         'as' => 'admin.products.index',
         'uses' => 'ProductsController@index'
     ]);
-    
+
     Route::post('products', [
         'as' => 'admin.products.add_filters',
         'uses' => 'ProductsController@addFilters'
+    ]);
+
+    Route::get('products/removeFilters', [
+        'as' => 'admin.products.remove_filters',
+        'uses' => 'ProductsController@removeFilters'
     ]);
 
     Route::get('products/excel', [
         'as' => 'admin.products.excel',
         'uses' => 'ProductsController@excel'
     ]);
-    
+
     Route::get('products/create', [
         'as' => 'admin.products.create',
         'uses' => 'ProductsController@create'
@@ -142,6 +150,7 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => ['aut
         'uses' => 'ProductsController@delete'
     ]);
 
+    //CATEGORIAS PRODUCTOS
     Route::get('categories', [
         'as' => 'admin.categories.index',
         'uses' => 'CategoriesController@index'
@@ -171,14 +180,21 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => ['aut
         'uses' => 'CategoriesController@delete'
     ]);
 
+
+    //PEDIDOS
     Route::get('orders', [
         'as' => 'admin.orders.index',
         'uses' => 'OrdersController@index'
     ]);
-    
+
     Route::post('orders', [
         'as' => 'admin.orders.add_filters',
         'uses' => 'OrdersController@addFilters'
+    ]);
+
+    Route::get('orders/removeFilters', [
+        'as' => 'admin.orders.remove_filters',
+        'uses' => 'OrdersController@removeFilters'
     ]);
 
     Route::get('orders/excel', [
@@ -206,6 +222,7 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => ['aut
         'uses' => 'OrdersController@details'
     ]);
 
+    //PAYMENTS
     Route::get('payments', [
         'as' => 'admin.payments.index',
         'uses' => 'PaymentsController@index'
@@ -221,6 +238,7 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => ['aut
         'uses' => 'PaymentsController@update'
     ]);
 
+    //COUPONS
     Route::get('coupons', [
         'as' => 'admin.coupons.index',
         'uses' => 'CouponsController@index'
@@ -251,8 +269,7 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => ['aut
         'uses' => 'CouponsController@delete'
     ]);
 
-
-
+    //BANNERS
     Route::get('banners', [
         'as' => 'admin.banners.index',
         'uses' => 'BannersController@index'
@@ -284,7 +301,7 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => ['aut
     ]);
 
 
-
+    //SHIPPING
     Route::get('shippingZones', [
         'as' => 'admin.shippingZones.index',
         'uses' => 'ShippingZonesController@index'
@@ -376,6 +393,7 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => ['aut
     ]);
 
 
+    //FAQS
 
     Route::get('faqsCategories', [
         'as' => 'admin.faqsCategories.index',

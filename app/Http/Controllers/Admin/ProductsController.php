@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Models\Products;
 use Session,
     Input;
+use App\Core\Excel\ExcelTransformator;
 
 class ProductsController extends BaseController
 {
@@ -23,6 +24,7 @@ class ProductsController extends BaseController
     {
         $fluxesHead = [
             'id' => 'id',
+            'reference' => 'Referencia',
             'title' => 'Nombre',
             'categoryName' => 'Categoria',
             'pvp' => 'Precio',
@@ -47,14 +49,36 @@ class ProductsController extends BaseController
         return back();
     }
 
-    public function excel( Orders $orders, ExcelTransformator $excelTransformator
+    public function removeFilters()
+    {
+        Session::forget('products_filters');
+        return back();
+    }
+
+    public function excel( Products $products, ExcelTransformator $excelTransformator
     )
     {
-        $products = $orders->filtered(
+        $products = $products->filtered(
                 Session::get('products_filters', [])
         );
 
-        $excelTransformator->transform($products->toArray());
+        $data = [];
+
+        foreach ($products as $product) {
+            $data[] = [
+                'Id' => $product->id,
+                'Referencia' => $product->reference,
+                'Titulo' => $product->title,
+                'Categoria' => $product->categoryName,
+                'Precio' => $product->pvp,
+                'Precio Descontado' => $product->pvp_discounted,
+                'Iva' => $product->pvp_discounted,
+                'Imagen detalle' => $product->image,
+                'Url amigable' => $product->slug,
+                'Descripcion' => $product->description,
+            ];
+        }
+        $excelTransformator->transform($data);
 
         return back();
     }

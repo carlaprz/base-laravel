@@ -235,6 +235,12 @@ return [
         'slug' => ['title'],
         'editor' => true,
         'fields' => [
+            'reference' => [
+                'type' => 'text',
+                'title' => 'Referencia',
+                'description' => 'La referencia del producto',
+                'rules' => ['required']
+            ],
             'active' => [
                 'type' => 'radio',
                 'title' => 'Activo',

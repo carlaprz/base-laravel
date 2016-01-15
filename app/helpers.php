@@ -239,6 +239,7 @@ function orders_status()
 {
     $repo = app(OrdersStatus::class);
     $status = $repo->all();
+    $data = [];
     foreach ($status as $state) {
         $data[$state->id] = $state->description;
     }
