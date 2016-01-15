@@ -726,6 +726,7 @@ return [
                 'type' => 'numeric',
                 'title' => 'Prioridad',
                 'description' => 'Prioridad de la categoría en un listado',
+                'rules' => []
             ],
             'active' => [
                 'type' => 'radio',

@@ -54,7 +54,6 @@ class Faqs extends Migration
             {
                 $table->increments('id');
                 $table->integer('faqs_id')->unsigned();
-                $table->integer('faqs_categories_id')->unsigned();
                 $table->string('locale')->index();
                 $table->string('question');
                 $table->longText('answer');
@@ -62,7 +61,6 @@ class Faqs extends Migration
 
                 $table->unique(['faqs_id', 'locale']);
                 $table->foreign('faqs_id')->references('id')->on('faqs')->onDelete('cascade');
-                $table->foreign('faqs_categories_id')->references('id')->on('faqs_categories');
             });
         }
     }

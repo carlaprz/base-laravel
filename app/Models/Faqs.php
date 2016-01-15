@@ -12,8 +12,8 @@ final class Faqs extends Model implements ModelInterface
     use \Dimsav\Translatable\Translatable;
 
     public $timestamps = true;
-    public $translatedAttributes = ['question', 'answer', 'locale', 'faqs_categories_id', 'faqs_id'];
-    protected $fillable = ['locale', 'faqs_categories_id', 'faqs_id', 'answer', 'question', 'active', 'priority'];
+    public $translatedAttributes = ['faqs_id','locale','answer', 'question'];
+    protected $fillable = ['faqs_id','faqs_categories_id','locale','answer', 'question','active', 'priority'];
     protected $appends = ["es", "en", "categoryName"];
 
     public function add( $data )
@@ -21,14 +21,14 @@ final class Faqs extends Model implements ModelInterface
         return $this->create($data);
     }
 
-    public function getCategory()
+    public function category()
     {
         return $this->belongsTo(FaqsCategories::class, 'faqs_categories_id', 'id')->first();
     }
 
-    public function getcategoryNameAttribute()
+    public function getCategoryNameAttribute()
     {
-        $parent = $this->getCategory();
+        $parent = $this->category();
         return $parent->title;
     }
 

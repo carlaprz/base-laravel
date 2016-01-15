@@ -73,7 +73,7 @@ abstract class BaseController extends Controller
 
         $rules = get_rules_from($this->resourceName);
         $data = $this->prepareData(Input::all(), $request);
-       
+
         $validations = $this->prepareValidate($data, $rules, $resource->id);
         if (!empty($validations) && is_object($validations)) {
             return back()->withInput()->withErrors($validations);
@@ -177,7 +177,7 @@ abstract class BaseController extends Controller
 
         //generate slugs
         $data = $this->generateSlugs($data);
-       
+
         $data = $this->clearDescription($data);
 
         //generate parent 
@@ -257,8 +257,8 @@ abstract class BaseController extends Controller
                         if (isset($data[$lang->code][$field]) && !empty($data[$lang->code][$field])) {
                             if (empty($data[$lang->code]['slug'])) {
                                 $slug[$lang->code][] = slugify($data[$lang->code][$field]);
-                            }else{
-                                 $slug[$lang->code][] = $data[$lang->code]['slug'];
+                            } else {
+                                $slug[$lang->code][] = $data[$lang->code]['slug'];
                             }
                         }
                     }
