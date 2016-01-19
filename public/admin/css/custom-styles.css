@@ -80,8 +80,8 @@ p {
 }
 
 .panel-default > .panel-heading {
-    color: #000;
-    background-color: #fff;
+    color: #FFF;
+    background-color: #337AB7;
     border-color: #ddd;
     font-weight: bold;
 }
@@ -335,7 +335,7 @@ footer p {
 }
 
 .active-menu {
-    background-color: #225081 !important;
+    background-color: #337AB7 !important;
 }
 
 .arrow {
@@ -659,8 +659,8 @@ ul.nav.nav-second-level.collapse.in {
     text-align: center;
 }
 
-.form-control.input-sm {
-    margin-left: 10px;
+#data-table_filter .form-control.input-sm {
+   margin-left: 10px;
 }
 
 .height-scroll {
@@ -680,13 +680,13 @@ ul.nav.nav-second-level.collapse.in {
     border: 1px solid;
     border-top-left-radius: 3px;
     border-top-right-radius: 3px;
-    background-color: #fff;
+    background-color: #337AB7;
     border-color: #ddd;
 }
 
 .lenguages_title span {
-    color: #000;
-    background-color: #fff;
+    color: #FFF;
+    background-color: #337AB7;
     border-color: #ddd;
     font-weight: bold;
     padding-right: 1%;
@@ -700,22 +700,32 @@ ul.nav.nav-second-level.collapse.in {
 .row {
     margin-right: 0px!important; 
 }
+
+
+
 .note-editor .note-editing-area .note-editable {
     height: 256px;
 }
 
 form label {
     vertical-align: top;
-    margin-right: 0.2em;
-    margin-bottom: 1em;
+    margin-right: 0.5em;
 }
 
-form.products .buttons {
-    display:inline-block;
-    margin-left: 1em;
+form.products .buttons,  form.pedidos .buttons {
+    display: inline-block;
 }
 
-form.products .buttons .red{
+form.products, form.pedidos{
+    margin: .5em 0;
+}
+
+form.products .buttons .red, form.pedidos .buttons .red  {
+    background-color: #FB3434 !important;
+    border-color: #FB3434 !important;
+}
+
+form.products .buttons .green {
     background-color: #FB3434 !important;
     border-color: #FB3434 !important;
 }
@@ -723,4 +733,50 @@ form.products .buttons .red{
 .panel-body {
     padding: 0;
     margin: 25px;
+}
+.panel-buscador{
+    border:1px solid #ddd!important;
+    margin: 25px;
+    background-color: white!important;
+}
+
+.panel-buscador{
+    color: #000 !important;
+}
+
+.buscador-interior {
+    padding: 5px 0px;
+    margin-bottom: 15px;
+}
+
+.calendar-button {
+    width:2em; display:inline-block; cursor:pointer; text-align: center; color: #337AB7;
+}
+
+
+.datepicker span{
+    font-weight: 200;
+}
+
+.datepicker input {
+    width: 10em;
+    display: inline-block;
+}
+
+.products input, .products select, .pedidos input, .pedidos select, .datepicker input {
+    font-weight: 200;
+    height: 2em;
+    padding: 0px 10px;
+}
+
+.table > thead > tr > th {
+    text-align: center;
+}
+
+.table-responsive {
+    overflow-x: visible;
+}
+
+.note-toolbar.panel-heading {
+    background-color: #F5F5F5;
 }

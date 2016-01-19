@@ -1,6 +1,6 @@
-<div class="panel-heading" style="border:1px solid #ddd; margin:  25px;">
-    <div class="panel-heading" style="padding: 5px;">
-        Buscador de Productos
+<div class="panel-heading panel-buscador" style="">
+    <div class="panel-heading buscador-interior">
+        <span>Filtrado de productos</span>
     </div>
     <form action="" method="post" class="products">
 
@@ -9,11 +9,11 @@
         </label>
 
         <label for="reference-filter" >
-            <input class="form-control" type="text" name="filters[reference]" id="id-filter" value="{{ Session::get('products_filters.reference', '') }}"  placeholder="Referencia" style="width: 9em;"/>
+            <input class="form-control" type="text" name="filters[reference]" id="id-filter" value="{{ Session::get('products_filters.reference', '') }}"  placeholder="Referencia" style="width: 10em;"/>
         </label>
 
         <label for="nombre-filter" >
-            <input class="form-control" type="text" name="filters[title]" id="id-filter" value="{{ Session::get('products_filters.title', '') }}"  placeholder="Nombre" style="width: 9em;"/>
+            <input class="form-control" type="text" name="filters[title]" id="id-filter" value="{{ Session::get('products_filters.title', '') }}"  placeholder="Nombre" style="width: 14em;"/>
         </label>
 
         <label for="status-filter" >
@@ -39,7 +39,7 @@
         </label>
         <div class="buttons">
             <input type="hidden" name="_token" value="{{ csrf_token() }}">
-            <input  class="btn btn-small btn-primary" type="submit" value="Buscar"/>
+            <input  class="btn btn-small btn-primary" type="submit" value="Filtrar"/>
             <a href="{{ route('admin.products.remove_filters') }}" class="btn btn-primary red">Borrar Filtros</a>
         </div>
     </form>   

@@ -273,6 +273,7 @@ function all_faqs_categories()
     App::setLocale('es');
     $repo = app(FaqsCategories::class);
     $categories = $repo->all();
+    $data = [];
     foreach ($categories as $category) {
         $data[$category->id] = $category->title;
     }
