@@ -63,12 +63,16 @@
             @if (!isset($noDataTable))
                     $('#data-table').dataTable({
                         "language": {
-                            "lengthMenu": "_MENU_ registros por pagina",
+                            "lengthMenu": "_MENU_ por página.",
                             "zeroRecords": "No se encontraron resultados.",
-                            "info": "Mostrando _PAGE_ de _PAGES_",
+                            "info": "Pág _PAGE_ de _PAGES_",
                             "infoEmpty": "",
-                            "infoFiltered": "(Filtrado de un total de  _MAX_  registros)",
-                            "search" :"Buscar:"
+                            "infoFiltered": "Buscado en _MAX_ registros.",
+                            "search" :"Buscar:",
+                            "paginate": {
+                                "previous": "Atrás",
+                                "next": "Siguiente"
+                              }
                         },
                         'pageLength': 30,
                                 @if (isset($flux))
