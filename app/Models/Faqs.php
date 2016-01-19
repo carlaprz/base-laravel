@@ -4,7 +4,6 @@ namespace App\Models;
 
 use App\Interfaces\ModelInterface;
 use Illuminate\Database\Eloquent\Model;
-use DB;
 use App;
 
 final class Faqs extends Model implements ModelInterface

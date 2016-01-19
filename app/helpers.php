@@ -268,9 +268,9 @@ function all_countries()
     return $data;
 }
 
-
 function all_faqs_categories()
 {
+    App::setLocale('es');
     $repo = app(FaqsCategories::class);
     $categories = $repo->all();
     foreach ($categories as $category) {

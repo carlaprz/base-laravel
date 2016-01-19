@@ -55,8 +55,7 @@ class ProductsController extends BaseController
         return back();
     }
 
-    public function excel( Products $products, ExcelTransformator $excelTransformator
-    )
+    public function excel( Products $products, ExcelTransformator $excelTransformator)
     {
         $products = $products->filtered(
                 Session::get('products_filters', [])

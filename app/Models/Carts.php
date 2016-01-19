@@ -18,11 +18,12 @@ final class Carts extends Model implements ModelInterface
     
     public function cartProducts()
     {
-        return $this->hasMany(CartsProducts::class, 'product_id', 'id')->get();
+       return $this->hasMany(CartsProducts::class, 'cart_id', 'id')->get();
     }
     
     public function  products(){
         $products = [];
+     
         foreach($this->cartProducts() as $item){
             $data = $item->toArray();
             $data["link"] = route('admin.products.edit',$data['product_id']);

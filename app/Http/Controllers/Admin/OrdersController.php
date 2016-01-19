@@ -7,6 +7,8 @@ use App,
     Session,
     Input;
 use App\Core\Form\FormGenerator;
+use App\Core\Excel\ExcelTransformator;
+
 
 class OrdersController extends BaseController
 {
@@ -27,7 +29,7 @@ class OrdersController extends BaseController
             'id' => 'id',
             'reference' => 'Codigo pedido',
             'total_pvp' => 'Importe total',
-            'product_name' => 'Producto',
+            'products_name' => 'Productos',
             'pvpName' => 'Metodo de pago',
             'linkUser' => 'Cliente',
             'created_at' => 'Fecha',
@@ -53,22 +55,10 @@ class OrdersController extends BaseController
 
         return back();
     }
-    
-     public function removeFilters()
+
+    public function removeFilters()
     {
         Session::forget('orders_filters');
-        return back();
-    }
-
-    public function excel( Orders $orders, ExcelTransformator $excelTransformator
-    )
-    {
-        $products = $orders->filtered(
-                Session::get('orders_filters', [])
-        );
-
-        $excelTransformator->transform($products->toArray());
-
         return back();
     }
 
@@ -102,6 +92,33 @@ class OrdersController extends BaseController
         return view('admin.form.form', [
             'form' => $formBuilder->generate('ordersStatus', $data->toArray()
         )]);
+    }
+
+    public function excel( Orders $orders, ExcelTransformator $excelTransformator )
+    {
+        $orders = $orders->filtered(
+                Session::get('orders_filters', [])
+        );
+
+        $data = [];
+
+        foreach ($orders as $order) {
+            $data[] = [
+                'Id' => $order->id,
+                'Codigo pedido' => $order->reference,
+                'Cupon' => empty($order->cupon_code)?'no': $order->cupon_code,
+                'Importe total' => $order->total_pvp,
+                'Productos' => $order->products_name,
+                'Cantidad de productos' => $order->cant_products,
+                'Metodo de pago' => $order->pvpName,
+                'Cliente' => $order->userNameLastName,
+                'Fecha' => $order->created_at,
+                'Estado' => $order->statusName,
+            ];
+        }
+        $excelTransformator->transform($data);
+
+        return back();
     }
 
 }
