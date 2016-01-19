@@ -14,20 +14,17 @@
 </div>
 
 <div class="row">
-
-    @if ($createRoute = current_route_has_create())
     <div class="col-md-12">
+    @if ($createRoute = current_route_has_create())
         <a href="{{ route($createRoute) }}"
            class="btn btn-primary">Crear nuevo</a>
-    </div>
     @endif
 
     @if ($excelRoute = current_route_has('excel'))
-    <div class="col-md-12">
         <a href="{{ route($excelRoute) }}"
-           class="btn btn-primary">Descargar Excel</a>
-    </div>
+           class="btn btn-primary">Exportar a Excel</a>
     @endif
+    </div>
 </div>
 
 <div class="row">
@@ -79,7 +76,7 @@
                     @endif
 
             $('.delete').on('click', function () {
-                if (confirm('Esta seguro de borrar este contenido?')) {
+                if (confirm('Está seguro de borrar este contenido?')) {
                     return true;
                     }
                     return false;

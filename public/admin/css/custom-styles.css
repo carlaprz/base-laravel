@@ -694,6 +694,7 @@ ul.nav.nav-second-level.collapse.in {
 
 .btn {
     padding: 4px 8px !important;
+    margin-right: 0.2em;
 }
 
 .row {
@@ -701,4 +702,25 @@ ul.nav.nav-second-level.collapse.in {
 }
 .note-editor .note-editing-area .note-editable {
     height: 256px;
+}
+
+form label {
+    vertical-align: top;
+    margin-right: 0.2em;
+    margin-bottom: 1em;
+}
+
+form.products .buttons {
+    display:inline-block;
+    margin-left: 1em;
+}
+
+form.products .buttons .red{
+    background-color: #FB3434 !important;
+    border-color: #FB3434 !important;
+}
+
+.panel-body {
+    padding: 0;
+    margin: 25px;
 }
