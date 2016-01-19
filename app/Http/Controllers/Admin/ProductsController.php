@@ -6,6 +6,9 @@ use App\Models\Products;
 use Session,
     Input;
 use App\Core\Excel\ExcelTransformator;
+use App\Models\ProductsRelated;
+use App\Core\Form\FormGenerator;
+use App;
 
 class ProductsController extends BaseController
 {
@@ -14,6 +17,7 @@ class ProductsController extends BaseController
 
     protected $resourceName = 'products';
     protected $repositoryName = Products::class;
+    protected $repositoryNameRelated = ProductsRelated::class;
     protected $pathFile = 'files/products/';
     protected $filesDimensions = [
         'image' => ['w' => 564, 'h' => 384],
@@ -55,7 +59,7 @@ class ProductsController extends BaseController
         return back();
     }
 
-    public function excel( Products $products, ExcelTransformator $excelTransformator)
+    public function excel( Products $products, ExcelTransformator $excelTransformator )
     {
         $products = $products->filtered(
                 Session::get('products_filters', [])
@@ -80,6 +84,20 @@ class ProductsController extends BaseController
         $excelTransformator->transform($data);
 
         return back();
+    }
+    
+    public function edit( FormGenerator $formBuilder, $id )
+    {
+        $repo = App::make($this->repositoryName);
+        $data = $repo->find($id);
+
+        return view('admin.form.form', [
+            'form' => $formBuilder->generate(
+                    $this->resourceName, array_merge(
+                            $data->toArray(), $data->productsRelatedData()
+                    )
+            )
+        ]);
     }
 
 }

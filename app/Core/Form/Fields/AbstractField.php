@@ -49,7 +49,7 @@ abstract class AbstractField implements Field
         if (!empty($this->title)) {
             $return = "<label>" . $this->title();
             if (is_array($this->rules) && array_search("required", $this->rules) !== false) {
-                $return.= " (*) :";
+                $return.= " * ";
             }
             $return .= "</label>";
 

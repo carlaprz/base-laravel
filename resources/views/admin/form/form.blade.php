@@ -48,6 +48,8 @@
                                         <span>Datos de envio</span> 
                                     @elseif($datashow["title"] === 'products')
                                         <span>Productos del pedido</span> 
+                                    @elseif($datashow["title"] === 'productsRelated')
+                                        <span>Productos Relacionados</span> 
                                     @elseif(in_array($datashow["title"],langs_array()))
                                         <span>Datos  en el idioma "{{$datashow["title"]}}" </span>
                                     @else

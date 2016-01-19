@@ -232,6 +232,7 @@ return [
         'name' => 'Productos',
         'for_files' => true,
         'description' => 'Administración de Productos',
+        'dataShow' => ['productsRelated'],
         'slug' => ['title'],
         'editor' => true,
         'fields' => [
@@ -282,7 +283,32 @@ return [
                 'title' => 'Imagen para el listado de productos',
                 'description' => 'Introduzca la imagen del producto para el listado',
                 'rules' => ['required']
-            ]
+            ],
+        ],
+        'productsRelated' => [
+            'title' => 'Productos Relacionados',
+            'fields' => [
+                'product_0' => [
+                    'type' => 'selectProducts',
+                    'title' => 'Producto Relacionado 1',
+                    'description' => 'all_products_backend',
+                ],
+                'product_1' => [
+                    'type' => 'selectProducts',
+                    'title' => 'Producto Relacionado 2',
+                    'description' => 'all_products_backend',
+                ],
+                'product_2' => [
+                    'type' => 'selectProducts',
+                    'title' => 'Producto Relacionado 3',
+                    'description' => 'all_products_backend',
+                ],
+                'product_3' => [
+                    'type' => 'selectProducts',
+                    'title' => 'Producto Relacionado 4',
+                    'description' => 'all_products_backend',
+                ],
+            ],
         ],
         'lenguages' => [
             'es' => [

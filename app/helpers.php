@@ -8,6 +8,7 @@ use App\Models\ShippingZones;
 use App\Models\ShippingCountries;
 use App\Models\FaqsCategories;
 use App\Models\Payments;
+use App\Models\Products;
 
 function current_lang()
 {
@@ -288,4 +289,45 @@ function all_method_payment()
         $data[$payment->id] = $payment->name;
     }
     return $data;
+}
+
+function all_products_backend()
+{
+    $repoCategories = app(Categories::class);
+    $repoProducts = app(Products::class);
+
+    $data = [];
+    $categories = $repoCategories->where('parent', "")->get();
+    $i = 0;
+    foreach ($categories as $category) {
+        $products = [];
+
+        foreach ($repoProducts->findByCategoryId($category->id) as $product) {
+            $products[$product->id] = $product->title;
+        }
+
+        $data[$i] = [
+            'id' => $category->id,
+            'name' => $category->title,
+            'products' => $products,
+        ];
+
+
+        foreach ($category->getChildren() as $children) {
+
+            $products = [];
+            foreach ($repoProducts->findByCategoryId($children->id) as $product) {
+                $products[$product->id] = $product->title;
+            }
+
+            $data[$i]["child"][]= [
+                'id' => $children->id,
+                'name' => $children->title,
+                'products' => $products,
+            ];
+        }
+    }
+    
+    return $data;
+    
 }
