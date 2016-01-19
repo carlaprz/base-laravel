@@ -48,6 +48,7 @@ return [
     [
         'route' => 'admin.orders.index',
         'details' => 'admin.orders.details',
+        'excel' => 'admin.orders.excel',
         'bill' => 'admin.orders.bill',
         'editstatus' => 'admin.orders.editstatus',
         'icon' => 'fa fa-shopping-cart',
@@ -125,12 +126,12 @@ return [
         ]
     ],
     [
-        'route'     => 'admin.banners.index',
-        'create'    => 'admin.banners.create',
-        'edit'      => 'admin.banners.edit',
-        'delete'    => 'admin.banners.delete',
-        'icon'      => 'fa fa-picture-o',
-        'name'      => 'Banners',
-        'resource'  => 'banners'
+        'route' => 'admin.banners.index',
+        'create' => 'admin.banners.create',
+        'edit' => 'admin.banners.edit',
+        'delete' => 'admin.banners.delete',
+        'icon' => 'fa fa-picture-o',
+        'name' => 'Banners',
+        'resource' => 'banners'
     ]
 ];

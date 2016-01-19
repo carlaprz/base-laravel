@@ -18,7 +18,7 @@ final class Orders extends Model implements ModelInterface
     protected $table = 'orders';
     protected $fillable = ['reference', 'cart_id', 'total_pvp', 'total_iva', 'status', 'observations', 'bill'];
     protected $appends = ['pvpName', 'linkUser', 'statusName', 'userNameLastName', 'shipping', 'cupon_code',
-        'cant_products', 'products', 'country_name', 'product_name'];
+        'cant_products', 'products', 'country_name', 'products_name'];
 
     public function paginate( $num, $filters = [] )
     {
@@ -62,7 +62,7 @@ final class Orders extends Model implements ModelInterface
                 } else if ($filterName == 'date_end') {
                     $query->where('orders.created_at', '<', $filterValue . ':00');
                 } else {
-                    $query = $query->where('orders.'.$filterName, '=', $filterValue);
+                    $query = $query->where('orders.' . $filterName, '=', $filterValue);
                 }
             }
         }
@@ -163,11 +163,19 @@ final class Orders extends Model implements ModelInterface
         }
     }
 
-    public function getProductNameAttribute()
+    public function getProductsNameAttribute()
     {
         $products = $this->cart()->products();
         if (!empty($products)) {
-            return $products[0]['product_description'];
+            $return = "";
+            foreach ($products as $product) {
+                if (!empty($return)) {
+                    $return.=", " . $product['product_description'];
+                } else {
+                    $return = $product['product_description'];
+                }
+            }
+            return $return;
         } else {
             return false;
         }
