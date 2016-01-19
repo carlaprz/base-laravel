@@ -62,17 +62,25 @@
     $(document).ready(function (){
             @if (!isset($noDataTable))
                     $('#data-table').dataTable({
-            'pageLength': 30,
-                    @if (isset($flux))
-                    "order": [[ 3, "desc" ]],
-                    @ else
-                    "order": [[ 0, "desc" ]],
-                    @endif
-                    @if (isset($totalProductsPerPage))
-                    "paging": false,
-                    "searching": false
-                    @endif
-            });
+                        "language": {
+                            "lengthMenu": "_MENU_ registros por pagina",
+                            "zeroRecords": "No se encontraron resultados.",
+                            "info": "Mostrando _PAGE_ de _PAGES_",
+                            "infoEmpty": "",
+                            "infoFiltered": "(Filtrado de un total de  _MAX_  registros)",
+                            "search" :"Buscar:"
+                        },
+                        'pageLength': 30,
+                                @if (isset($flux))
+                                "order": [[ 3, "desc" ]],
+                                @ else
+                                "order": [[ 0, "desc" ]],
+                                @endif
+                                @if (isset($totalProductsPerPage))
+                                "paging": false,
+                                "searching": false
+                                @endif
+                        });
                     @endif
 
             $('.delete').on('click', function () {
