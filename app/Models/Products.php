@@ -50,7 +50,7 @@ final class Products extends Model implements ModelInterface
         
         foreach ($filters as $filterName => $filterValue) {
             if (!empty($filterValue) && $filterName !== "title") {
-                $query = $query->where($filterName, '=', $filterValue);
+                $query = $query->where('products.'.$filterName, '=', $filterValue);
             }
         }
 
