@@ -22,7 +22,7 @@ final class Categories extends Model implements ModelInterface
         return $this->belongsTo(Categories::class, 'parent', 'id')->first();
     }
 
-    public function getChildren()
+    public function children()
     {
         return $this->hasMany(Categories::class, 'parent')->get();
     }
@@ -40,7 +40,7 @@ final class Categories extends Model implements ModelInterface
     }
 
 
-    public function getparentNameAttribute()
+    public function getParentNameAttribute()
     {
         App::setLocale('es');
         $parent = $this->getParent();
@@ -74,9 +74,9 @@ final class Categories extends Model implements ModelInterface
                         ->get();
     }
 
-    public function children()
+    public function getChildren()
     {
-        return $this->getChildren();
+        return $this->children();
     }
 
     public function findCategoryBySlug( $slug )

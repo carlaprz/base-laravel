@@ -14,20 +14,55 @@ final class Products extends Model implements ModelInterface
 
     const IMAGE_PATH = 'files/products/';
 
+    protected $table = 'products';
     public $translatedAttributes = ['products_id', 'locale', 'title', 'description', 'slug'];
     protected $fillable = ['category_id', 'reference', 'image', 'thumb', 'active', 'products_id', 'pvp', 'pvp_discounted', 'iva', 'locale', 'title', 'description', 'slug'];
-    protected $appends = ["es", "en", "fr", "categoryName", "categorySlug"];
+    protected $appends = ["es", "en", "categoryName", "categorySlug"];
 
+    //RELACIONES 
+    public function category()
+    {
+        return $this->belongsTo(Categories::class, 'category_id', 'id')->first();
+    }
+
+    public function getCategoryNameAttribute()
+    {
+        $category = $this->category();
+        if (!empty($category)) {
+            return $category->title;
+        }
+        return false;
+    }
+
+    public function getCategorySlugAttribute()
+    {
+        $parent = $this->category();
+        return $parent->slug;
+    }
+
+    public function productsRelated()
+    {
+        return $this->hasMany(ProductsRelated::class, 'product_id', 'id')->orderBy('order')->get();
+    }
+
+    public function productsRelatedData()
+    {
+        $time = 0;
+        $products = [];
+        foreach ($this->productsRelated() as $product) {
+            $products["product_{$time}"] = $product->related;
+            $time++;
+        }
+        return $products;
+    }
+
+    //BACKEND
     public function add( $data )
     {
         return $this->create($data);
     }
 
-    public function getCategory()
-    {
-        return $this->belongsTo(Categories::class, 'category_id', 'id')->first();
-    }
-
+    //FILTROS
     public function paginate( $num, $filters = [] )
     {
         return $this->withFilters($filters)->paginate($num);
@@ -44,30 +79,26 @@ final class Products extends Model implements ModelInterface
             $query = $query->join(DB::raw('products_translations ct'), 'ct.products_id', '=', 'products.id')->where('ct.locale', '=', "es");
 
             if (array_key_exists("title", $filters) && !empty($filters["title"])) {
-                $query = $query->where('ct.title', 'like', '%' . $filters["title"] . '%');                       
+                $query = $query->where('ct.title', 'like', '%' . $filters["title"] . '%');
             }
         }
-        
+
         foreach ($filters as $filterName => $filterValue) {
             if (!empty($filterValue) && $filterName !== "title") {
-                $query = $query->where('products.'.$filterName, '=', $filterValue);
+                $query = $query->where('products.' . $filterName, '=', $filterValue);
             }
         }
 
         return $query->groupBy('products.id')->orderBy('products.id', 'desc');
     }
 
+    // ATTR IDIOMAS
     public function getEsAttribute()
     {
         App::setLocale('es');
         return [
             'title' => $this->title,
-            'description' => $this->description,
-            'description_sheet' => $this->description_sheet,
-            'data_sheet' => asset(self::IMAGE_PATH . 'es/' . $this->data_sheet),
-            'data_comercial' => asset(self::IMAGE_PATH . 'es/' . $this->data_comercial),
-            'data_iom' => asset(self::IMAGE_PATH . 'es/' . $this->data_iom),
-            'data_drawing' => asset(self::IMAGE_PATH . 'es/' . $this->data_drawing)
+            'description' => $this->description
         ];
     }
 
@@ -76,41 +107,11 @@ final class Products extends Model implements ModelInterface
         App::setLocale('en');
         return [
             'title' => $this->title,
-            'description' => $this->description,
-            'description_sheet' => $this->description_sheet,
-            'data_sheet' => asset(self::IMAGE_PATH . 'en/' . $this->data_sheet),
-            'data_comercial' => asset(self::IMAGE_PATH . 'en/' . $this->data_comercial),
-            'data_iom' => asset(self::IMAGE_PATH . 'en/' . $this->data_iom),
-            'data_drawing' => asset(self::IMAGE_PATH . 'en/' . $this->data_drawing)
+            'description' => $this->description
         ];
     }
 
-    public function getFrAttribute()
-    {
-        App::setLocale('fr');
-        return [
-            'title' => $this->title,
-            'description' => $this->description,
-            'description_sheet' => $this->description_sheet,
-            'data_sheet' => asset(self::IMAGE_PATH . 'fr/' . $this->data_sheet),
-            'data_comercial' => asset(self::IMAGE_PATH . 'fr/' . $this->data_comercial),
-            'data_iom' => asset(self::IMAGE_PATH . 'fr/' . $this->data_iom),
-            'data_drawing' => asset(self::IMAGE_PATH . 'fr/' . $this->data_drawing)
-        ];
-    }
-
-    public function getcategoryNameAttribute()
-    {
-        $parent = $this->getCategory();
-        return $parent->title;
-    }
-
-    public function getcategorySlugAttribute()
-    {
-        $parent = $this->getCategory();
-        return $parent->slug;
-    }
-
+    //IMAGENES
     public function getThumbAttribute( $thumb )
     {
         return (filter_var($thumb, FILTER_VALIDATE_URL) === FALSE) ? $this->imagePath($thumb) : $thumb;
@@ -129,6 +130,12 @@ final class Products extends Model implements ModelInterface
         return false;
     }
 
+    public function findByCategoryId( $categoryId )
+    {
+        return $this->where('category_id', '=', $categoryId)
+                        ->get();
+    }
+
     //Metodos FRONT
 
     public function allActive()
@@ -136,7 +143,7 @@ final class Products extends Model implements ModelInterface
         return $this->where('active', '=', 1)->get();
     }
 
-    public function findByCategoryId( $categoryId )
+    public function findByCategoryIdActive( $categoryId )
     {
         return $this->where('category_id', '=', $categoryId)
                         ->where('active', '=', 1)

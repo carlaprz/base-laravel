@@ -59,7 +59,10 @@ abstract class BaseController extends Controller
         }
 
         $data = $this->clearLang($data);
-        $repo->add($data, $rules);
+        $resource = $repo->add($data, $rules);
+
+        // ONLY FOR PRODUCTS RELATED
+        $this->relatedProducts($data, $resource);
 
         $route = resource_home($this->resourceName);
         return redirect($route);
@@ -81,8 +84,10 @@ abstract class BaseController extends Controller
 
         $data = $this->clearLang($data);
 
-
         $resource->update($data);
+
+        // ONLY FOR PRODUCTS RELATED
+        $this->relatedProducts($data, $resource);
 
         $route = resource_home($this->resourceName);
         return redirect($route);
@@ -177,13 +182,13 @@ abstract class BaseController extends Controller
 
         //generate slugs
         $data = $this->generateSlugs($data);
-
         $data = $this->clearDescription($data);
 
         //generate parent 
         $data = $this->generateParent($data);
 
         $data = $this->removePrev($data);
+
 
 
         //$data = $this->clearLang($data);
@@ -328,6 +333,27 @@ abstract class BaseController extends Controller
         }
         $route = resource_home($this->resourceName);
         return redirect($route);
+    }
+
+    public function relatedProducts( $data, $resource )
+    {
+        if (!empty($data['productsRelated']) && !empty($this->repositoryNameRelated)) {
+            $repoRelated = App::make($this->repositoryNameRelated);
+            $objects = $repoRelated->where('product_id', $resource->id)->get();
+            if (is_array($objects) && count($objects) > 1) {
+                foreach ($objects as $object) {
+                    $object->delete();
+                }
+            }
+            $i = 0;
+            foreach ($data['productsRelated'] as $productRelated) {
+                if (!empty($productRelated)) {
+                    $data = ['product_id' => $resource->id, 'related' => $productRelated, 'order' => $i];
+                    $repoRelated->add($data);
+                    $i++;
+                }
+            }
+        }
     }
 
 }

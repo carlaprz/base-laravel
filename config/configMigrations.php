@@ -25,6 +25,7 @@ return [
     'ecommerce' => [
         'categories' => true,
         'products' => true,
+        'products_related' => true,
         'cart' => true,
         'cart_opcion' => [
             'shipping' => true,
