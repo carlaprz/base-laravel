@@ -2,7 +2,7 @@
     <div class="panel-heading" style="padding: 5px;">
         Buscador de Productos
     </div>
-    <form action="" method="post">
+    <form action="" method="post" class="products">
 
         <label for="id-filter" >
             <input class="form-control" type="number" name="filters[id]" id="id-filter" value="{{ Session::get('products_filters.id', '') }}"  placeholder="ID" style="width: 5em;"/>
@@ -37,9 +37,10 @@
                 @endforeach
             </select>
         </label>
-        <br/>
-        <input type="hidden" name="_token" value="{{ csrf_token() }}">
-        <input  class="btn btn-small btn-primary" type="submit" value="Buscar"/>
-        <a href="{{ route('admin.products.remove_filters') }}" class="btn btn-primary">Borrar Filtros</a>
+        <div class="buttons">
+            <input type="hidden" name="_token" value="{{ csrf_token() }}">
+            <input  class="btn btn-small btn-primary" type="submit" value="Buscar"/>
+            <a href="{{ route('admin.products.remove_filters') }}" class="btn btn-primary red">Borrar Filtros</a>
+        </div>
     </form>   
 </div>
