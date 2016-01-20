@@ -186,11 +186,11 @@ class Users extends Migration
     private function insertStatus()
     {
         $roles = [
-            ['name' => 'active', 'created_at' => date("Y-m-d H:s:i")],
-            ['name' => 'inactive', 'created_at' => date("Y-m-d H:s:i")],
-            ['name' => 'waiting confirmation', 'created_at' => date("Y-m-d H:s:i")],
-            ['name' => 'deleted', 'created_at' => date("Y-m-d H:s:i")],
-            ['name' => 'banned', 'created_at' => date("Y-m-d H:s:i")],
+            ['name' => 'Activo', 'created_at' => date("Y-m-d H:s:i")],
+            ['name' => 'Inactivo', 'created_at' => date("Y-m-d H:s:i")],
+            ['name' => 'Esperando confirmación', 'created_at' => date("Y-m-d H:s:i")],
+            ['name' => 'Eliminado', 'created_at' => date("Y-m-d H:s:i")],
+            ['name' => 'Banneado', 'created_at' => date("Y-m-d H:s:i")],
         ];
 
         foreach ($roles as $rol) {

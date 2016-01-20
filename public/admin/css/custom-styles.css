@@ -721,13 +721,8 @@ form.products, form.pedidos{
 }
 
 form.products .buttons .red, form.pedidos .buttons .red  {
-    background-color: #FB3434 !important;
-    border-color: #FB3434 !important;
-}
-
-form.products .buttons .green {
-    background-color: #FB3434 !important;
-    border-color: #FB3434 !important;
+    background-color: #FF6868 !important;
+    border-color: #FF6868 !important;
 }
 
 .panel-body {
