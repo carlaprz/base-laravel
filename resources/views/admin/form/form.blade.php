@@ -40,8 +40,8 @@
                         @foreach($form->getDataShow() as $datashow )    
                         
                             <div class="{{$datashow["title"]}}">                          
-                                <div class="lenguages_title active" id="div_field_{{$datashow["title"]}}">
-                                    <a class="toggle" style="cursor:pointer;" data-parent="div_field_{{$datashow["title"]}}" data-class='toggle_field_{{$datashow["title"]}}'>
+                                <div class="lenguages_title toggle <?php echo ($datashow["title"] === 'generals')?'active':''; ?>" id="div_field_{{$datashow["title"]}}" style="cursor:pointer;" data-parent="div_field_{{$datashow["title"]}}" data-class='toggle_field_{{$datashow["title"]}}'>
+                                    
                                     @if($datashow["title"] === 'generals')
                                         <span>Datos generales</span> 
                                     @elseif($datashow["title"] === 'shipping')
@@ -55,7 +55,7 @@
                                     @else
                                         <span>Datos "{{$datashow["title"]}}" </span>
                                     @endif
-                                    <span class="fa arrow"></span></a>
+                                    <span class="fa arrow"></span>
                                 </div>
                                     
                                     @foreach ($form->fields($datashow["title"]) as $field)
@@ -143,8 +143,9 @@
 
          $(document).on('click', '.toggle', function () {
             var element = $(this).data('class');
+       
             var divParent = $(this).data('parent');
-            var active = $('#' + divParent).hasClass('active');
+            var active = $(this).hasClass('active');
             if (active === true) {
                 $('#' + divParent).removeClass('active');
             } else {
@@ -154,14 +155,14 @@
         });
         
         <?php
-        foreach ($form->getDataShow() as $dataHide) {            
+        /*foreach ($form->getDataShow() as $dataHide) {            
             if (null !== $dataHide["title"] && $dataHide["title"]!== 'generals') { ?>
                 if($("#div_field_<?php echo $dataHide["title"]?>").length > 0) {
-                    $("#div_field_<?php echo $dataHide["title"]?> a").trigger("click");
+                    $("#div_field_<?php echo $dataHide["title"]?>").trigger("click");
                 }
         <?php 
             }
-        } ?>
+        }*/ ?>
         
         $(document).on('keydown', '.onlyNumbers', function (event) {
             if (event.keyCode == 46 || event.keyCode == 8 || event.keyCode == 9 || event.keyCode == 27 || event.keyCode == 13 || (event.keyCode == 65 && event.ctrlKey === true) || (event.keyCode >= 35 && event.keyCode <= 39)) {

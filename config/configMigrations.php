@@ -4,8 +4,8 @@ return [
     'users' => [
         'admin' => true,
         'front' => true,
-        'fb_connect' => false, // DIDN?T DO
-        'gp_connect' => false, // DIDN?T DO
+        'fb_connect' => true, 
+        'gp_connect' => true, 
     ],
     'languages' => [
         [

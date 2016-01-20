@@ -3,9 +3,8 @@
 namespace App\Services;
 
 use Auth;
-use Potoroze\Users\EloquentUserRepository;
-use Potoroze\Services\EmailService;
-use Potoroze\Services\SmartFocusService;
+Use App\Services\EmailService;
+use App\Models\User;
 use Session;
 
 class UserService
@@ -15,13 +14,10 @@ class UserService
     const FB = 'fb';
     const GOOGLE = 'google';
 
-    public function __construct(
-    EloquentUserRepository $userRepository, EmailService $emailservice, SmartFocusService $smartFocusService )
+    public function __construct( User $userRepository, EmailService $emailservice )
     {
-
         $this->userRepository = $userRepository;
         $this->emailServices = $emailservice;
-        $this->smartFocusService = $smartFocusService;
     }
 
     public function registerUser( $data )
@@ -31,7 +27,7 @@ class UserService
         } else {
             $user = $this->registerBySocial($data);
         }
-        $this->smartFocusService->addUser($user->email, $user->name, $user->surnames, $user->sex, 'ACCOUNT');
+       
         $this->emailServices->welcomeEmail($user);
         return $user;
     }
@@ -69,47 +65,24 @@ class UserService
         if ($type == self::FB) {
             $userData[$type . '_image'] = "http://graph.facebook.com/" . $user->id . "/picture?width=255";
             $userData['name'] = $user->user['first_name'];
-            $userData['surnames'] = $user->user['last_name'];
+            $userData['lastname'] = $user->user['last_name'];
         } else if ($type == self::GOOGLE) {
             $userData[$type . '_image'] = str_replace('?sz=50', '?sz=255', $user->avatar);
             $userData['name'] = $user->user['name']['givenName'];
-            $userData['surnames'] = $user->user['name']['familyName'];
+            $userData['lastname'] = $user->user['name']['familyName'];
         }
 
         $userData['email'] = $user->email;
-        $userData['sex'] = isset($user->user['gender']) && ($user->user['gender'] == 'female' ) ? 1 : 2;
+        //$userData['sex'] = isset($user->user['gender']) && ($user->user['gender'] == 'female' ) ? 1 : 2;
         $userData['status'] = 1;
-
-        $name = str_replace(' ', '', $userData['name']);
-        $nickname = !empty($user->nickname) ? $user->nickname : $name . $userData['surnames'];
-        $userData['nickname'] = $this->getNickname($nickname);
 
         return $this->userRepository->add($userData);
     }
 
-    public function getNickname( $nickname )
+     public function updateUser( $user, $userData )
     {
-        $exitNick = $this->userRepository->findUserNickname($nickname);
-
-        if (!empty($exitNick->items)) {
-            $num = count($exitNick) + 1;
-            $nickname = $nickname . $num;
-        }
-
-        return $nickname;
-    }
-
-    public function updateUser( $user, $userData )
-    {
-        $checkNickname = $this->userRepository->checkNickname($userData['nickname'], $user);
         $error = [];
-        if (!empty($checkNickname)) {
-            $error[] = [
-                'field' => 'nickname',
-                'error' => '#edit-enter-pseudo-exist'
-            ];
-        }
-
+        
         $checkEmail = $this->userRepository->checkEmail($userData['email'], $user);
         if (!empty($checkEmail)) {
             $error[] = [

@@ -37,11 +37,11 @@ class Users extends Migration
             $table->string('telephone', 15);
             $table->string('province', 175);
             $table->integer('country_id');
-            $table->rememberToken();
-            $table->timestamps();
-
             $table->integer('rol')->unsigned();
             $table->integer('status')->unsigned();
+
+            $table->rememberToken();
+            $table->timestamps();
 
             $table->foreign('rol')->references('id')->on('users_roles');
             $table->foreign('status')->references('id')->on('users_status');
