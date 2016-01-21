@@ -133,6 +133,7 @@ return [
         'Mcamara\LaravelLocalization\LaravelLocalizationServiceProvider',
         'Intervention\Image\ImageServiceProvider',
         'Maatwebsite\Excel\ExcelServiceProvider',
+        'Gloudemans\Shoppingcart\ShoppingcartServiceProvider'
     ],
     /*
       |--------------------------------------------------------------------------
@@ -181,5 +182,6 @@ return [
         'LaravelLocalization' => 'Mcamara\LaravelLocalization\Facades\LaravelLocalization',
         'Image' => 'Intervention\Image\Facades\Image',
         'Excel' => 'Maatwebsite\Excel\Facades\Excel',
+        'Cart'            => 'Gloudemans\Shoppingcart\Facades\Cart',
     ],
 ];

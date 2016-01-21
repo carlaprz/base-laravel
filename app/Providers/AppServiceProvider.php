@@ -4,8 +4,12 @@ namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use App\Services\EmailService;
-
 use App\Services\FileServices;
+use App\Models\User;
+Use App\Services\UserService;
+use App\Services\PaypalService;
+
+//use App\Services\MobileServices;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -36,6 +40,9 @@ class AppServiceProvider extends ServiceProvider
         );
 
         $this->registerFileServices();
+        $this->registerEmailService();
+        $this->registerUserService();
+        $this->registerPaypalService();
     }
 
     public function registerFileServices()
@@ -48,9 +55,25 @@ class AppServiceProvider extends ServiceProvider
 
     public function registerEmailService()
     {
-        $this->app->singleton(EmailService::class, function ($app)
+        $this->app->singleton(EmailService::class, function ()
         {
             return new EmailService();
+        });
+    }
+
+    public function registerUserService()
+    {
+        $this->app->singleton(UserService::class, function ($app)
+        {
+            return new UserService($app[User::class], $app[EmailService::class]);
+        });
+    }
+
+    public function registerPaypalService()
+    {
+        $this->app->singleton(PaypalService::class, function ()
+        {
+            return new PaypalService();
         });
     }
 

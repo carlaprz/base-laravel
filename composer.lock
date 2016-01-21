@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "548c2071e28b57bd54d62c6f0393a5dc",
-    "content-hash": "932e662231abe1f484bff57d5aba4e17",
+    "hash": "94435c2b3e02091064b8053fc5567816",
+    "content-hash": "29d7df7f186395d114f721afd3f89627",
     "packages": [
         {
             "name": "classpreloader/classpreloader",
@@ -273,6 +273,51 @@
                 "string"
             ],
             "time": "2015-11-06 14:35:42"
+        },
+        {
+            "name": "gloudemans/shoppingcart",
+            "version": "1.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Crinsane/LaravelShoppingcart.git",
+                "reference": "d2ba5aff19fc94a321611b1e9dd531c8e1800359"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Crinsane/LaravelShoppingcart/zipball/d2ba5aff19fc94a321611b1e9dd531c8e1800359",
+                "reference": "d2ba5aff19fc94a321611b1e9dd531c8e1800359",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/support": "~5.0",
+                "php": ">=5.4.0"
+            },
+            "require-dev": {
+                "mockery/mockery": "~0.9",
+                "phpunit/phpunit": "~4.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "Gloudemans\\Shoppingcart": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Rob Gloudemans",
+                    "email": "Rob_Gloudemans@hotmail.com"
+                }
+            ],
+            "description": "Laravel 4 Shoppingcart",
+            "keywords": [
+                "laravel",
+                "shoppingcart"
+            ],
+            "time": "2015-02-19 14:36:24"
         },
         {
             "name": "guzzlehttp/psr7",
@@ -1026,40 +1071,6 @@
                 "schedule"
             ],
             "time": "2015-01-11 23:07:46"
-        },
-        {
-            "name": "neitanod/forceutf8",
-            "version": "dev-master",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/neitanod/forceutf8.git",
-                "reference": "2c1b21e00ed16b2b083ae4e27901cb5f2856db90"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/neitanod/forceutf8/zipball/2c1b21e00ed16b2b083ae4e27901cb5f2856db90",
-                "reference": "2c1b21e00ed16b2b083ae4e27901cb5f2856db90",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.3.0"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-0": {
-                    "ForceUTF8\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "authors": [
-                {
-                    "name": "Sebastián Grignoli",
-                    "email": "grignoli@gmail.com"
-                }
-            ],
-            "description": "PHP Class Encoding featuring popular Encoding::toUTF8() function --formerly known as forceUTF8()-- that fixes mixed encoded strings.",
-            "homepage": "https://github.com/neitanod/forceutf8",
-            "time": "2015-05-07 16:37:23"
         },
         {
             "name": "nesbot/carbon",
@@ -3505,8 +3516,7 @@
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
-        "intervention/image": 20,
-        "neitanod/forceutf8": 20
+        "intervention/image": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,

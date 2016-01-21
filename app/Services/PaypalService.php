@@ -1,6 +1,6 @@
 <?php
 
-namespace Potoroze\Services;
+namespace App\Services;
 
 class PaypalService
 {
