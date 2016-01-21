@@ -33,9 +33,21 @@ class EmailService
         $subject = "Bienvenido a base Project";
         $view = 'emails.welcome';
 
-        $data = ['name' => $user->name.' '.$user->lastname,
+        $data = ['name' => $user->name . ' ' . $user->lastname,
             'image' => $user->image
         ];
+
+        $this->sendEmail($from, $to, $subject, $view, $data);
+    }
+
+    public function forgotPasswordEmail( $user, $passwordRecovery )
+    {
+        $to = $user->email;
+        $from = 'noreply@baseProject.com';
+
+        $subject = "Recupueracion de contraseña base project";
+        $view = 'emails.mdp';
+        $data = ['data' => ['name' => $user->name.' '.$user->lastname, 'hash' => $passwordRecovery->hash]];
 
         $this->sendEmail($from, $to, $subject, $view, $data);
     }
