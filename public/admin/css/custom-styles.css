@@ -461,13 +461,18 @@ ul.nav.nav-second-level.collapse.in {
     line-height: 1.428571429;
 }
 
+.table>tbody>tr>td {
+    text-align: center;
+    vertical-align: middle;
+}
+
 /*----------------------------------------------
     MEDIA QUERIES
 ------------------------------------------------*/
 
 @media (min-width: 768px) {
     #page-wrapper {
-        margin: 0 0 0 260px;
+        margin: 0 0 0 210px;
         padding: 0px 30px;
         min-height: 1200px;
 
@@ -476,7 +481,7 @@ ul.nav.nav-second-level.collapse.in {
     .navbar-side {
         z-index: 1;
         position: absolute;
-        width: 260px;
+        width: 210px;
     }
 
     .navbar {
