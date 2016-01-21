@@ -14,8 +14,8 @@ class CouponsController extends BaseController
     public function index()
     {
         $fluxesHead = [
-            'id' => 'id',
-            'code' => 'Codigo',
+            'id' => 'ID',
+            'code' => 'Código',
             'start' => 'Fecha de inicio',
             'end' => 'Fecha de finalización',
             'active' => 'Activo'
@@ -24,7 +24,7 @@ class CouponsController extends BaseController
         return view('admin.datatable', [
             'data' => Coupons::all(),
             'title' => 'Cupones',
-            'pageTitle' => 'Listado de Cupones',
+            'pageTitle' => 'Listado de cupones',
             'header' => $fluxesHead
         ]);
     }

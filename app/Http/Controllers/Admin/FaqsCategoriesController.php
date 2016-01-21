@@ -16,7 +16,7 @@ class FaqsCategoriesController extends BaseController
     {
         App::setLocale('es');
         $fluxesHead = [
-            'id'            => 'id',
+            'id'            => 'ID',
             'title'         => 'Título',
             'description'   => 'Descripción',
             'priority'      => 'Prioridad',

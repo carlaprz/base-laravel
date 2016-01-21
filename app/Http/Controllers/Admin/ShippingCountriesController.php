@@ -14,16 +14,16 @@ class ShippingCountriesController extends BaseController
     public function index()
     {
         $fluxesHead = [
-            'id' => 'id',
-            'code' => 'Codigo',
+            'id' => 'ID',
+            'code' => 'Código',
             'name' => 'Nombre',
             'zoneName' => 'Zona'
         ];
 
         return view('admin.datatable', [
             'data' => ShippingCountries::all(),
-            'title' => 'Ordenes de Compra',
-            'pageTitle' => 'Listado de ordenes de compra',
+            'title' => 'Países de envío',
+            'pageTitle' => 'Listado de paises de envío',
             'header' => $fluxesHead
         ]);
     }

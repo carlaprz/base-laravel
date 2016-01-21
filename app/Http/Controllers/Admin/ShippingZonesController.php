@@ -14,7 +14,7 @@ class ShippingZonesController extends BaseController
     public function index()
     {
         $fluxesHead = [
-            'id' => 'id',
+            'id' => 'ID',
             'name' => 'Nombre'
         ];
 

@@ -13,7 +13,7 @@ class PaymentsController extends BaseController
     public function index()
     {
         $fluxesHead = [
-            'id' => 'id',
+            'id' => 'ID',
             'name' => 'Nombre',
             'active' => 'Activo'
         ];
@@ -21,7 +21,7 @@ class PaymentsController extends BaseController
         return view('admin.datatable', [
             'data' => Payments::all(),
             'title' => 'Métodos de pago',
-            'pageTitle' => 'Listado de Metodos de pago',
+            'pageTitle' => 'Listado de métodos de pago',
             'header' => $fluxesHead
         ]);
     }

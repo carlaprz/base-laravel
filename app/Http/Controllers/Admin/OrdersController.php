@@ -26,11 +26,11 @@ class OrdersController extends BaseController
     public function index( Orders $orders )
     {
         $fluxesHead = [
-            'id' => 'id',
-            'reference' => 'Codigo pedido',
+            'id' => 'ID',
+            'reference' => 'Código pedido',
             'total_pvp' => 'Importe total',
             'products_name' => 'Productos',
-            'pvpName' => 'Metodo de pago',
+            'pvpName' => 'Método de pago',
             'linkUser' => 'Cliente',
             'created_at' => 'Fecha',
             'statusName' => 'Estado',

@@ -59,21 +59,21 @@ return [
         'route' => 'admin.payments.index',
         'edit' => 'admin.payments.edit',
         'icon' => 'credit-card',
-        'name' => 'Metodos de pago',
+        'name' => 'Métodos de pago',
         'resource' => 'payments'
     ],
     [
         'dropdown' => true,
         'icon' => 'fa fa-truck',
-        'name' => 'Gastos de envio',
+        'name' => 'Gastos de envío',
         'childs' => [
             [
-                'route' => 'admin.shippingZones.index',
-                'resource' => 'shippingZones',
-                'create' => 'admin.shippingZones.create',
-                'edit' => 'admin.shippingZones.edit',
-                'delete' => 'admin.shippingZones.delete',
-                'name' => 'Zonas'
+                'route' => 'admin.shippingCosts.index',
+                'resource' => 'shippingCosts',
+                'create' => 'admin.shippingCosts.create',
+                'edit' => 'admin.shippingCosts.edit',
+                'delete' => 'admin.shippingCosts.delete',
+                'name' => 'Gastos de envío',
             ],
             [
                 'route' => 'admin.shippingCountries.index',
@@ -81,15 +81,15 @@ return [
                 'create' => 'admin.shippingCountries.create',
                 'edit' => 'admin.shippingCountries.edit',
                 'delete' => 'admin.shippingCountries.delete',
-                'name' => 'Paises',
+                'name' => 'Países',
             ],
             [
-                'route' => 'admin.shippingCosts.index',
-                'resource' => 'shippingCosts',
-                'create' => 'admin.shippingCosts.create',
-                'edit' => 'admin.shippingCosts.edit',
-                'delete' => 'admin.shippingCosts.delete',
-                'name' => 'Gastos de envio',
+                'route' => 'admin.shippingZones.index',
+                'resource' => 'shippingZones',
+                'create' => 'admin.shippingZones.create',
+                'edit' => 'admin.shippingZones.edit',
+                'delete' => 'admin.shippingZones.delete',
+                'name' => 'Zonas'
             ]
         ],
     ],
@@ -99,7 +99,7 @@ return [
         'edit' => 'admin.coupons.edit',
         'delete' => 'admin.coupons.delete',
         'icon' => 'fa fa-gift',
-        'name' => 'Coupons',
+        'name' => 'Cupones',
         'resource' => 'coupons'
     ],
     [
@@ -108,20 +108,20 @@ return [
         'name' => 'Faqs',
         'childs' => [
             [
-                'route' => 'admin.faqsCategories.index',
-                'resource' => 'faqsCategories',
-                'create' => 'admin.faqsCategories.create',
-                'edit' => 'admin.faqsCategories.edit',
-                'delete' => 'admin.faqsCategories.delete',
-                'name' => 'Categorias'
-            ],
-            [
                 'route' => 'admin.faqs.index',
                 'resource' => 'faqs',
                 'create' => 'admin.faqs.create',
                 'edit' => 'admin.faqs.edit',
                 'delete' => 'admin.faqs.delete',
                 'name' => 'Faqs',
+            ],
+            [
+                'route' => 'admin.faqsCategories.index',
+                'resource' => 'faqsCategories',
+                'create' => 'admin.faqsCategories.create',
+                'edit' => 'admin.faqsCategories.edit',
+                'delete' => 'admin.faqsCategories.delete',
+                'name' => 'Categorías'
             ]
         ]
     ],

@@ -14,7 +14,7 @@ class FaqsController extends BaseController
     public function index()
     {
         $fluxesHead = [
-            'id'            => 'id',
+            'id'            => 'ID',
             'answer'        => 'Pregunta',
             'categoryName'  => 'Categoría',
             'priority'      => 'Prioridad',

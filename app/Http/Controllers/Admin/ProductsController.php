@@ -27,12 +27,12 @@ class ProductsController extends BaseController
     public function index( Products $products )
     {
         $fluxesHead = [
-            'id' => 'id',
+            'id' => 'ID',
             'reference' => 'Referencia',
             'title' => 'Nombre',
-            'categoryName' => 'Categoria',
+            'categoryName' => 'Categoría',
             'pvp' => 'Precio',
-            'slug' => 'Url Amigable',
+            'slug' => 'URL',
             'active' => 'Activo'
         ];
 

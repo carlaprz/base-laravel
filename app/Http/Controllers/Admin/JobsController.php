@@ -21,7 +21,7 @@ class JobsController extends BaseController
         return view('admin.datatable', [
             'data' => Jobs::all(),
             'title' => 'Bolsa de empleo',
-            'pageTitle' => 'Listado de Bolsa de empleo',
+            'pageTitle' => 'Listado de bolsa de empleo',
             'header' => $fluxesHead
         ]);
     }

@@ -18,7 +18,7 @@ class BannersController extends BaseController
     public function index()
     {
         $fluxesHead = [
-            'id'        => 'id',
+            'id'        => 'ID',
             'name'      => 'Nombre',
             'text'      => 'Texto',
             'link'      => 'Enlace',
@@ -30,7 +30,7 @@ class BannersController extends BaseController
         return view('admin.datatable', [
             'data'      => Banners::all(),
             'title'     => 'Banners',
-            'pageTitle' => 'Listado de Banners',
+            'pageTitle' => 'Listado de banners',
             'header'    => $fluxesHead
         ]);
     }
