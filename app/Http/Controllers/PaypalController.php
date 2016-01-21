@@ -8,25 +8,25 @@ use App\Http\Controllers\Controller;
 use App\Services\PaypalService;
 use Request;
 
-final class PaymentController extends Controller
+final class PaypalController extends Controller
 {
 
-    public function IPN( PaypalService $paypalService , OrdersPayments $paymentRepository , Orders $ordersRespository)
+    public function IPN( PaypalService $paypalService, OrdersPayments $paymentRepository, Orders $ordersRespository )
     {
         $params = Request::all();
 
         if (empty($params['custom'])) {
             die('error de parametros');
         }
-        
+
         $response = $paypalService->validateIpn($params);
-        if(!empty($response['id'])){
-           $orders_payment = $paymentRepository->findByOperationCode($response['id']);
-           $orders_payment->update(['response_code' => $response['status']]); 
-           
-           $orders = $ordersRespository->find($orders_payment->order_id);
-           $orders->update(['status' => 2]);
-        }        
+        if (!empty($response['id'])) {
+            $orders_payment = $paymentRepository->findByOperationCode($response['id']);
+            $orders_payment->update(['response_code' => $response['status']]);
+
+            $orders = $ordersRespository->find($orders_payment->order_id);
+            $orders->update(['status' => 2]);
+        }
     }
 
     public function paymentCorrect( PaypalService $paypalService )
