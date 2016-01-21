@@ -1,14 +1,16 @@
+<?php $cantTd = 0; ?>
 <table class="table table-striped table-bordered table-hover" id="data-table">
     <thead>
         <tr>
             @foreach ($header as $key => $value)
+            <?php $cantTd++; ?>
             <th>{{ $value }}</th>
             @endforeach
             <th>Acciones</th>
         </tr>
     </thead>
     <tbody>
-        @foreach ($data as $content)
+        @forelse ($data as $content)
         <tr>
             @foreach ($header as $key => $value)
             <td class="field-{{ $key }}">
@@ -89,7 +91,11 @@
                 @endif   
             </td>
         </tr>
-        @endforeach
+        @empty
+            @if (isset($noDataTable))
+            <tr class="odd"> <td colspan="<?php echo $cantTd+1;?>" valing="top" class="dataTables_empty">No se encontraron resultados.</td></tr>
+            @endif
+        @endforelse
 
     </tbody>
 </table>

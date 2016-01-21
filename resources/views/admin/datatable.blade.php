@@ -37,18 +37,16 @@
             <div class="panel-heading">
                 {{ $pageTitle }}
             </div>
-
-
             @if (isset($extras))
-            @foreach ($extras as $extra)
-            @include($extra)
-            @endforeach
+                @foreach ($extras as $extra)
+                @include($extra)
+                @endforeach
             @endif
             <div class="panel-body">
                 <div class="table-responsive">
                     @include('admin/partials/datatable')
                     @if (isset($totalProductsPerPage))
-                    {!! $data->render() !!}
+                        {!! $data->render() !!}
                     @endif
                 </div>
             </div>
