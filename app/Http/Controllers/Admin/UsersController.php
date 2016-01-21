@@ -19,11 +19,11 @@ class UsersController extends BaseController
     public function index()
     {
         $fluxesHead = [
-            'id' => 'id',
+            'id' => 'ID',
             'name' => 'Nombre',
             'lastname' => 'Apellido',
             'email' => 'Email',
-            'countryName' => 'Pais',
+            'countryName' => 'País',
             'cantOrders' => 'Pedidos',
             'statusName' => 'Estado'
         ];

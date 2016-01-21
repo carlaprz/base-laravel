@@ -14,8 +14,8 @@ class CouponsController extends BaseController
     public function index()
     {
         $fluxesHead = [
-            'id' => 'id',
-            'code' => 'Codigo',
+            'id' => 'ID',
+            'code' => 'Código',
             'start' => 'Fecha de inicio',
             'end' => 'Fecha de finalización',
             'active' => 'Activo'

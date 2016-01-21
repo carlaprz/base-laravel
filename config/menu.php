@@ -59,13 +59,13 @@ return [
         'route' => 'admin.payments.index',
         'edit' => 'admin.payments.edit',
         'icon' => 'credit-card',
-        'name' => 'Metodos de pago',
+        'name' => 'Métodos de pago',
         'resource' => 'payments'
     ],
     [
         'dropdown' => true,
         'icon' => 'fa fa-truck',
-        'name' => 'Gastos de envio',
+        'name' => 'Gastos de envío',
         'childs' => [
             [
                 'route' => 'admin.shippingZones.index',
@@ -81,7 +81,7 @@ return [
                 'create' => 'admin.shippingCountries.create',
                 'edit' => 'admin.shippingCountries.edit',
                 'delete' => 'admin.shippingCountries.delete',
-                'name' => 'Paises',
+                'name' => 'Países',
             ],
             [
                 'route' => 'admin.shippingCosts.index',
@@ -89,7 +89,7 @@ return [
                 'create' => 'admin.shippingCosts.create',
                 'edit' => 'admin.shippingCosts.edit',
                 'delete' => 'admin.shippingCosts.delete',
-                'name' => 'Gastos de envio',
+                'name' => 'Gastos de envío',
             ]
         ],
     ],
@@ -99,7 +99,7 @@ return [
         'edit' => 'admin.coupons.edit',
         'delete' => 'admin.coupons.delete',
         'icon' => 'fa fa-gift',
-        'name' => 'Coupons',
+        'name' => 'Cupones',
         'resource' => 'coupons'
     ],
     [
@@ -113,7 +113,7 @@ return [
                 'create' => 'admin.faqsCategories.create',
                 'edit' => 'admin.faqsCategories.edit',
                 'delete' => 'admin.faqsCategories.delete',
-                'name' => 'Categorias'
+                'name' => 'Categorías'
             ],
             [
                 'route' => 'admin.faqs.index',

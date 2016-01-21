@@ -17,17 +17,17 @@ class NewsController extends BaseController
     public function index()
     {
         $fluxesHead = [
-            'id' => 'id',
-            'title' => 'Titulo',
-            'publish' => 'Fecha de publicacion',      
-            'slug' => 'Url amigable',
+            'id' => 'ID',
+            'title' => 'Título',
+            'publish' => 'Fecha de publicación',
+            'slug' => 'URL',
             'order' => 'Prioridad',            
             'active' => 'Activo'
         ];
 
         return view('admin.datatable', [
             'data' => News::all(),
-            'pageTitle' => 'Listado de Noticias',
+            'pageTitle' => 'Listado de noticias',
             'header' => $fluxesHead
         ]);
     }

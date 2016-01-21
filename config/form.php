@@ -39,7 +39,7 @@ return [
             ],
             'telephone' => [
                 'type' => 'numeric',
-                'title' => 'Telefono',
+                'title' => 'Teléfono',
                 'description' => 'Introduzca el numero de telefono',
                 'rules' => ['required']
             ],
@@ -51,7 +51,7 @@ return [
             ],
             'country_id' => [
                 'type' => 'select',
-                'title' => 'Pais',
+                'title' => 'País',
                 'description' => 'all_countries',
                 'rules' => ['required']
             ],
@@ -80,19 +80,19 @@ return [
             'image' => [
                 'type' => 'image_file',
                 'title' => 'Image',
-                'description' => 'Introduzca la imagen Principal de la noticia',
+                'description' => 'Introduzca la imagen principal de la noticia',
                 'rules' => ['required']
             ],
             'order' => [
                 'type' => 'numeric',
                 'title' => 'Prioridad',
-                'description' => 'Introduzca el orden en caso de destacar',
+                'description' => 'Introduzca la prioridad en caso de querer destacar. (Más alta, más arriba)',
                 'rules' => ['numeric']
             ],
             'publish' => [
                 'type' => 'datetime',
-                'title' => 'Fecha de publicacion',
-                'description' => 'Introduzca la fecha de publicacion',
+                'title' => 'Fecha de publicación',
+                'description' => 'Introduzca la fecha de publicación',
                 'rules' => ['required', 'date_format:Y-m-d H:i']
             ],
             'active' => [
@@ -107,14 +107,14 @@ return [
                 'fields' => [
                     'title' => [
                         'type' => 'text',
-                        'title' => 'Titulo',
-                        'description' => 'Titulo',
+                        'title' => 'Título',
+                        'description' => 'Título',
                         'rules' => ['required', 'unique:news_translations,title,{unique:id},news_id,locale,es']
                     ],
                     'description' => [
                         'type' => 'textarea',
                         'title' => 'Descripción',
-                        'description' => 'Descripcion',
+                        'description' => 'Descripción',
                         'rules' => ['required']
                     ],
                     'content' => [
@@ -150,16 +150,16 @@ return [
         ]
     ],
     'categories' => [
-        'name' => 'Categorias',
+        'name' => 'Categorías',
         'for_files' => false,
-        'description' => 'Administración de Categorias',
+        'description' => 'Administración de Categorías',
         'editor' => false,
         'autocomplete' => ['meta_title' => 'title'],
         'slug' => ['title'],
         'fields' => [
             'parent' => [
                 'type' => 'select',
-                'title' => 'Categoria Padre',
+                'title' => 'Categoría padre',
                 'description' => 'all_categories_parent',
             ],
             'active' => [
@@ -180,8 +180,8 @@ return [
                     ],
                     'slug' => [
                         'type' => 'text',
-                        'title' => 'Url amigable',
-                        'description' => 'Url amigable,en caso de no completarlo se completara con el nombre.',
+                        'title' => 'URL',
+                        'description' => 'URL amigable para SEO,en caso de no completarlo se completara con el nombre.',
                         'rules' => ['required']
                     ],
                     'meta_title' => [
@@ -208,8 +208,8 @@ return [
                     ],
                     'slug' => [
                         'type' => 'text',
-                        'title' => 'Friendly url',
-                        'description' => 'Friendly url',
+                        'title' => 'URL',
+                        'description' => 'Friendly SEO URL',
                         'rules' => ['required_with:title']
                     ],
                     'meta_title' => [
@@ -243,7 +243,7 @@ return [
                 'rules' => ['required']
             ],
             'active' => [
-                'type' => 'radio',
+                'type'  => 'radio',
                 'title' => 'Activo',
                 'description' => 'Estado',
                 'rules' => ['required']
@@ -251,7 +251,7 @@ return [
             'pvp' => [
                 'type' => 'numeric',
                 'title' => 'Precio del producto',
-                'description' => 'Introduzca el precio del producto',
+                'description' => 'Introduzca el precio sin IVA del producto',
                 'rules' => ['required']
             ],
             'pvp_discounted' => [
@@ -315,8 +315,8 @@ return [
                 'fields' => [
                     'title' => [
                         'type' => 'text',
-                        'title' => 'Titulo',
-                        'description' => 'Titulo del producto',
+                        'title' => 'Título',
+                        'description' => 'Título del producto',
                         'rules' => ['required']
                     ],
                     'description' => [
@@ -327,8 +327,8 @@ return [
                     ],
                     'slug' => [
                         'type' => 'text',
-                        'title' => 'Url amigable',
-                        'description' => 'Url amigable,en caso de no completarlo se completara con el nombre del producto.',
+                        'title' => 'URL',
+                        'description' => 'URL amigable para SEO. En caso de no completarlo se completara con el nombre del producto.',
                         'rules' => ['required']
                     ]
                 ]
@@ -338,19 +338,19 @@ return [
                     'title' => [
                         'type' => 'text',
                         'title' => 'Title',
-                        'description' => 'Titulo del producto',
+                        'description' => 'Título del producto',
                         'rules' => []
                     ],
                     'description' => [
                         'type' => 'textarea',
                         'title' => 'Description',
-                        'description' => 'Descripcion',
+                        'description' => 'Descripción',
                         'rules' => ['required_with:title']
                     ],
                     'slug' => [
                         'type' => 'text',
-                        'title' => 'Friendly url',
-                        'description' => 'Friendly url',
+                        'title' => 'URL',
+                        'description' => 'Friendly SEO URL',
                         'rules' => ['required_with:title']
                     ]
                 ]
@@ -373,14 +373,14 @@ return [
             ],
             'reference' => [
                 'type' => 'textDisabled',
-                'title' => 'Codigo pedido',
+                'title' => 'Código pedido',
                 'description' => '',
                 'rules' => ['']
             ],
             'pvpName' => [
                 'type' => 'textDisabled',
                 'title' => 'Método de pago',
-                'description' => 'Metodo de pago',
+                'description' => 'Método de pago',
                 'rules' => ['']
             ],
             'total_pvp' => [
@@ -391,7 +391,7 @@ return [
             ],
             'total_iva' => [
                 'type' => 'numericDisabled',
-                'title' => 'IVA total',
+                'title' => 'IVA',
                 'description' => '',
                 'rules' => ['']
             ],
@@ -403,7 +403,7 @@ return [
             ],
             'cupon_code' => [
                 'type' => 'textDisabled',
-                'title' => 'Cupon de descuento',
+                'title' => 'Cupón de descuento',
                 'description' => '',
                 'rules' => []
             ],
@@ -424,55 +424,55 @@ return [
             'fields' => [
                 'shipping_name' => [
                     'type' => 'textDisabled',
-                    'title' => 'Nombre de envio',
+                    'title' => 'Nombre',
                     'description' => '',
                     'rules' => ['']
                 ],
                 'shipping_lastname' => [
                     'type' => 'textDisabled',
-                    'title' => 'Apellido de envio',
+                    'title' => 'Apellido',
                     'description' => '',
                     'rules' => ['']
                 ],
                 'shipping_email' => [
                     'type' => 'textDisabled',
-                    'title' => 'Email de envio',
+                    'title' => 'Email',
                     'description' => '',
                     'rules' => ['']
                 ],
                 'shipping_telephone' => [
                     'type' => 'textDisabled',
-                    'title' => 'Telefono de envio',
+                    'title' => 'Teléfono',
                     'description' => '',
                     'rules' => ['']
                 ],
                 'shipping_address' => [
                     'type' => 'textDisabled',
-                    'title' => 'Dirreccion de envio',
+                    'title' => 'Dirección de envío',
                     'description' => '',
                     'rules' => ['']
                 ],
                 'shipping_postalcode' => [
                     'type' => 'textDisabled',
-                    'title' => 'Codigo postal de envio',
+                    'title' => 'Código postal de envío',
                     'description' => '',
                     'rules' => ['']
                 ],
                 'shipping_city' => [
                     'type' => 'textDisabled',
-                    'title' => 'Ciudad de envio',
+                    'title' => 'Ciudad de envío',
                     'description' => '',
                     'rules' => ['']
                 ],
                 'shipping_province' => [
                     'type' => 'textDisabled',
-                    'title' => 'Provincia de envio',
+                    'title' => 'Provincia de envío',
                     'description' => '',
                     'rules' => ['']
                 ],
                 'shipping_country_name' => [
                     'type' => 'textDisabled',
-                    'title' => 'Pais de envio',
+                    'title' => 'País de envío',
                     'description' => '',
                     'rules' => ['']
                 ],
@@ -483,7 +483,7 @@ return [
             "fields" => [
                 'link' => [
                     'type' => 'link',
-                    'title' => 'Producto Link',
+                    'title' => 'Enlace al producto',
                     'description' => '',
                     'rules' => ['']
                 ],
@@ -501,7 +501,7 @@ return [
                 ],
                 'iva' => [
                     'type' => 'textDisabled',
-                    'title' => 'iva',
+                    'title' => 'IVA',
                     'description' => '',
                     'rules' => ['']
                 ],
@@ -634,7 +634,7 @@ return [
             ],
             'shipping_zone' => [
                 'type' => 'select',
-                'title' => 'Zone',
+                'title' => 'Zona',
                 'description' => 'all_zones',
                 'rules' => ['required']
             ]

@@ -15,16 +15,16 @@ class CategoriesController extends BaseController
     {
         App::setLocale('es');
         $fluxesHead = [
-            'id' => 'id',
+            'id'=> 'ID',
             'title' => 'Nombre',
-            'parentName' => 'Categoria Padre',
-            'slug' => 'Url amigable',
+            'parentName' => 'Categoría padre',
+            'slug' => 'URL',
             'active' => 'Activo'
         ];
 
         return view('admin.datatable', [
             'data' => Categories::all(),
-            'pageTitle' => 'Listado de Categorias',
+            'pageTitle' => 'Listado de Categorías',
             'header' => $fluxesHead
         ]);
     }
