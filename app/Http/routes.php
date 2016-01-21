@@ -1,20 +1,10 @@
 <?php
 
-/*
-  |--------------------------------------------------------------------------
-  | Application Routes
-  |--------------------------------------------------------------------------
-  |
-  | Here is where you can register all of the routes for an application.
-  | It's a breeze. Simply tell Laravel the URIs it should respond to
-  | and give it the controller to call when that URI is requested.
-  |
- */
+///////////////////////////////////////////////////////////////////////////////////////////////////
+//FRONT
 Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['localizationRedirect', 'localize']
         ], function()
 {
-
-
     Route::get(LaravelLocalization::transRoute('routes.home'), [
         'as' => 'home',
         'uses' => 'WelcomeController@index'
@@ -26,15 +16,54 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['lo
     ]);
 });
 
-Route::get('administrador', function()
-{
-    return redirect('auth/login');
-});
+
+//PAYPAL
+Route::get('payment/paypal/ok', [
+    'as' => 'payments.paypal_ok',
+    'uses' => 'PaypalController@paymentCorrect',
+    'middleware' => 'auth'
+]);
+
+Route::get('payment/paypal/ko', [
+    'as' => 'payments.paypal_ko',
+    'uses' => 'PaypalController@paymentIncorrect',
+    'middleware' => 'auth'
+]);
+
+Route::post('payment/paypal/ipn', [
+    'as' => 'payment.paypal',
+    'uses' => 'PaypalController@IPN'
+]);
+
+//TVP
+Route::get('payment/tpv/ok', [
+    'as' => 'payments.tpv_ok',
+    'uses' => 'TpvController@paymentCorrect',
+    'middleware' => 'auth'
+]);
+
+Route::get('payment/tpv/ko', [
+    'as' => 'payments.tpv_ko',
+    'uses' => 'TpvController@paymentIncorrect',
+    'middleware' => 'auth'
+]);
+
+Route::post('payment/tpv/ipn', [
+    'as' => 'payment.tpv',
+    'uses' => 'TpvController@IPN'
+]);
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
 
 Route::controllers([
     'auth' => 'Auth\AuthController',
     'password' => 'Auth\PasswordController'
 ]);
+
+Route::get('administrador', function()
+{
+    return redirect('auth/login');
+});
 
 Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => ['auth', 'admin']], function ()
 {
@@ -43,7 +72,7 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => ['aut
         'uses' => 'HomeController@Index'
     ]);
 
-    //USERS
+    ////////////////USERS
     Route::get('users', [
         'as' => 'admin.users.index',
         'uses' => 'UsersController@index'
@@ -74,7 +103,7 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => ['aut
         'uses' => 'UsersController@delete'
     ]);
 
-    //NEWS
+    ///////////////NEWS
     Route::get('news', [
         'as' => 'admin.news.index',
         'uses' => 'NewsController@index'
@@ -104,7 +133,7 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => ['aut
         'uses' => 'NewsController@delete'
     ]);
 
-    //PRODUCTOS
+    ///////////////PRODUCTOS
     Route::get('products', [
         'as' => 'admin.products.index',
         'uses' => 'ProductsController@index'
@@ -150,7 +179,7 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => ['aut
         'uses' => 'ProductsController@delete'
     ]);
 
-    //CATEGORIAS PRODUCTOS
+    ///////////////CATEGORIAS PRODUCTOS
     Route::get('categories', [
         'as' => 'admin.categories.index',
         'uses' => 'CategoriesController@index'
@@ -181,7 +210,7 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => ['aut
     ]);
 
 
-    //PEDIDOS
+    ///////////////PEDIDOS
     Route::get('orders', [
         'as' => 'admin.orders.index',
         'uses' => 'OrdersController@index'
@@ -222,7 +251,7 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => ['aut
         'uses' => 'OrdersController@details'
     ]);
 
-    //PAYMENTS
+    ///////////////PAYMENTS
     Route::get('payments', [
         'as' => 'admin.payments.index',
         'uses' => 'PaymentsController@index'
@@ -238,7 +267,7 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => ['aut
         'uses' => 'PaymentsController@update'
     ]);
 
-    //COUPONS
+    ///////////////COUPONS
     Route::get('coupons', [
         'as' => 'admin.coupons.index',
         'uses' => 'CouponsController@index'
@@ -269,7 +298,7 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => ['aut
         'uses' => 'CouponsController@delete'
     ]);
 
-    //BANNERS
+    ///////////////BANNERS
     Route::get('banners', [
         'as' => 'admin.banners.index',
         'uses' => 'BannersController@index'
@@ -301,7 +330,7 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => ['aut
     ]);
 
 
-    //SHIPPING
+    ///////////////SHIPPING
     Route::get('shippingZones', [
         'as' => 'admin.shippingZones.index',
         'uses' => 'ShippingZonesController@index'
@@ -393,7 +422,7 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => ['aut
     ]);
 
 
-    //FAQS
+    ///////////////FAQS
 
     Route::get('faqsCategories', [
         'as' => 'admin.faqsCategories.index',
