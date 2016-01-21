@@ -68,12 +68,12 @@ return [
         'name' => 'Gastos de envío',
         'childs' => [
             [
-                'route' => 'admin.shippingZones.index',
-                'resource' => 'shippingZones',
-                'create' => 'admin.shippingZones.create',
-                'edit' => 'admin.shippingZones.edit',
-                'delete' => 'admin.shippingZones.delete',
-                'name' => 'Zonas'
+                'route' => 'admin.shippingCosts.index',
+                'resource' => 'shippingCosts',
+                'create' => 'admin.shippingCosts.create',
+                'edit' => 'admin.shippingCosts.edit',
+                'delete' => 'admin.shippingCosts.delete',
+                'name' => 'Gastos de envío',
             ],
             [
                 'route' => 'admin.shippingCountries.index',
@@ -84,12 +84,12 @@ return [
                 'name' => 'Países',
             ],
             [
-                'route' => 'admin.shippingCosts.index',
-                'resource' => 'shippingCosts',
-                'create' => 'admin.shippingCosts.create',
-                'edit' => 'admin.shippingCosts.edit',
-                'delete' => 'admin.shippingCosts.delete',
-                'name' => 'Gastos de envío',
+                'route' => 'admin.shippingZones.index',
+                'resource' => 'shippingZones',
+                'create' => 'admin.shippingZones.create',
+                'edit' => 'admin.shippingZones.edit',
+                'delete' => 'admin.shippingZones.delete',
+                'name' => 'Zonas'
             ]
         ],
     ],
@@ -108,20 +108,20 @@ return [
         'name' => 'Faqs',
         'childs' => [
             [
-                'route' => 'admin.faqsCategories.index',
-                'resource' => 'faqsCategories',
-                'create' => 'admin.faqsCategories.create',
-                'edit' => 'admin.faqsCategories.edit',
-                'delete' => 'admin.faqsCategories.delete',
-                'name' => 'Categorías'
-            ],
-            [
                 'route' => 'admin.faqs.index',
                 'resource' => 'faqs',
                 'create' => 'admin.faqs.create',
                 'edit' => 'admin.faqs.edit',
                 'delete' => 'admin.faqs.delete',
                 'name' => 'Faqs',
+            ],
+            [
+                'route' => 'admin.faqsCategories.index',
+                'resource' => 'faqsCategories',
+                'create' => 'admin.faqsCategories.create',
+                'edit' => 'admin.faqsCategories.edit',
+                'delete' => 'admin.faqsCategories.delete',
+                'name' => 'Categorías'
             ]
         ]
     ],

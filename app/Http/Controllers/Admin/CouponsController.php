@@ -24,7 +24,7 @@ class CouponsController extends BaseController
         return view('admin.datatable', [
             'data' => Coupons::all(),
             'title' => 'Cupones',
-            'pageTitle' => 'Listado de Cupones',
+            'pageTitle' => 'Listado de cupones',
             'header' => $fluxesHead
         ]);
     }
