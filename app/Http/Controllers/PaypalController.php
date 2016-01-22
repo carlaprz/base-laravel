@@ -49,12 +49,12 @@ final class PaypalController extends Controller
             die('error en confirmacion');
         }
 
-        return view('front.users.my-account.ads.pay-correct');
+        return view('front.payments.pay-paypal-correct');
     }
 
     public function paymentIncorrect()
     {
-        return view('front.users.my-account.ads.pay-incorrect');
+        return view('front.payments.pay-paypal-incorrect');
     }
 
 }

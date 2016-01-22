@@ -4,6 +4,7 @@ namespace App\Services;
 
 class PaypalService
 {
+    private $inTestMode = true;
 
     private static $environmentsUrls = [
         'test' => 'https://www.sandbox.paypal.com/cgi-bin/webscr',
@@ -13,7 +14,6 @@ class PaypalService
         'test' => 'https://api-3t.sandbox.paypal.com/nvp',
         'production' => 'https://api-3t.paypal.com/nvp',
     ];
-    private $inTestMode = true;
 
     private function getApiUrl()
     {
@@ -45,9 +45,9 @@ class PaypalService
                 . '&L_PAYMENTREQUEST_0_NAME0=' . urlencode($desc)
                 . '&L_PAYMENTREQUEST_0_QTY0=1'
                 . '&PAYMENTREQUEST_0_DESC=' . urlencode($desc)
-                . '&RETURNURL=' . urlencode(route('my_account.ads.payment_ok'))
-                . '&CANCELURL=' . urlencode(route('my_account.ads.payment_ko'))
-                . '&PAYMENTREQUEST_0_NOTIFYURL=' . urlencode(route('payment.ads.paypal'));
+                . '&RETURNURL=' . urlencode(route('payments.paypal_ok'))
+                . '&CANCELURL=' . urlencode(route('payments.paypal_ko'))
+                . '&PAYMENTREQUEST_0_NOTIFYURL=' . urlencode(route('payment.paypal'));
 
         $resArray = $this->doPost($url, $nvp);
 

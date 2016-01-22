@@ -43,6 +43,7 @@ class AppServiceProvider extends ServiceProvider
         $this->registerEmailService();
         $this->registerUserService();
         $this->registerPaypalService();
+        $this->registerTpvService();
     }
 
     public function registerFileServices()
@@ -74,6 +75,14 @@ class AppServiceProvider extends ServiceProvider
         $this->app->singleton(PaypalService::class, function ()
         {
             return new PaypalService();
+        });
+    }
+
+    public function registerTpvService()
+    {
+        $this->app->singleton(TpvService::class, function ()
+        {
+            return new TpvService();
         });
     }
 
