@@ -66,7 +66,7 @@ class FileServices
         $imageName = strtolower($imageName);
         $imageName = str_replace('.', '_' . $key . '.', $imageName);
         $data['imageName'] = $imageName;
-         if ($ext == 'jpg' || $ext = 'png' || $ext == 'jepg') {
+        if ($ext == 'jpg' || $ext = 'png' || $ext == 'jepg') {
             if (isset($dimensions[$key])) {
                 $image = Image::make($file->getRealPath());
                 $data['showCrop'] = false;
@@ -108,10 +108,10 @@ class FileServices
         return $imagePath;
     }
 
-    static function cropImage($path, $data, $finalWidth)
+    static function cropImage( $path, $data, $finalWidth )
     {
         $uploadPath = public_path($path);
-        $imagen = Image::make($uploadPath.'/'.$data['name']);
+        $imagen = Image::make($uploadPath . '/' . $data['name']);
         $imagen->crop($data['w'], $data['h'], $data['x'], $data['y']);
         $imagen->widen($finalWidth);
         $imagen->save($uploadPath . $data['name']);
