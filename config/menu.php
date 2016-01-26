@@ -31,6 +31,7 @@ return [
                 'edit' => 'admin.products.edit',
                 'delete' => 'admin.products.delete',
                 'excel' => 'admin.products.excel',
+                'crop' => 'admin.products.crop',
                 'name' => 'Productos',
                 'icon' => 'fa fa-shopping-cart',
             ],

@@ -51,7 +51,6 @@ abstract class BaseController extends Controller
         $rules = get_rules_from($this->resourceName);
 
         $data = $this->prepareData(Input::all(), $request);
-
         $validations = $this->prepareValidate($data, $rules, null);
 
         if (!empty($validations) && is_object($validations)) {
@@ -63,15 +62,18 @@ abstract class BaseController extends Controller
 
         // ONLY FOR PRODUCTS RELATED
         $this->relatedProducts($data, $resource);
-
         $route = resource_home($this->resourceName);
+
+        if (!empty($data["showCrop"]) && is_array($data["showCrop"])) {
+            return redirect(route('admin.' . $this->resourceName . '.crop', $resource->id));
+        }
+
         return redirect($route);
     }
 
     public function update( $id, Request $request )
     {
         $repo = App::make($this->repositoryName);
-
         $resource = $repo->find($id);
 
         $rules = get_rules_from($this->resourceName);
@@ -85,11 +87,15 @@ abstract class BaseController extends Controller
         $data = $this->clearLang($data);
 
         $resource->update($data);
-
         // ONLY FOR PRODUCTS RELATED
-        $this->relatedProducts($data, $resource);
 
+        $this->relatedProducts($data, $resource);
         $route = resource_home($this->resourceName);
+
+        if (!empty($data["showCrop"]) && is_array($data["showCrop"])) {
+            return redirect(route('admin.' . $this->resourceName . '.crop', $resource->id));
+        }
+
         return redirect($route);
     }
 
@@ -155,7 +161,6 @@ abstract class BaseController extends Controller
             }
         }
 
-
         foreach ($data as $key => $value) {
             if (is_array($value)) {
                 if (in_array($key, $langs)) {
@@ -182,14 +187,13 @@ abstract class BaseController extends Controller
 
         //generate slugs
         $data = $this->generateSlugs($data);
+        //dd($data);
         $data = $this->clearDescription($data);
 
         //generate parent 
         $data = $this->generateParent($data);
 
         $data = $this->removePrev($data);
-
-
 
         //$data = $this->clearLang($data);
 
@@ -201,12 +205,12 @@ abstract class BaseController extends Controller
         foreach ($data as $index => $value) {
             if (is_array($value)) {
                 foreach ($value as $key => $val) {
-                    if ($val == '<p><br></p>') {
+                    if ($val === '<p><br></p>') {
                         $data[$index][$key] = null;
                     }
                 }
             } else {
-                if ($value == '<p><br></p>') {
+                if ($value === '<p><br></p>') {
                     $data[$index] = null;
                 }
             }
@@ -284,7 +288,6 @@ abstract class BaseController extends Controller
         $pattern = '/_prev$/';
         $keysPrevs = preg_array_key_exists($pattern, $data);
 
-
         if (!empty($keysPrevs)) {
             foreach ($keysPrevs as $key) {
                 $realkey = str_replace('_prev', '', $key);
@@ -354,6 +357,31 @@ abstract class BaseController extends Controller
                 }
             }
         }
+    }
+
+    public function crop( FormGenerator $formBuilder, $id )
+    {
+        $repo = App::make($this->repositoryName);
+        $data = $repo->find($id);
+
+        return view('admin.form.crop', [
+            'form' => $formBuilder->generate(
+                    $this->resourceName . '_crop', $data->toArray()
+            )
+        ]);
+    }
+
+    public function cropSave( $id )
+    {
+        $data = Input::all();
+        unset($data["_token"]);
+        foreach ($data as $key => $imagen) {
+            $d = $this->filesDimensions;
+            FileServices::cropImage($this->pathFile, $imagen, $d[$key]["w"]);
+        }
+
+        $route = resource_home($this->resourceName);
+        return redirect($route);
     }
 
 }

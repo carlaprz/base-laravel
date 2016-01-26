@@ -9,6 +9,8 @@ use App\Core\Excel\ExcelTransformator;
 use App\Models\ProductsRelated;
 use App\Core\Form\FormGenerator;
 use App;
+use Request;
+
 
 class ProductsController extends BaseController
 {
@@ -20,8 +22,8 @@ class ProductsController extends BaseController
     protected $repositoryNameRelated = ProductsRelated::class;
     protected $pathFile = 'files/products/';
     protected $filesDimensions = [
-        'image' => ['w' => 564, 'h' => 384],
-        'thumb' => ['w' => 424, 'h' => 362],
+        'image' => ['w' => 400, 'h' => 400],
+        'thumb' => ['w' => 150, 'h' => 150],
     ];
 
     public function index( Products $products )
@@ -33,6 +35,8 @@ class ProductsController extends BaseController
             'categoryName' => 'Categoría',
             'pvp' => 'Precio',
             'slug' => 'URL',
+            'thumb' => 'Imagen Listado',
+            'image' => 'Imagen Detalle',
             'active' => 'Activo'
         ];
 
@@ -85,7 +89,7 @@ class ProductsController extends BaseController
 
         return back();
     }
-    
+
     public function edit( FormGenerator $formBuilder, $id )
     {
         $repo = App::make($this->repositoryName);
@@ -99,5 +103,6 @@ class ProductsController extends BaseController
             )
         ]);
     }
+
 
 }

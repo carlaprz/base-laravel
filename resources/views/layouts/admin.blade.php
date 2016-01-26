@@ -16,7 +16,7 @@
         <link href="{{ admin_asset('css/custom-styles.css') }}" rel="stylesheet"/>
         <link href="{{ admin_asset('css/summernote.css') }}" rel="stylesheet">
         <link href="{{ admin_asset('css/styles.css') }}" rel="stylesheet">
-
+        <link href="{{ admin_asset('css/cropper.css') }}" rel="stylesheet">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/3.1.2/css/bootstrap-datetimepicker.min.css">
 
     </head>
@@ -64,6 +64,7 @@
         <script src="{{ admin_asset('js/dataTables/jquery.dataTables.js') }}"></script>
         <script src="{{ admin_asset('js/dataTables/dataTables.bootstrap.js') }}"></script>
         <script src="{{ admin_asset('js/summernote.min.js') }}"></script>
+         <script src="{{ admin_asset('js/cropper.js') }}"></script>
         <script src="{{ admin_asset('js/custom-scripts.js') }}"></script>
 
 

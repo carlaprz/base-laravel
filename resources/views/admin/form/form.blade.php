@@ -155,14 +155,14 @@
         });
         
         <?php
-        /*foreach ($form->getDataShow() as $dataHide) {            
+        foreach ($form->getDataShow() as $dataHide) {            
             if (null !== $dataHide["title"] && $dataHide["title"]!== 'generals') { ?>
                 if($("#div_field_<?php echo $dataHide["title"]?>").length > 0) {
                     $("#div_field_<?php echo $dataHide["title"]?>").trigger("click");
                 }
         <?php 
             }
-        }*/ ?>
+        }?>
         
         $(document).on('keydown', '.onlyNumbers', function (event) {
             if (event.keyCode == 46 || event.keyCode == 8 || event.keyCode == 9 || event.keyCode == 27 || event.keyCode == 13 || (event.keyCode == 65 && event.ctrlKey === true) || (event.keyCode >= 35 && event.keyCode <= 39)) {

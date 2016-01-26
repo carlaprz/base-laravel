@@ -164,6 +164,16 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => ['aut
         'uses' => 'ProductsController@save'
     ]);
 
+    Route::get('products/crop/{id}', [
+        'as' => 'admin.products.crop',
+        'uses' => 'ProductsController@crop'
+    ]);
+    
+    Route::post('products/crop/{id}', [
+        'as' => 'admin.products.cropSave',
+        'uses' => 'ProductsController@cropSave'
+    ]);
+    
     Route::get('products/edit/{id}', [
         'as' => 'admin.products.edit',
         'uses' => 'ProductsController@edit'

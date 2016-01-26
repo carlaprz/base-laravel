@@ -16,7 +16,7 @@
             <td class="field-{{ $key }}">
                 @if ($key == 'active' || $key == 'compress' || $key == 'status')
                 {{ $content[$key] ? 'Sí' : 'No' }}
-                @elseif (trim($key)=="product_image" || trim($key)=="banner_image" || trim($key)=="image" )
+                @elseif (trim($key)=="product_image" || trim($key)=="banner_image" || trim($key)=="image" || trim($key)=="thumb" )
                 <?php
                 $image = pathinfo($content[$key], PATHINFO_BASENAME);
                 $explodeImage = explode('.', $image);

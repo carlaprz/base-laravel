@@ -16,7 +16,23 @@ class FileServices
         //add file generals
         foreach ($files as $key => $file) {
             if (!is_array($file)) {
-                $data[$key] = FileServices::uploadFilebyRequest($file, $path,  $key, $dimensions);
+                $dataAux = FileServices::uploadFilebyRequest($file, $path, $key, $dimensions);
+
+                $data[$key] = $dataAux["imageName"];
+                $data[$key . "_showCrop"] = $dataAux["showCrop"];
+                if ($dataAux["showCrop"] === true) {
+                    $data["showCrop"][] = $key;
+                }
+
+                if ($key === 'image') {
+                    $dataAux = FileServices::uploadFilebyRequest($file, $path, "thumb", $dimensions);
+                    $data["thumb"] = $dataAux["imageName"];
+                    if ($dataAux["showCrop"] === true) {
+                        $data["showCrop"][] = "thumb";
+                    }
+                    unset($data['thumb_prev']);
+                }
+
                 unset($data[$key . '_prev']);
             }
         }
@@ -26,8 +42,11 @@ class FileServices
             if (key_exists($lang->code, $files)) {
                 foreach ($files[$lang->code] as $key => $file) {
                     if (isset($file)) {
-                        
-                        $data[$lang->code][$key] = FileServices::uploadFilebyRequest($file, $path .  $lang->code, $key, $dimensions);
+                        $dataAux = FileServices::uploadFilebyRequest($file, $path . $lang->code, $key, $dimensions);
+                        $data[$lang->code][$key] = $dataAux["imageName"];
+                        if ($dataAux["showCrop"] === true) {
+                            $data[$lang->code]["showCrop"][] = $key;
+                        }
                         unset($data[$lang->code][$key . '_prev']);
                     }
                 }
@@ -45,17 +64,30 @@ class FileServices
 
         $imageName = str_replace(' ', '_', $file->getClientOriginalName());
         $imageName = strtolower($imageName);
-        $imageName = str_replace('.', '_'.$key.'.', $imageName);
-
-        if ($ext == 'jpg' || $ext = 'png' || $ext == 'jepg') {
+        $imageName = str_replace('.', '_' . $key . '.', $imageName);
+        $data['imageName'] = $imageName;
+         if ($ext == 'jpg' || $ext = 'png' || $ext == 'jepg') {
             if (isset($dimensions[$key])) {
                 $image = Image::make($file->getRealPath());
-                if (isset($dimensions[$key]['w']) && $dimensions[$key]['w'] > 0) {
+                $data['showCrop'] = false;
+
+                $w = $image->width();
+                $h = $image->height();
+                $realRelation = $w / $h;
+                $dimensionsRelation = false;
+
+                if (!empty($dimensions[$key]['w']) && !empty($dimensions[$key]['h'])) {
+                    $dimensionsRelation = $dimensions[$key]['w'] / $dimensions[$key]['h'];
+                } else if (!empty($dimensions[$key]['w'])) {
+                    //si solo tengo defino el ancho.
                     $image->widen($dimensions[$key]['w']);
                 }
 
-                if (isset($dimensions[$key]['h']) && $dimensions[$key]['h'] > 0) {
-                    $image->resizeCanvas($dimensions[$key]['w'], $dimensions[$key]['h'], 'center', false, 'ffffff');
+                if ($dimensionsRelation != FALSE && $dimensionsRelation == $realRelation) {
+                    //si tiene la misma proporcion le cambio el tamaño
+                    $image->resize($dimensions[$key]['w'], $dimensions[$key]['h']);
+                } else if ($dimensionsRelation != FALSE) {
+                    $data['showCrop'] = true;
                 }
 
                 $image->save($uploadPath . $imageName);
@@ -66,16 +98,23 @@ class FileServices
             $file->move($uploadPath, $imageName);
         }
 
-        return $imageName;
+        return $data;
     }
 
     static function flipImage( $imagePath )
     {
-        // create Image from file
         $img = Image::make($imagePath);
-        // flip image vertically
         $img->flip('v');
         return $imagePath;
+    }
+
+    static function cropImage($path, $data, $finalWidth)
+    {
+        $uploadPath = public_path($path);
+        $imagen = Image::make($uploadPath.'/'.$data['name']);
+        $imagen->crop($data['w'], $data['h'], $data['x'], $data['y']);
+        $imagen->widen($finalWidth);
+        $imagen->save($uploadPath . $data['name']);
     }
 
 }

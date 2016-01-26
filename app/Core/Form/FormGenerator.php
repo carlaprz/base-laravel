@@ -11,6 +11,7 @@ use App\Core\Form\Fields\Text;
 use App\Core\Form\Fields\TextDisabled;
 use App\Core\Form\Fields\Textarea;
 use App\Core\Form\Fields\Image;
+use App\Core\Form\Fields\ImageCrop;
 use App\Core\Form\Fields\Radio;
 use App\Core\Form\Fields\RadioDisabled;
 use App\Core\Form\Fields\Select;
@@ -37,6 +38,7 @@ final class FormGenerator
         'emailDisabled' => EmailDisabled::class,
         'image' => Image::class,
         'image_file' => ImageFile::class,
+        'imageCrop' => ImageCrop::class,
         'file' => File::class,
         'url_image' => URLImage::class,
         'radio' => Radio::class,

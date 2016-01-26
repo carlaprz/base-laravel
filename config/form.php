@@ -274,16 +274,16 @@ return [
             ],
             'image' => [
                 'type' => 'image_file',
-                'title' => 'Imagen para el detalle del producto',
+                'title' => 'Imagen para el detalle del producto (400x400)',
                 'description' => 'Introduzca la imagen del producto',
                 'rules' => ['required']
             ],
-            'thumb' => [
+            /*'thumb' => [
                 'type' => 'image_file',
                 'title' => 'Imagen para el listado de productos',
                 'description' => 'Introduzca la imagen del producto para el listado',
                 'rules' => ['required']
-            ],
+            ],*/
         ],
         'productsRelated' => [
             'title' => 'Productos Relacionados',
@@ -356,6 +356,29 @@ return [
                 ]
             ]
         ],
+    ],
+    'products_crop' => [
+        'name' => 'Productos',
+        'for_files' => true,
+        'description' => 'Administración de Imagenes de productos',
+        'slug' => false,
+        'editor' => false,
+        'dataShow' => [],
+        'fields' => [
+            'image' => [
+                'type' => 'imageCrop',
+                'title' => 'Imagen detalle',
+                'description' => '',
+                'rules' => [''],
+                
+            ],
+            'thumb' => [
+                'type' => 'imageCrop',
+                'title' => 'Imagen Listado',
+                'description' => '',
+                'rules' => ['']
+            ]
+        ]        
     ],
     'orders' => [
         'name' => 'Pedidos',

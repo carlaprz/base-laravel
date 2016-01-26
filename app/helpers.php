@@ -67,9 +67,8 @@ function current_route_has_delete( $currentKey = 'menu' )
 function current_route_has( $thing, $currentKey = 'menu' )
 {
     $currentRoute = Route::currentRouteName();
-
     $config = config($currentKey);
-
+   
     foreach ($config as $key => $section) {
         if (array_key_exists('dropdown', $section)) {
             $currentValue = current_route_has(
