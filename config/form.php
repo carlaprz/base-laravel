@@ -251,7 +251,7 @@ return [
                 'type' => 'text',
                 'title' => 'Referencia',
                 'description' => 'La referencia del producto',
-                'rules' => ['required']
+                'rules' => ['required','unique:products,reference,{unique:id}']
             ],
             'active' => [
                 'type'  => 'radio',

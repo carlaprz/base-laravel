@@ -362,7 +362,9 @@ abstract class BaseController extends Controller
         return view('admin.form.crop', [
             'form' => $formBuilder->generate(
                     $this->resourceName . '_crop', $data->toArray()
-            )
+            ),
+            'repository' => $this->resourceName,
+            'id' => $id
         ]);
     }
 
@@ -389,8 +391,7 @@ abstract class BaseController extends Controller
         foreach ($data as $item) {
             $resource = $repo->find($item);
             $dataAux = ['order' => $order];
-            var_dump($resource);
-            $resource->update($dataAux);
+           $resource->update($dataAux);
             $order++;
         }
 

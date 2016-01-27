@@ -16,7 +16,7 @@ final class Products extends Model implements ModelInterface
 
     protected $table = 'products';
     public $translatedAttributes = ['products_id', 'locale', 'title', 'description', 'slug'];
-    protected $fillable = ['category_id', 'reference', 'image', 'thumb', 'active', 'products_id', 'pvp', 'pvp_discounted', 'iva', 'locale', 'title', 'description', 'slug'];
+    protected $fillable = ['category_id', 'reference', 'image', 'thumb', 'active', 'products_id', 'pvp', 'pvp_discounted', 'iva', 'locale', 'title', 'description', 'slug' ,'order'];
     protected $appends = ["es", "en", "categoryName", "categorySlug"];
 
     //RELACIONES 

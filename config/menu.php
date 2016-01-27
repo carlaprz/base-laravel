@@ -16,6 +16,7 @@ return [
         'create' => 'admin.news.create',
         'edit' => 'admin.news.edit',
         'delete' => 'admin.news.delete',
+        'crop' => 'admin.news.crop',
         'icon' => 'fa fa-bullhorn',
         'name' => 'Noticias',
         'resource' => 'news'
@@ -28,11 +29,12 @@ return [
             [
                 'route' => 'admin.products.index',
                 'resource' => 'products',
-                'create' => 'admin.products.create',
+                'create' => 'admin.products.create',                
                 'edit' => 'admin.products.edit',
                 'delete' => 'admin.products.delete',
                 'excel' => 'admin.products.excel',
                 'crop' => 'admin.products.crop',
+                'order' => 'admin.products.order',
                 'name' => 'Productos',
                 'icon' => 'fa fa-shopping-cart',
             ],

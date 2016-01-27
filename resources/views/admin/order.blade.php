@@ -13,9 +13,7 @@
     </div>
 </div>
 
-<div class="row">
-    <br/>
-</div>
+
 
 <div class="row">
     <div class="col-md-12">
@@ -23,6 +21,23 @@
             <div class="panel-heading">
                 {{ $pageTitle }}
             </div>
+
+            @if(isset($filter))
+            <div class="panel-body">
+                <label for="category-filter">
+                    <select  class="form-control" onchange="filterChange(this.value)">
+                        <option value="">Todas las categorias</option>
+                        @foreach ($filter as $key => $value)
+                        @if (isset($filter_id) && $filter_id== $key)
+                        <option value="{{ $key }}" selected="selected" >{{ $value }}</option>
+                        @else
+                        <option value="{{ $key }}" >{{ $value }}</option>
+                        @endif
+                        @endforeach
+                    </select>
+                </label>
+            </div>
+            @endif
             @if (isset($extras))
             @foreach ($extras as $extra)
             @include($extra)
@@ -54,7 +69,11 @@
             $('#order_input').val(order);
             $('#saveOrder').submit();
         });
+
     });
+    function filterChange(id) {
+        window.location.href = "<?php echo Request::url() ?>/" + id;
+    }
 </script>
 
 @stop

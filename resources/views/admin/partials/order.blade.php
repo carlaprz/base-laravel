@@ -8,19 +8,14 @@
         <?php $cantTd++; ?>
     </li >
     @empty
-    @if (isset($noDataTable))
-    <li >No se encontraron resultados.</li>
-    @endif
+        <li style="padding: 0px; border: 0px; color: #555;background: none;  cursor:none;">No se encontraron resultados.</li>
     @endforelse
 </ol>
-<?php
-$url = explode("/", Request::url());
-$repo = $url[count($url) - 2];
-?>  
-<a id="save" class="btn btn-success">Guardar</a>
-<a  href="{{route('admin.'.$repo.'.index')}}" class="btn btn-danger">Cancelar</a>
 
-<form id="saveOrder" action="{{route('admin.'.$repo.'.orderSave')}}" method="post" >
+<a id="save" class="btn btn-success">Guardar</a>
+<a  href="{{route('admin.'.$repository.'.index')}}" class="btn btn-danger">Cancelar</a>
+
+<form id="saveOrder" action="{{route('admin.'.$repository.'.orderSave')}}" method="post" >
     <input type="hidden" name="order" id="order_input" value="" />
     <input type="hidden" name="_token" id="csrf-token" value="{{ Session::token() }}" />
 </form>

@@ -18,13 +18,16 @@ class Products extends Migration
             Schema::create('products', function(Blueprint $table)
             {
                 $table->increments('id');
-                $table->string('reference');
+                $table->string('reference')->unsigned();
                 $table->string('image');
                 $table->string('thumb');
+                $table->integer('order');
                 $table->float('pvp')->unsigned();
                 $table->float('pvp_discounted')->unsigned();
                 $table->float('iva')->unsigned();
                 $table->boolean('active')->default(1);
+
+                $table->unique(['reference']);
 
                 $table->timestamps();
             });

@@ -50,7 +50,8 @@ class NewsController extends BaseController
             'data' => $data,
             'pageTitle' => 'Orden de noticias',
             'title' => 'Noticias',
-            'header' => $fluxesHead
+            'header' => $fluxesHead,
+            'repository' => $this->resourceName
         ]);
     }
 

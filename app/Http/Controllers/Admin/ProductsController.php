@@ -102,4 +102,44 @@ class ProductsController extends BaseController
         ]);
     }
 
+    public function order()
+    {
+        App::setLocale('es');
+        $fluxesHead = [
+            'title' => 'Título',
+        ];
+
+        return view('admin.order', [
+            'data' => [],
+            'pageTitle' => 'Orden de Productos',
+            'title' => 'Productos',
+            'header' => $fluxesHead,
+            'filter' => all_categories(),
+            'filter_id' => false,
+            'repository' => $this->resourceName
+        ]);
+    }
+
+    public function orderByCategory( $categoryId )
+    {
+        App::setLocale('es');
+
+        $repo = App::make($this->repositoryName);
+        $data = $repo->findByCategoryIdActive($categoryId);
+
+        $fluxesHead = [
+            'title' => 'Título',
+        ];
+
+        return view('admin.order', [
+            'data' => $data,
+            'pageTitle' => 'Orden de Productos ',
+            'title' => 'Productos',
+            'header' => $fluxesHead,
+            'filter' => all_categories(),
+            'filter_id' => $categoryId,
+            'repository' => $this->resourceName
+        ]);
+    }
+
 }

@@ -173,6 +173,21 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => ['aut
         'as' => 'admin.products.excel',
         'uses' => 'ProductsController@excel'
     ]);
+    
+    Route::get('products/order', [
+        'as' => 'admin.products.order',
+        'uses' => 'ProductsController@order'
+    ]);
+
+    Route::get('products/order/{categoryId}', [
+        'as' => 'admin.products.orderByCategory',
+        'uses' => 'ProductsController@orderByCategory'
+    ]);
+
+    Route::post('products/order/{categoryId}', [
+        'as' => 'admin.products.orderSave',
+        'uses' => 'ProductsController@orderSave'
+    ]);
 
     Route::get('products/create', [
         'as' => 'admin.products.create',

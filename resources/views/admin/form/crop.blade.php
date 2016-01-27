@@ -105,12 +105,8 @@
                     @endif
 
                     <button class="btn btn-success">Guardar</button>
-                   <?php                        
-                        $url = explode("/", Request::url());
-                        $repo = $url[count($url)-3];
-                        $id = $url[count($url) - 1];
-                        ?>                    
-                    <a  href="{{ route('admin.'.$repo.'.edit', $id)}}" class="btn btn-danger">Cancelar</a>
+                             
+                    <a  href="{{ route('admin.'.$repository.'.edit', $id)}}" class="btn btn-danger">Cancelar</a>
                     <input type="hidden" name="_token" id="csrf-token" value="{{ Session::token() }}" />
                 </form>
             </div>
