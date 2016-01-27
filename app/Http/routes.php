@@ -109,6 +109,26 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => ['aut
         'uses' => 'NewsController@index'
     ]);
 
+    Route::get('news/order', [
+        'as' => 'admin.news.order',
+        'uses' => 'NewsController@order'
+    ]);
+
+    Route::post('news/order', [
+        'as' => 'admin.news.orderSave',
+        'uses' => 'NewsController@orderSave'
+    ]);
+
+    Route::get('news/crop/{id}', [
+        'as' => 'admin.news.crop',
+        'uses' => 'NewsController@crop'
+    ]);
+
+    Route::post('news/crop/{id}', [
+        'as' => 'admin.news.cropSave',
+        'uses' => 'NewsController@cropSave'
+    ]);
+
     Route::get('news/create', [
         'as' => 'admin.news.create',
         'uses' => 'NewsController@create'
@@ -168,12 +188,12 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => ['aut
         'as' => 'admin.products.crop',
         'uses' => 'ProductsController@crop'
     ]);
-    
+
     Route::post('products/crop/{id}', [
         'as' => 'admin.products.cropSave',
         'uses' => 'ProductsController@cropSave'
     ]);
-    
+
     Route::get('products/edit/{id}', [
         'as' => 'admin.products.edit',
         'uses' => 'ProductsController@edit'

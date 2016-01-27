@@ -9,13 +9,11 @@ use App\Core\Excel\ExcelTransformator;
 use App\Models\ProductsRelated;
 use App\Core\Form\FormGenerator;
 use App;
-use Request;
-
 
 class ProductsController extends BaseController
 {
 
-    const TOTAL_ITEMS_PER_PAGE = 1;
+    const TOTAL_ITEMS_PER_PAGE = 20;
 
     protected $resourceName = 'products';
     protected $repositoryName = Products::class;
@@ -103,6 +101,5 @@ class ProductsController extends BaseController
             )
         ]);
     }
-
 
 }

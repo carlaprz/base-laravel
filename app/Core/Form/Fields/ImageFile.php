@@ -10,7 +10,7 @@ class ImageFile extends AbstractField
     public function render( $id = null )
     {
 
-        $data = " <input type='file' name='{$this->name()}'/> ";
+
         $id = Request::url();
         $id = explode("/", $id);
         $id = $id[count($id) - 1];
@@ -25,11 +25,11 @@ class ImageFile extends AbstractField
         $explodeImage = explode('.', $image);
 
         if (count($explodeImage) > 1) {
-            echo 'caca';
-            $data.="<br>
-                    <input type='hidden' id='{$this->name()}_prev' name='{$this->name()}_prev' value='" . pathinfo($this->value(), PATHINFO_BASENAME) . "' />
-                    <div id='{$this->name()}'>
-                        <img  src='{$this->value()}' style='max-width: 300px;'>";
+            $data = "<input type='file' style='display:none' id='{$this->name()}_input' name='{$this->name()}'/> 
+                     <input type='hidden' id='{$this->name()}_prev' name='{$this->name()}_prev' value='" . pathinfo($this->value(), PATHINFO_BASENAME) . "' />
+                     <br/>
+                     <div id='{$this->name()}'>
+                        <img style='border: 1px solid #000' src='{$this->value()}'>";
 
             $data.='<a style="margin-left: 10px;" data-id="' . $this->name() . '" class="deleteImage btn btn-small btn-danger" title="Eliminar Imagen" >
                         <i class="glyphicon glyphicon-trash"> </i>
@@ -39,7 +39,8 @@ class ImageFile extends AbstractField
                     </a> Editar 
                     </div>';
         } else {
-            $data.=" <input type='hidden' name='{$this->name()}_prev' value='' />";
+            $data = "<input type='file' name='{$this->name()}'/> ";
+            $data.="<input type='hidden' name='{$this->name()}_prev' value='' />";
         }
 
         return $data;

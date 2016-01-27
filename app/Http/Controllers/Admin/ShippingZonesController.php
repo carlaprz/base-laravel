@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Models\ShippingZones;
-use App;
 
 class ShippingZonesController extends BaseController
 {
@@ -25,7 +24,5 @@ class ShippingZonesController extends BaseController
             'header' => $fluxesHead
         ]);
     }
-
-
 
 }

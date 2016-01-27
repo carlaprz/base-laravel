@@ -12,6 +12,7 @@ return [
     ],
     [
         'route' => 'admin.news.index',
+        'order' => 'admin.news.order',
         'create' => 'admin.news.create',
         'edit' => 'admin.news.edit',
         'delete' => 'admin.news.delete',

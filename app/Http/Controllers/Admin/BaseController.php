@@ -21,11 +21,6 @@ abstract class BaseController extends Controller
     protected $resourceName = '';
     protected $repositoryName = '';
 
-    public function __construct()
-    {
-        
-    }
-
     public function create( FormGenerator $formBuilder )
     {
         return view('admin.form.form', [
@@ -378,6 +373,25 @@ abstract class BaseController extends Controller
         foreach ($data as $key => $imagen) {
             $d = $this->filesDimensions;
             FileServices::cropImage($this->pathFile, $imagen, $d[$key]["w"]);
+        }
+
+        $route = resource_home($this->resourceName);
+        return redirect($route);
+    }
+
+    public function orderSave()
+    {
+        $repo = App::make($this->repositoryName);
+        $data = Input::all();
+        $data = explode(',', $data['order']);
+        
+        $order = 1;
+        foreach ($data as $item) {
+            $resource = $repo->find($item);
+            $dataAux = ['order' => $order];
+            var_dump($resource);
+            $resource->update($dataAux);
+            $order++;
         }
 
         $route = resource_home($this->resourceName);

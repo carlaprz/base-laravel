@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Admin;
 
 use App\Models\Coupons;
 
-
 class CouponsController extends BaseController
 {
 

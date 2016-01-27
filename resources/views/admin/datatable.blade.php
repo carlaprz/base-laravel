@@ -24,6 +24,11 @@
         <a href="{{ route($excelRoute) }}"
            class="btn btn-primary">Exportar a Excel</a>
     @endif
+    
+    @if ($orderRoute = current_route_has('order'))
+        <a href="{{ route($orderRoute) }}"
+           class="btn btn-primary">Orden</a>
+    @endif
     </div>
 </div>
 

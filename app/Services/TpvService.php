@@ -3,13 +3,13 @@
 namespace App\Services;
 use App\Libraries\ApiRedsys;
 
-//Configurar en ENV:
+/*Configurar en ENV:
 TPV_FUC
 TPV_TERMINAL
-
 TPV_MONEDA
 TPV_TYPE_TRANSACTION
-
+ 
+*/
 class TpvService {
     private $inTestMode = true;
 

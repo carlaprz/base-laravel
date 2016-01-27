@@ -15,7 +15,7 @@ class CategoriesController extends BaseController
     {
         App::setLocale('es');
         $fluxesHead = [
-            'id'=> 'ID',
+            'id' => 'ID',
             'title' => 'Nombre',
             'parentName' => 'Categoría padre',
             'slug' => 'URL',

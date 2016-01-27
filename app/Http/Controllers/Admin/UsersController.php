@@ -10,12 +10,7 @@ class UsersController extends BaseController
 
     protected $resourceName = 'users';
     protected $repositoryName = User::class;
-    protected $pathFile = 'files/users/';
-    protected $filesDimensions = [
-        'image' => ['w' => 640, 'h' => 581]
-        
-    ];
-    
+
     public function index()
     {
         $fluxesHead = [
@@ -29,7 +24,7 @@ class UsersController extends BaseController
         ];
 
         $repo = App::make($this->repositoryName);
-        
+
         return view('admin.datatable', [
             'data' => $repo->allUserFront(),
             'pageTitle' => 'Listado de Usuarios',

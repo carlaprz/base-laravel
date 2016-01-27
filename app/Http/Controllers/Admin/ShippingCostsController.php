@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Models\ShippingCosts;
-use App;
 
 class ShippingCostsController extends BaseController
 {
@@ -29,7 +28,5 @@ class ShippingCostsController extends BaseController
             'header' => $fluxesHead
         ]);
     }
-
-
 
 }

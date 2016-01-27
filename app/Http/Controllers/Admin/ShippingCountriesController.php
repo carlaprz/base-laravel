@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Models\ShippingCountries;
-use App;
 
 class ShippingCountriesController extends BaseController
 {
@@ -27,7 +26,5 @@ class ShippingCountriesController extends BaseController
             'header' => $fluxesHead
         ]);
     }
-
-
 
 }

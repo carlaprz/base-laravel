@@ -53,7 +53,7 @@ class Products extends Migration
                 $table->unique(['products_id', 'locale']);
                 $table->unique(['title', 'locale']);
                 $table->unique(['slug', 'locale']);
-                $table->foreign('products_id')->references('id')->on('products');
+                $table->foreign('products_id')->references('id')->on('products')->onDelete('cascade');
             });
         }
     }

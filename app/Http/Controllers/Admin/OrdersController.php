@@ -9,7 +9,6 @@ use App,
 use App\Core\Form\FormGenerator;
 use App\Core\Excel\ExcelTransformator;
 
-
 class OrdersController extends BaseController
 {
 
@@ -17,11 +16,7 @@ class OrdersController extends BaseController
 
     protected $resourceName = 'orders';
     protected $repositoryName = Orders::class;
-    protected $pathFile = 'files/products/';
-    protected $filesDimensions = [
-        'image' => ['w' => 564, 'h' => 384],
-        'thumb' => ['w' => 424, 'h' => 362],
-    ];
+    
 
     public function index( Orders $orders )
     {
@@ -106,7 +101,7 @@ class OrdersController extends BaseController
             $data[] = [
                 'Id' => $order->id,
                 'Codigo pedido' => $order->reference,
-                'Cupon' => empty($order->cupon_code)?'no': $order->cupon_code,
+                'Cupon' => empty($order->cupon_code) ? 'no' : $order->cupon_code,
                 'Importe total' => $order->total_pvp,
                 'Productos' => $order->products_name,
                 'Cantidad de productos' => $order->cant_products,

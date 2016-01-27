@@ -83,12 +83,6 @@ return [
                 'description' => 'Introduzca la imagen principal de la noticia',
                 'rules' => ['required']
             ],
-            'order' => [
-                'type' => 'numeric',
-                'title' => 'Prioridad',
-                'description' => 'Introduzca la prioridad en caso de querer destacar. (Más alta, más arriba)',
-                'rules' => ['numeric']
-            ],
             'publish' => [
                 'type' => 'datetime',
                 'title' => 'Fecha de publicación',
@@ -148,6 +142,23 @@ return [
                 ]
             ]
         ]
+    ],
+    'news_crop' => [
+        'name' => 'Noticias',
+        'for_files' => true,
+        'description' => 'Administración de Imagen de NoticiA',
+        'slug' => false,
+        'editor' => false,
+        'dataShow' => [],
+        'fields' => [
+            'image' => [
+                'type' => 'imageCrop',
+                'title' => 'Imagen',
+                'description' => '',
+                'rules' => [''],
+                
+            ],            
+        ]        
     ],
     'categories' => [
         'name' => 'Categorías',

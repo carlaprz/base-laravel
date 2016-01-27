@@ -7,7 +7,6 @@ use App;
 use App\Interfaces\ModelInterface;
 use Illuminate\Database\Eloquent\Model;
 
-
 final class News extends Model implements ModelInterface
 {
 
@@ -16,8 +15,8 @@ final class News extends Model implements ModelInterface
     const IMAGE_PATH = 'files/news/';
 
     public $translatedAttributes = ['title', 'description', 'slug'];
-    protected $fillable = ['order', 'publish', 'active', 'title', 'description', 'image','slug'];
-    protected $appends = ["es", "en", "fr"];
+    protected $fillable = ['order', 'publish', 'active', 'title', 'description', 'image', 'slug'];
+    protected $appends = ["es", "en"];
 
     public function getEsAttribute()
     {
@@ -36,13 +35,14 @@ final class News extends Model implements ModelInterface
         return $this->create($data);
     }
 
-    public function getPublishAttribute($value){
-   
-        $value = explode(':',$value);
+    public function getPublishAttribute( $value )
+    {
+
+        $value = explode(':', $value);
         unset($value[2]);
-        return implode(':',$value);
+        return implode(':', $value);
     }
-    
+
     public function getImageAttribute( $image )
     {
         return (filter_var($image, FILTER_VALIDATE_URL) === FALSE) ? $this->imagePath($image) : $image;
@@ -56,11 +56,10 @@ final class News extends Model implements ModelInterface
         return false;
     }
 
-    public function findallactive( $num )
+    public function findAllActive()
     {
         return $this->where('active', '=', 1)
-                        ->orderBy('created_at', 'desc')
-                        ->paginate($num);
+                        ->orderBy('order', 'asc')->get();
     }
 
     public function finhomeactive()

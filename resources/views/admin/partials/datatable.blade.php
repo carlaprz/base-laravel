@@ -62,33 +62,6 @@
                 </a>
                 @endif
 
-                @if ($productsRoute = current_route_has('products'))
-                @if($content['products_count']>0)
-                <a style="margin-bottom: 2px;" class="btn  btn-small btn-primary" href="{{ route($productsRoute, $content['id']) }}">
-                    Productos
-                </a>
-                @endif
-                @endif
-
-                @if ($editComments = current_route_has('editComments'))
-                <a class="btn btn-small btn-primary" title="Editar comentarios" href="{{route($editComments,$content['id'])}}">
-                    <i class="glyphicon glyphicon-pencil"  > </i>
-                </a>
-                @endif
-
-                @if ($deleteComments = current_route_has('deleteComments'))
-                <a class="delete btn btn-small btn-danger" title="Eliminar comentarios" href="{{ route($deleteComments, $content['id']) }}">
-                    <i class="glyphicon glyphicon-trash"> </i>
-                </a>
-                @endif
-
-                @if ($commentsRoute = current_route_has('comments'))
-                @if($content->hasComments())
-                <a  style="margin-bottom: 2px;" class="btn  btn-small btn-primary" title="Comentarios" href="{{ route($commentsRoute, $content['id']) }}">
-                    Comentarios
-                </a>
-                @endif
-                @endif   
             </td>
         </tr>
         @empty

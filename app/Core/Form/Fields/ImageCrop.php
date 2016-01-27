@@ -12,7 +12,7 @@ class ImageCrop extends AbstractField
         $explodeImage = explode('.', $image);
         if (count($explodeImage) > 1) {
             $data.="<br>
-                    <input type='hidden' id='{$this->name()}[name]' name='{$this->name()}[name]' value='" . pathinfo($this->value(), PATHINFO_BASENAME) . "' />
+                    <input type='hidden' id='{$this->name()}_input' name='{$this->name()}[name]' value='" . pathinfo($this->value(), PATHINFO_BASENAME) . "' />
                     <div>
                         <img id='{$this->name()}' src='{$this->value()}' > 
                         <input type='hidden' id='{$this->name()}_x' name='{$this->name()}[x]' value='' >

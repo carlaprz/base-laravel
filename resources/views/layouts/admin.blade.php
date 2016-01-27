@@ -5,20 +5,15 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>{{ $title or 'Admin' }} - BaseProject </title>
-
-        <link href='http://fonts.googleapis.com/css?family=Open+Sans'
-              rel='stylesheet' type='text/css'/>
-
+        <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'/>
         <link href="{{ admin_asset('css/bootstrap.min.css') }}" rel="stylesheet">
         <link href="{{ admin_asset('css/font-awesome.css') }}" rel="stylesheet"/>
         <link href="{{ admin_asset('js/morris/morris-0.4.3.min.css') }}" rel="stylesheet"/>
         <link href="{{ admin_asset('js/dataTables/dataTables.bootstrap.css') }}" rel="stylesheet" />
-        <link href="{{ admin_asset('css/custom-styles.css') }}" rel="stylesheet"/>
+        <link href="{{ admin_asset('css/bootstrap-datetimepicker.min.css')}}" rel="stylesheet" >
         <link href="{{ admin_asset('css/summernote.css') }}" rel="stylesheet">
-        <link href="{{ admin_asset('css/styles.css') }}" rel="stylesheet">
         <link href="{{ admin_asset('css/cropper.css') }}" rel="stylesheet">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/3.1.2/css/bootstrap-datetimepicker.min.css">
-
+        <link href="{{ admin_asset('css/custom-styles.css') }}" rel="stylesheet"/>
     </head>
     <body>
 
@@ -27,7 +22,6 @@
                 <div class="navbar-header">
                     <a class="navbar-brand" href="{{ route('admin.home') }}"> BaseProject </a>
                 </div>
-
                 <ul class="nav navbar-top-links navbar-right">
                     <li class="dropdown">
                         <a class="dropdown-toggle" data-toggle="dropdown" href="#"
@@ -64,13 +58,12 @@
         <script src="{{ admin_asset('js/dataTables/jquery.dataTables.js') }}"></script>
         <script src="{{ admin_asset('js/dataTables/dataTables.bootstrap.js') }}"></script>
         <script src="{{ admin_asset('js/summernote.min.js') }}"></script>
-         <script src="{{ admin_asset('js/cropper.js') }}"></script>
+        <script src="{{ admin_asset('js/cropper.js') }}"></script>
+        <script src="{{ admin_asset('js/moment.js') }}"></script>
+        <script src="{{ admin_asset('js/bootstrap-datetimepicker.min.js') }}"></script>
+        <script src="{{ admin_asset('js/jquery-sortable.js') }}"></script>
+
         <script src="{{ admin_asset('js/custom-scripts.js') }}"></script>
-
-
-        <script src="http://momentjs.com/downloads/moment.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/3.1.2/js/bootstrap-datetimepicker.min.js"></script>
-
         @yield('scripts')
 
     </body>

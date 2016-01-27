@@ -78,6 +78,11 @@
                     @if(!isset($details))
                         <button class="btn btn-success">Guardar</button>
                     @endif
+                    <?php                        
+                        $url = explode("/", Request::url());
+                        $repo = $url[count($url)-3];
+                        ?>                    
+                    <a  href="{{ route('admin.'.$repo.'.index')}}" class="btn btn-danger">Cancelar</a>
 
                     <input type="hidden" name="_token" id="csrf-token" value="{{ Session::token() }}" />
                 </form>
@@ -100,8 +105,11 @@
         $('.deleteImage').on('click', function () {
             if (confirm('Esta seguro de borrar esta Imagen?')) {
                 var elementId = '#' + $(this).data('id');
+                console.log(elementId);
                 $(elementId + '_prev').val('');
                 $(elementId).html('');
+                $(elementId+'_input').show();
+               
             }
             return false;
         });
@@ -110,7 +118,6 @@
             if (confirm('Esta seguro de borrar este archivo?')) {
                 var elementId = '#' + $(this).data('id');
                 var elementdeleteId = '.' + $(this).data('delete');
-                console.log(elementdeleteId);
                 $(elementdeleteId).val('');
                 $(elementId).html('');
                 $(elementId+'file').show();
