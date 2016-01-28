@@ -81,7 +81,7 @@ final class Products extends Model implements ModelInterface
         $colours = $this->colours();
         $return = [];
         foreach ($colours as $color) {
-            $return[] = $color->color_id;
+            $return[] = $color->colour_id;
         }
         return $return;
     }

@@ -117,9 +117,11 @@ abstract class BaseController extends Controller
         $data = $this->getDataRelated($dataClear);
 
         $resource->update($data['data']);
+        if (isset($data['related']['showCrop'])) {
+            $showCrop = $data['related']['showCrop'];
+            unset($data['related']['showCrop']);
+        }
 
-        $showCrop = $data['related']['showCrop'];
-        unset($data['related']['showCrop']);
         //RELATED MANY TO MANY
         $this->dataRelated($data['related'], $resource);
 
