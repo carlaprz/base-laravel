@@ -18,13 +18,29 @@ abstract class BaseController extends Controller
     use DispatchesCommands,
         ValidatesRequests;
 
-    protected $resourceName = '';
-    protected $repositoryName = '';
+    // OBLIGATORIO 
+    protected $resourceName = "";
+    protected $repositoryName = "";
+
+    //Paginado PHP
+    const TOTAL_ITEMS_PER_PAGE = "";
+
+    //Relaciones multiples
+    protected $repositoryRelated = [];
+    protected $selfReferenceRelated = "";
+    // IMAGENES 
+    protected $pathFile = "";
+    protected $filesDimensions = [
+            //'image' => ['w' => 400, 'h' => 400]       
+    ];
+
+    /*     * ******************* VISTAS *********************************************** */
 
     public function create( FormGenerator $formBuilder )
     {
         return view('admin.form.form', [
-            'form' => $formBuilder->generate($this->resourceName)
+            'form' => $formBuilder->generate($this->resourceName),
+            'repository' => $this->resourceName
         ]);
     }
 
@@ -36,33 +52,51 @@ abstract class BaseController extends Controller
         return view('admin.form.form', [
             'form' => $formBuilder->generate(
                     $this->resourceName, $data->toArray()
-            )
+            ),
+            'repository' => $this->resourceName
         ]);
     }
+
+    public function crop( FormGenerator $formBuilder, $id )
+    {
+        $repo = App::make($this->repositoryName);
+        $data = $repo->find($id);
+
+        return view('admin.form.crop', [
+            'form' => $formBuilder->generate(
+                    $this->resourceName . '_crop', $data->toArray()
+            ),
+            'repository' => $this->resourceName,
+            'id' => $id
+        ]);
+    }
+
+    /*     * ********************** PROCESOS ******************************************** */
 
     public function save( Request $request )
     {
         $repo = App::make($this->repositoryName);
         $rules = get_rules_from($this->resourceName);
 
-        $data = $this->prepareData(Input::all(), $request);
-        $validations = $this->prepareValidate($data, $rules, null);
+        $prepareData = $this->prepareData(Input::all(), $request);
+        $validations = $this->prepareValidate($prepareData, $rules, null);
 
         if (!empty($validations) && is_object($validations)) {
             return back()->withInput()->withErrors($validations);
         }
 
-        $data = $this->clearLang($data);
-        $resource = $repo->add($data, $rules);
+        $dataClear = $this->clearLang($prepareData);
+        $data = $this->getDataRelated($dataClear);
 
-        // ONLY FOR PRODUCTS RELATED
-        $this->relatedProducts($data, $resource);
-        $route = resource_home($this->resourceName);
+        $resource = $repo->add($data['data']);
+
+        $this->dataRelated($data['related'], $resource);
 
         if (!empty($data["showCrop"]) && is_array($data["showCrop"])) {
             return redirect(route('admin.' . $this->resourceName . '.crop', $resource->id));
         }
 
+        $route = resource_home($this->resourceName);
         return redirect($route);
     }
 
@@ -72,26 +106,84 @@ abstract class BaseController extends Controller
         $resource = $repo->find($id);
 
         $rules = get_rules_from($this->resourceName);
-        $data = $this->prepareData(Input::all(), $request);
+        $prepareData = $this->prepareData(Input::all(), $request);
 
-        $validations = $this->prepareValidate($data, $rules, $resource->id);
+        $validations = $this->prepareValidate($prepareData, $rules, $resource->id);
         if (!empty($validations) && is_object($validations)) {
             return back()->withInput()->withErrors($validations);
         }
 
-        $data = $this->clearLang($data);
+        $dataClear = $this->clearLang($prepareData);
+        $data = $this->getDataRelated($dataClear);
 
-        $resource->update($data);
-        // ONLY FOR PRODUCTS RELATED
+        $resource->update($data['data']);
 
-        $this->relatedProducts($data, $resource);
-        $route = resource_home($this->resourceName);
+        $showCrop = $data['related']['showCrop'];
+        unset($data['related']['showCrop']);
+        //RELATED MANY TO MANY
+        $this->dataRelated($data['related'], $resource);
 
-        if (!empty($data["showCrop"]) && is_array($data["showCrop"])) {
+        if (!empty($showCrop) && is_array($showCrop)) {
             return redirect(route('admin.' . $this->resourceName . '.crop', $resource->id));
         }
 
+        $route = resource_home($this->resourceName);
         return redirect($route);
+    }
+
+    public function delete( $id )
+    {
+        $repo = App::make($this->repositoryName);
+        $object = $repo->find($id);
+        if (!empty($object)) {
+            $object->delete();
+        }
+        $route = resource_home($this->resourceName);
+        return redirect($route);
+    }
+
+    public function cropSave()
+    {
+        $data = Input::all();
+        unset($data["_token"]);
+        foreach ($data as $key => $imagen) {
+            $d = $this->filesDimensions;
+            FileServices::cropImage($this->pathFile, $imagen, $d[$key]["w"]);
+        }
+
+        $route = resource_home($this->resourceName);
+        return redirect($route);
+    }
+
+    public function orderSave()
+    {
+        $repo = App::make($this->repositoryName);
+        $data = Input::all();
+        $data = explode(',', $data['order']);
+
+        $order = 1;
+        foreach ($data as $item) {
+            $resource = $repo->find($item);
+            $dataAux = ['order' => $order];
+            $resource->update($dataAux);
+            $order++;
+        }
+
+        $route = resource_home($this->resourceName);
+        return redirect($route);
+    }
+
+    /*     * ********************************************************************** */
+
+    private function prepareData( $data, $request )
+    {
+        $dataWithImages = FileServices::uploadFilesRequest($request, $data, $this->pathFile, $this->filesDimensions);
+        $dataAutoComplete = $this->generateAutocomplete($dataWithImages);
+        $dataWithSlug = $this->generateSlugs($dataAutoComplete);
+        $dataWithOutDescriptionEmpty = $this->clearDescription($dataWithSlug);
+        $dataGenerateParent = $this->generateParent($dataWithOutDescriptionEmpty);
+        $dataRemovePrev = $this->removePrev($dataGenerateParent);
+        return $dataRemovePrev;
     }
 
     private function prepareValidate( $data, $rules, $id = null )
@@ -115,15 +207,12 @@ abstract class BaseController extends Controller
         }
     }
 
-    public function validate( $data, $rules, $id = null )
+    private function validate( $data, $rules, $id = null )
     {
         $langs = langs_array();
         $errors = [];
-
         if (!empty($id)) {
-
             $parent = isset($data['parent']) ? $data['parent'] : '';
-
             foreach ($rules as $key => $rulesArray) {
                 if (is_array($rulesArray)) {
                     foreach ($rulesArray as $subKey => $rule) {
@@ -137,7 +226,6 @@ abstract class BaseController extends Controller
                                 if (preg_match("/unique:parent/i", $value)) {
                                     $val = str_replace("{unique:parent}", $parent, $val);
                                 }
-                                //echo 'value: '.$val.'<br/>';
                                 $rules[$key][$subKey][$subsubKey] = $val;
                             }
                         } else {
@@ -148,14 +236,12 @@ abstract class BaseController extends Controller
                             if (preg_match("/unique:parent/i", $rule)) {
                                 $val = str_replace("{unique:parent}", $parent, $val);
                             }
-
                             $rules[$key] = $val;
                         }
                     }
                 }
             }
         }
-
         foreach ($data as $key => $value) {
             if (is_array($value)) {
                 if (in_array($key, $langs)) {
@@ -165,33 +251,26 @@ abstract class BaseController extends Controller
                 }
             }
         }
-
         $errors[] = Validator::make($data, $rules);
 
         return $errors;
     }
 
-    private function prepareData( $data, $request )
+    private function clearLang( $data )
     {
-        if (isset($this->pathFile)) {
-            $data = FileServices::uploadFilesRequest($request, $data, $this->pathFile, $this->filesDimensions);
+        foreach ($data as $index => $value) {
+            if (is_array($value)) {
+                $clearLang = true;
+                foreach ($value as $key => $val) {
+                    if (!empty($val)) {
+                        $clearLang = false;
+                    }
+                }
+                if ($clearLang) {
+                    unset($data[$index]);
+                }
+            }
         }
-
-        //generate autocomplete
-        $data = $this->generateAutocomplete($data);
-
-        //generate slugs
-        $data = $this->generateSlugs($data);
-        //dd($data);
-        $data = $this->clearDescription($data);
-
-        //generate parent 
-        $data = $this->generateParent($data);
-
-        $data = $this->removePrev($data);
-
-        //$data = $this->clearLang($data);
-
         return $data;
     }
 
@@ -207,25 +286,6 @@ abstract class BaseController extends Controller
             } else {
                 if ($value === '<p><br></p>') {
                     $data[$index] = null;
-                }
-            }
-        }
-
-        return $data;
-    }
-
-    private function clearLang( $data )
-    {
-        foreach ($data as $index => $value) {
-            if (is_array($value)) {
-                $clearLang = true;
-                foreach ($value as $key => $val) {
-                    if (!empty($val)) {
-                        $clearLang = false;
-                    }
-                }
-                if ($clearLang) {
-                    unset($data[$index]);
                 }
             }
         }
@@ -322,81 +382,44 @@ abstract class BaseController extends Controller
         return $data;
     }
 
-    public function delete( $id )
+    private function getDataRelated( $data )
     {
-        $repo = App::make($this->repositoryName);
-        $object = $repo->find($id);
-        if (!empty($object)) {
-            $object->delete();
-        }
-        $route = resource_home($this->resourceName);
-        return redirect($route);
-    }
-
-    public function relatedProducts( $data, $resource )
-    {
-        if (!empty($data['productsRelated']) && !empty($this->repositoryNameRelated)) {
-            $repoRelated = App::make($this->repositoryNameRelated);
-            $objects = $repoRelated->where('product_id', $resource->id)->get();
-            if (is_array($objects) && count($objects) > 1) {
-                foreach ($objects as $object) {
-                    $object->delete();
-                }
-            }
-            $i = 0;
-            foreach ($data['productsRelated'] as $productRelated) {
-                if (!empty($productRelated)) {
-                    $data = ['product_id' => $resource->id, 'related' => $productRelated, 'order' => $i];
-                    $repoRelated->add($data);
-                    $i++;
-                }
+        $related = [];
+        foreach ($data as $key => $value) {
+            if (is_array($value) && !in_array($key, langs_array())) {
+                $related[$key] = $value;
+                unset($data[$key]);
             }
         }
+        return ['data' => $data, 'related' => $related];
     }
 
-    public function crop( FormGenerator $formBuilder, $id )
+    private function dataRelated( $data, $resource )
     {
-        $repo = App::make($this->repositoryName);
-        $data = $repo->find($id);
-
-        return view('admin.form.crop', [
-            'form' => $formBuilder->generate(
-                    $this->resourceName . '_crop', $data->toArray()
-            ),
-            'repository' => $this->resourceName,
-            'id' => $id
-        ]);
-    }
-
-    public function cropSave( $id )
-    {
-        $data = Input::all();
-        unset($data["_token"]);
-        foreach ($data as $key => $imagen) {
-            $d = $this->filesDimensions;
-            FileServices::cropImage($this->pathFile, $imagen, $d[$key]["w"]);
+        $repositories = $this->repositoryRelated;
+        foreach ($data as $field => $values) {
+            $repository = App::make($repositories[$field]);
+            $this->deleteRelated($repository, $resource);
+            $this->addRelated($field, $values, $repository, $resource);
         }
-
-        $route = resource_home($this->resourceName);
-        return redirect($route);
     }
 
-    public function orderSave()
+    private function deleteRelated( $repository, $resource )
     {
-        $repo = App::make($this->repositoryName);
-        $data = Input::all();
-        $data = explode(',', $data['order']);
-        
-        $order = 1;
-        foreach ($data as $item) {
-            $resource = $repo->find($item);
-            $dataAux = ['order' => $order];
-           $resource->update($dataAux);
-            $order++;
+        $objects = $repository->where($this->selfReferenceRelated, $resource->id)->get();
+        foreach ($objects as $object) {
+            if (is_object($object)) {
+                $object->delete();
+            }
         }
+    }
 
-        $route = resource_home($this->resourceName);
-        return redirect($route);
+    private function addRelated( $field, $values, $repository, $resource )
+    {
+        foreach ($values as $value) {
+            $data = [$field => $value, $this->selfReferenceRelated => $resource->id];
+            $repository->add($data);
+        }
     }
 
 }

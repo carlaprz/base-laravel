@@ -243,7 +243,7 @@ return [
         'name' => 'Productos',
         'for_files' => true,
         'description' => 'Administración de Productos',
-        'dataShow' => ['productsRelated'],
+        'dataShow' => [],
         'slug' => ['title'],
         'editor' => true,
         'fields' => [
@@ -257,6 +257,12 @@ return [
                 'type'  => 'radio',
                 'title' => 'Activo',
                 'description' => 'Estado',
+                'rules' => ['required']
+            ],
+            'image' => [
+                'type' => 'image_file',
+                'title' => 'Imagen para el detalle del producto (400x400)',
+                'description' => 'Introduzca la imagen del producto',
                 'rules' => ['required']
             ],
             'pvp' => [
@@ -277,50 +283,34 @@ return [
                 'description' => 'Introduzca el valor del impuesto en porcentaje',
                 'rules' => []
             ],
+            
             'category_id' => [
                 'type' => 'select',
                 'title' => 'Categoria',
                 'description' => 'all_categories',
                 'rules' => ['required']
             ],
-            'image' => [
-                'type' => 'image_file',
-                'title' => 'Imagen para el detalle del producto (400x400)',
-                'description' => 'Introduzca la imagen del producto',
+            'size_id' => [
+                'type' => 'multipleSelect',
+                'title' => 'Talla',
+                'description' => 'all_sizes',
                 'rules' => ['required']
             ],
-            /*'thumb' => [
-                'type' => 'image_file',
-                'title' => 'Imagen para el listado de productos',
-                'description' => 'Introduzca la imagen del producto para el listado',
+            'colour_id' => [
+                'type' => 'multipleSelect',
+                'title' => 'Colores',
+                'description' => 'all_colours',
                 'rules' => ['required']
-            ],*/
-        ],
-        'productsRelated' => [
-            'title' => 'Productos Relacionados',
-            'fields' => [
-                'product_0' => [
-                    'type' => 'selectProducts',
-                    'title' => 'Producto Relacionado 1',
-                    'description' => 'all_products_backend',
-                ],
-                'product_1' => [
-                    'type' => 'selectProducts',
-                    'title' => 'Producto Relacionado 2',
-                    'description' => 'all_products_backend',
-                ],
-                'product_2' => [
-                    'type' => 'selectProducts',
-                    'title' => 'Producto Relacionado 3',
-                    'description' => 'all_products_backend',
-                ],
-                'product_3' => [
-                    'type' => 'selectProducts',
-                    'title' => 'Producto Relacionado 4',
-                    'description' => 'all_products_backend',
-                ],
             ],
+            'product_id_related' => [
+                'type' => 'multipleSelectProducts',
+                'title' => 'Productos Relacionados',
+                'description' => 'all_products_backend',
+                'rules' => ['required']
+            ],
+            
         ],
+       
         'lenguages' => [
             'es' => [
                 'fields' => [
@@ -390,6 +380,82 @@ return [
                 'rules' => ['']
             ]
         ]        
+    ],
+    'sizes' => [
+        'name' => 'Tallas',
+        'for_files' => false,
+        'description' => 'Administración de Tallas',
+        'editor' => false,
+        'autocomplete' => [],
+        'slug' => [],
+        'fields' => [
+            'active' => [
+                'type' => 'radio',
+                'title' => 'Activo',
+                'description' => 'Estado',
+                'rules' => []
+            ]
+        ],
+        'lenguages' => [
+            'es' => [
+                'fields' => [
+                    'title' => [
+                        'type' => 'text',
+                        'title' => 'Nombre',
+                        'description' => 'Nombre',
+                        'rules' => ['required', 'unique:sizes_translations,title,{unique:id}']
+                    ]                    
+                ]
+            ],
+            'en' => [
+                'fields' => [
+                    'title' => [
+                        'type' => 'text',
+                        'title' => 'Name',
+                        'description' => 'Name',
+                        'rules' => ['unique:sizes_translations,title,{unique:id},']
+                    ]
+                ]
+            ]
+        ]
+    ],
+    'colours' => [
+        'name' => 'Colores',
+        'for_files' => false,
+        'description' => 'Administración de Colores',
+        'editor' => false,
+        'autocomplete' => [],
+        'slug' => [],
+        'fields' => [
+            'active' => [
+                'type' => 'radio',
+                'title' => 'Activo',
+                'description' => 'Estado',
+                'rules' => []
+            ]
+        ],
+        'lenguages' => [
+            'es' => [
+                'fields' => [
+                    'title' => [
+                        'type' => 'text',
+                        'title' => 'Nombre',
+                        'description' => 'Nombre',
+                        'rules' => ['required', 'unique:colours_translations,title,{unique:id}']
+                    ]                    
+                ]
+            ],
+            'en' => [
+                'fields' => [
+                    'title' => [
+                        'type' => 'text',
+                        'title' => 'Name',
+                        'description' => 'Name',
+                        'rules' => ['unique:colours_translations,title,{unique:id},']
+                    ]
+                ]
+            ]
+        ]
     ],
     'orders' => [
         'name' => 'Pedidos',

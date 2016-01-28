@@ -10,49 +10,48 @@ class FileServices
 
     static function uploadFilesRequest( Request $request, $data, $path, $dimensions = [] )
     {
-        $langs = all_langs();
-        $files = $request->files->all();
+        if (isset($path) && !empty($path)) {
+            $langs = all_langs();
+            $files = $request->files->all();
+            
+            foreach ($files as $key => $file) {
+                if (!is_array($file)) {
+                    $dataAux = FileServices::uploadFilebyRequest($file, $path, $key, $dimensions);
 
-        //add file generals
-        foreach ($files as $key => $file) {
-            if (!is_array($file)) {
-                $dataAux = FileServices::uploadFilebyRequest($file, $path, $key, $dimensions);
-
-                $data[$key] = $dataAux["imageName"];
-                $data[$key . "_showCrop"] = $dataAux["showCrop"];
-                if ($dataAux["showCrop"] === true) {
-                    $data["showCrop"][] = $key;
-                }
-
-                if ($key === 'image') {
-                    $dataAux = FileServices::uploadFilebyRequest($file, $path, "thumb", $dimensions);
-                    $data["thumb"] = $dataAux["imageName"];
+                    $data[$key] = $dataAux["imageName"];
+                    $data[$key . "_showCrop"] = $dataAux["showCrop"];
                     if ($dataAux["showCrop"] === true) {
-                        $data["showCrop"][] = "thumb";
-                    }
-                    unset($data['thumb_prev']);
-                }
+                        $data["showCrop"][] = $key;                    }
 
-                unset($data[$key . '_prev']);
-            }
-        }
-
-        // add file for lang
-        foreach ($langs as $lang) {
-            if (key_exists($lang->code, $files)) {
-                foreach ($files[$lang->code] as $key => $file) {
-                    if (isset($file)) {
-                        $dataAux = FileServices::uploadFilebyRequest($file, $path . $lang->code, $key, $dimensions);
-                        $data[$lang->code][$key] = $dataAux["imageName"];
+                    if ($key === 'image') {
+                        $dataAux = FileServices::uploadFilebyRequest($file, $path, "thumb", $dimensions);
+                        $data["thumb"] = $dataAux["imageName"];
                         if ($dataAux["showCrop"] === true) {
-                            $data[$lang->code]["showCrop"][] = $key;
+                            $data["showCrop"][] = "thumb";
                         }
-                        unset($data[$lang->code][$key . '_prev']);
+                        unset($data['thumb_prev']);
+                    }
+
+                    unset($data[$key . '_prev']);
+                }
+            }
+
+            // add file for lang
+            foreach ($langs as $lang) {
+                if (key_exists($lang->code, $files)) {
+                    foreach ($files[$lang->code] as $key => $file) {
+                        if (isset($file)) {
+                            $dataAux = FileServices::uploadFilebyRequest($file, $path . $lang->code, $key, $dimensions);
+                            $data[$lang->code][$key] = $dataAux["imageName"];
+                            if ($dataAux["showCrop"] === true) {
+                                $data[$lang->code]["showCrop"][] = $key;
+                            }
+                            unset($data[$lang->code][$key . '_prev']);
+                        }
                     }
                 }
             }
         }
-
         return $data;
     }
 
@@ -65,14 +64,14 @@ class FileServices
         $imageName = str_replace(' ', '_', $file->getClientOriginalName());
         $imageName = strtolower($imageName);
         $imageName = str_replace('.', '_' . $key . '.', $imageName);
-        
+
         $data['imageName'] = $imageName;
         $data['showCrop'] = false;
-        
+
         if ($ext == 'jpg' || $ext = 'png' || $ext == 'jepg') {
             if (isset($dimensions[$key])) {
                 $image = Image::make($file->getRealPath());
-                
+
                 $w = $image->width();
                 $h = $image->height();
                 $realRelation = $w / $h;

@@ -13,8 +13,6 @@
     </div>
 </div>
 
-
-
 <div class="row">
     <div class="col-md-12">
         <div class="panel panel-default">
@@ -72,7 +70,7 @@
 
     });
     function filterChange(id) {
-        window.location.href = "<?php echo Request::url() ?>/" + id;
+        window.location.href = "<?php echo route('admin.'.$repository.'.order')?>/" + id;
     }
 </script>
 

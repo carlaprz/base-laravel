@@ -2,13 +2,13 @@
 
 namespace App\Core\Form\Fields;
 
-final class SelectProducts extends AbstractField
+final class MultipleSelectProducts extends AbstractField
 {
 
     public function render()
     {
         $options = $this->generateOptions();
-        return "<select class='form-control' name='{$this->name()}'>{$options}</select>";
+        return "<select class='form-control' name='{$this->name()}[]' multiple>{$options}</select>";
     }
 
     private function generateOptions()
@@ -24,7 +24,7 @@ final class SelectProducts extends AbstractField
                 foreach ($categories['products'] as $productId => $productName) {
                     if (!empty($productId) && !empty($productName)) {
                         $selected = '';
-                        if ($productId == $this->value()) {
+                        if (in_array($productId, $this->value())) {
                             $selected = 'selected="selected"';
                         }
                         $options .= "<option value='{$productId}' {$selected}> &nbsp;{$productName}</option>";
@@ -35,21 +35,23 @@ final class SelectProducts extends AbstractField
 
             if (!empty($categories['child'])) {
                 foreach ($categories['child'] as $children) {
-                    $options .= "<optgroup label='&nbsp;&nbsp;{$children['name']}'>";
-                    foreach ($children['products'] as $childrenProductId => $childrenProductName) {
-                        if (!empty($childrenProductId) && !empty($childrenProductName)) {
-                            $selected = '';
-                            if ($childrenProductId == $this->value()) {
-                                $selected = 'selected="selected"';
-                            }
-                            $options .= "
+                    if (count($children['products']) > 0) {
+                        $options .= "<optgroup label='&nbsp;&nbsp;{$children['name']}'>";
+                        foreach ($children['products'] as $childrenProductId => $childrenProductName) {
+                            if (!empty($childrenProductId) && !empty($childrenProductName)) {
+                                $selected = '';
+                                if (in_array($childrenProductId, $this->value())) {
+                                    $selected = 'selected="selected"';
+                                }
+                                $options .= "
                                     <option
                                     value='{$childrenProductId}'
                                     {$selected}>
                                     &nbsp;{$childrenProductName}</option>";
+                            }
                         }
+                        $options.="</optgroup>";
                     }
-                    $options.="</optgroup>";
                 }
             }
         }

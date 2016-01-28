@@ -8,8 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 final class OrdersStatus extends Model implements ModelInterface
 {
 
-        protected $table = 'orders_status';
-
+    protected $table = 'orders_status';
     protected $fillable = ['description'];
 
     public function add( $data )
@@ -19,7 +18,7 @@ final class OrdersStatus extends Model implements ModelInterface
 
     public function orders()
     {
-        return $this->hasMany(Orders::class, 'status','id');
+        return $this->hasMany(Orders::class, 'status', 'id');
     }
 
 }

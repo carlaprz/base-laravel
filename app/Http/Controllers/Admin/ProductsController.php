@@ -2,22 +2,36 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Models\Products;
-use Session,
-    Input;
 use App\Core\Excel\ExcelTransformator;
-use App\Models\ProductsRelated;
 use App\Core\Form\FormGenerator;
-use App;
+use Session,
+    App,
+    Input;
+use App\Models\Products;
+use App\Models\ProductsRelated;
+use App\Models\ProductsColours;
+use App\Models\ProductsSizes;
 
 class ProductsController extends BaseController
 {
 
-    const TOTAL_ITEMS_PER_PAGE = 20;
-
+    // OBLIGATORIO 
     protected $resourceName = 'products';
     protected $repositoryName = Products::class;
-    protected $repositoryNameRelated = ProductsRelated::class;
+
+
+    //Paginado PHP
+    const TOTAL_ITEMS_PER_PAGE = 20;
+
+    //Relaciones multiples
+    protected $repositoryRelated = [
+        'product_id_related' => ProductsRelated::class,
+        'colour_id' => ProductsColours::Class,
+        'size_id' => ProductsSizes::class
+    ];
+    protected $selfReferenceRelated = 'product_id';
+    
+    // IMAGENES 
     protected $pathFile = 'files/products/';
     protected $filesDimensions = [
         'image' => ['w' => 400, 'h' => 400],
@@ -63,13 +77,13 @@ class ProductsController extends BaseController
 
     public function excel( Products $products, ExcelTransformator $excelTransformator )
     {
-        $products = $products->filtered(
+        $dataProducts = $products->filtered(
                 Session::get('products_filters', [])
         );
 
         $data = [];
 
-        foreach ($products as $product) {
+        foreach ($dataProducts as $product) {
             $data[] = [
                 'Id' => $product->id,
                 'Referencia' => $product->reference,
@@ -88,7 +102,7 @@ class ProductsController extends BaseController
         return back();
     }
 
-    public function edit( FormGenerator $formBuilder, $id )
+    /*public function edit( FormGenerator $formBuilder, $id )
     {
         $repo = App::make($this->repositoryName);
         $data = $repo->find($id);
@@ -98,9 +112,10 @@ class ProductsController extends BaseController
                     $this->resourceName, array_merge(
                             $data->toArray(), $data->productsRelatedData()
                     )
-            )
+            ),
+            'repository' => $this->resourceName
         ]);
-    }
+    }*/
 
     public function order()
     {

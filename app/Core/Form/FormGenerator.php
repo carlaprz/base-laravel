@@ -15,7 +15,7 @@ use App\Core\Form\Fields\ImageCrop;
 use App\Core\Form\Fields\Radio;
 use App\Core\Form\Fields\RadioDisabled;
 use App\Core\Form\Fields\Select;
-use App\Core\Form\Fields\SelectProducts;
+use App\Core\Form\Fields\MultipleSelectProducts;
 use App\Core\Form\Fields\File;
 use App\Core\Form\Fields\URLImage;
 use App\Core\Form\Fields\Hidden;
@@ -23,6 +23,7 @@ use App\Core\Form\Fields\Datetime;
 use App\Core\Form\Fields\SelectDisabled;
 use App\Core\Form\Fields\Link;
 use App\Core\Form\Fields\Line;
+use App\Core\Form\Fields\MultipleSelect;
 
 final class FormGenerator
 {
@@ -49,7 +50,8 @@ final class FormGenerator
         'datetime' => Datetime::class,
         'link' => Link::class,
         'line' => Line::class,
-        'selectProducts' => SelectProducts::class
+        'multipleSelectProducts' => MultipleSelectProducts::class,
+        'multipleSelect' => MultipleSelect::class
     ];
 
     public function generate( $config, array $defaultData = [] )
@@ -148,20 +150,11 @@ final class FormGenerator
     {
         $title = $fieldData['title'];
         $description = $fieldData['description'];
-
         $rules = isset($fieldData['rules']) ? $fieldData['rules'] : NULL;
         $value_dafault = isset($fieldData['value']) ? $fieldData['value'] : NULL;
         $value = empty($value_dafault) ? $this->getValue($defaultData, $name) : $value_dafault;
-
-      
-        if (preg_match("/productsRelated\[product_/i", $name)) {
-           $dataAux = explode('[', $name);
-           $nameAux = str_replace(']', '', $dataAux[1]);
-           $value = $this->getValue($defaultData, $nameAux);
-        } 
-
         $fieldClass = $this->fieldClass($fieldData['type']);
-
+        
         return new $fieldClass($name, $title, $description, $value, $rules);
     }
 

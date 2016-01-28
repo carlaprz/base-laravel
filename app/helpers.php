@@ -9,6 +9,8 @@ use App\Models\ShippingCountries;
 use App\Models\FaqsCategories;
 use App\Models\Payments;
 use App\Models\Products;
+use App\Models\Colours;
+use App\Models\Sizes;
 
 function current_lang()
 {
@@ -329,4 +331,28 @@ function all_products_backend()
     
     return $data;
     
+}
+
+function all_colours()
+{
+    App::setLocale('es');
+    $repo = app(Colours::class);
+    $colors = $repo->all();
+    $data = [];
+    foreach ($colors as $color) {
+        $data[$color->id] = $color->title;
+    }
+    return $data;
+}
+
+function all_sizes()
+{
+    App::setLocale('es');
+    $repo = app(Sizes::class);
+    $sizes = $repo->all();
+    $data = [];
+    foreach ($sizes as $size) {
+        $data[$size->id] = $size->title;
+    }
+    return $data;
 }

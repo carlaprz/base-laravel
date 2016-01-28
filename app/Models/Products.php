@@ -6,6 +6,9 @@ use App\Interfaces\ModelInterface;
 use Illuminate\Database\Eloquent\Model;
 use DB;
 use App;
+use App\Models\ProductsRelated;
+use App\Models\ProductsColours;
+use App\Models\ProductsSizes;
 
 final class Products extends Model implements ModelInterface
 {
@@ -16,8 +19,8 @@ final class Products extends Model implements ModelInterface
 
     protected $table = 'products';
     public $translatedAttributes = ['products_id', 'locale', 'title', 'description', 'slug'];
-    protected $fillable = ['category_id', 'reference', 'image', 'thumb', 'active', 'products_id', 'pvp', 'pvp_discounted', 'iva', 'locale', 'title', 'description', 'slug' ,'order'];
-    protected $appends = ["es", "en", "categoryName", "categorySlug"];
+    protected $fillable = ['category_id', 'reference', 'image', 'thumb', 'active', 'products_id', 'pvp', 'pvp_discounted', 'iva', 'locale', 'title', 'description', 'slug', 'order'];
+    protected $appends = ["es", "en", "categoryName", "categorySlug", 'size_id', 'colour_id', 'product_id_related'];
 
     //RELACIONES 
     public function category()
@@ -40,26 +43,57 @@ final class Products extends Model implements ModelInterface
         return $parent->slug;
     }
 
-    public function productsRelated()
+    public function products()
     {
-        return $this->hasMany(ProductsRelated::class, 'product_id', 'id')->orderBy('order')->get();
+        return $this->hasMany(ProductsRelated::class, 'product_id', 'id')->get();
     }
 
-    public function productsRelatedData()
+    public function colours()
     {
-        $time = 0;
-        $products = [];
-        foreach ($this->productsRelated() as $product) {
-            $products["product_{$time}"] = $product->related;
-            $time++;
-        }
-        return $products;
+        return $this->hasMany(ProductsColours::class, 'product_id', 'id')->get();
+    }
+
+    public function sizes()
+    {
+        return $this->hasMany(ProductsSizes::class, 'product_id', 'id')->get();
     }
 
     //BACKEND
     public function add( $data )
     {
         return $this->create($data);
+    }
+
+    public function getSizeIdAttribute()
+    {
+        $sizes = $this->sizes();
+
+        $return = [];
+        foreach ($sizes as $size) {
+            $return[] = $size->size_id;
+        }
+
+        return $return;
+    }
+
+    public function getColourIdAttribute()
+    {
+        $colours = $this->colours();
+        $return = [];
+        foreach ($colours as $color) {
+            $return[] = $color->color_id;
+        }
+        return $return;
+    }
+
+    public function getProductIdRelatedAttribute()
+    {
+        $products = $this->products();
+        $return = [];
+        foreach ($products as $product) {
+            $return[] = $product->product_id_related;
+        }
+        return $return;
     }
 
     //FILTROS
@@ -132,8 +166,7 @@ final class Products extends Model implements ModelInterface
 
     public function findByCategoryId( $categoryId )
     {
-        return $this->where('category_id', '=', $categoryId)
-                        ->get();
+        return $this->where('category_id', '=', $categoryId)->get();
     }
 
     //Metodos FRONT

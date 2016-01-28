@@ -36,7 +36,6 @@ return [
                 'crop' => 'admin.products.crop',
                 'order' => 'admin.products.order',
                 'name' => 'Productos',
-                'icon' => 'fa fa-shopping-cart',
             ],
             [
                 'route' => 'admin.categories.index',
@@ -45,7 +44,22 @@ return [
                 'edit' => 'admin.categories.edit',
                 'delete' => 'admin.categories.delete',
                 'name' => 'Categorías',
-                'icon' => 'fa fa-align-left',
+            ],
+            [
+                'route' => 'admin.sizes.index',
+                'resource' => 'sizes',
+                'create' => 'admin.sizes.create',
+                'edit' => 'admin.sizes.edit',
+                'delete' => 'admin.sizes.delete',
+                'name' => 'Tallas'
+            ],
+            [
+                'route' => 'admin.colours.index',
+                'resource' => 'colours',
+                'create' => 'admin.colours.create',
+                'edit' => 'admin.colours.edit',
+                'delete' => 'admin.colours.delete',
+                'name' => 'Colores'
             ]
         ],
     ],

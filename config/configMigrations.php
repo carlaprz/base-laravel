@@ -4,8 +4,8 @@ return [
     'users' => [
         'admin' => true,
         'front' => true,
-        'fb_connect' => true, 
-        'gp_connect' => true, 
+        'fb_connect' => true,
+        'gp_connect' => true,
     ],
     'languages' => [
         [
@@ -26,6 +26,10 @@ return [
         'categories' => true,
         'products' => true,
         'products_related' => true,
+        'products_options' => [
+            'size' => true,
+            'colour' => true,
+        ],
         'cart' => true,
         'cart_opcion' => [
             'shipping' => true,

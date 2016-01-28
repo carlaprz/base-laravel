@@ -253,7 +253,67 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => ['aut
         'as' => 'admin.categories.delete',
         'uses' => 'CategoriesController@delete'
     ]);
+    
+    // TALLES
+    
+    Route::get('sizes', [
+        'as' => 'admin.sizes.index',
+        'uses' => 'SizesController@index'
+    ]);
 
+    Route::get('sizes/create', [
+        'as' => 'admin.sizes.create',
+        'uses' => 'SizesController@create'
+    ]);
+
+    Route::post('sizes/create', [
+        'as' => 'admin.sizes.save',
+        'uses' => 'SizesController@save'
+    ]);
+
+    Route::get('sizes/edit/{id}', [
+        'as' => 'admin.sizes.edit',
+        'uses' => 'SizesController@edit'
+    ]);
+
+    Route::post('sizes/edit/{id}', [
+        'as' => 'admin.sizes.update',
+        'uses' => 'SizesController@update'
+    ]);
+    Route::get('sizes/delete/{id}', [
+        'as' => 'admin.sizes.delete',
+        'uses' => 'SizesController@delete'
+    ]);
+    
+    //COLOR
+    Route::get('colours', [
+        'as' => 'admin.colours.index',
+        'uses' => 'ColoursController@index'
+    ]);
+
+    Route::get('colours/create', [
+        'as' => 'admin.colours.create',
+        'uses' => 'ColoursController@create'
+    ]);
+
+    Route::post('colours/create', [
+        'as' => 'admin.colours.save',
+        'uses' => 'ColoursController@save'
+    ]);
+
+    Route::get('colours/edit/{id}', [
+        'as' => 'admin.colours.edit',
+        'uses' => 'ColoursController@edit'
+    ]);
+
+    Route::post('colours/edit/{id}', [
+        'as' => 'admin.colours.update',
+        'uses' => 'ColoursController@update'
+    ]);
+    Route::get('colours/delete/{id}', [
+        'as' => 'admin.colours.delete',
+        'uses' => 'ColoursController@delete'
+    ]);
 
     ///////////////PEDIDOS
     Route::get('orders', [

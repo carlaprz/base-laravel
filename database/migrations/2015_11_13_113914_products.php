@@ -18,7 +18,7 @@ class Products extends Migration
             Schema::create('products', function(Blueprint $table)
             {
                 $table->increments('id');
-                $table->string('reference')->unsigned();
+                $table->string('reference');
                 $table->string('image');
                 $table->string('thumb');
                 $table->integer('order');
@@ -26,9 +26,6 @@ class Products extends Migration
                 $table->float('pvp_discounted')->unsigned();
                 $table->float('iva')->unsigned();
                 $table->boolean('active')->default(1);
-
-                $table->unique(['reference']);
-
                 $table->timestamps();
             });
 
@@ -38,6 +35,7 @@ class Products extends Migration
                 {
                     $table->integer('category_id')->unsigned();
                     $table->foreign('category_id')->references('id')->on('categories');
+                    $table->unique(['reference']);
                 });
             }
 
