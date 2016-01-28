@@ -213,6 +213,7 @@ abstract class BaseController extends Controller
     {
         $langs = langs_array();
         $errors = [];
+        
         if (!empty($id)) {
             $parent = isset($data['parent']) ? $data['parent'] : '';
             foreach ($rules as $key => $rulesArray) {
@@ -244,6 +245,7 @@ abstract class BaseController extends Controller
                 }
             }
         }
+        
         foreach ($data as $key => $value) {
             if (is_array($value)) {
                 if (in_array($key, $langs)) {

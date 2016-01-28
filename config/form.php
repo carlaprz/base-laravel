@@ -306,7 +306,7 @@ return [
                 'type' => 'multipleSelectProducts',
                 'title' => 'Productos Relacionados',
                 'description' => 'all_products_backend',
-                'rules' => ['required']
+                'rules' => ['']
             ],
             
         ],
@@ -318,7 +318,7 @@ return [
                         'type' => 'text',
                         'title' => 'Título',
                         'description' => 'Título del producto',
-                        'rules' => ['required']
+                        'rules' => ['required', 'unique:products_translations,title,{unique:id},products_id,locale,es']
                     ],
                     'description' => [
                         'type' => 'textarea',
@@ -340,7 +340,7 @@ return [
                         'type' => 'text',
                         'title' => 'Title',
                         'description' => 'Título del producto',
-                        'rules' => []
+                        'rules' => ['unique:products_translations,title,{unique:id},products_id,locale,en']
                     ],
                     'description' => [
                         'type' => 'textarea',
@@ -403,7 +403,7 @@ return [
                         'type' => 'text',
                         'title' => 'Nombre',
                         'description' => 'Nombre',
-                        'rules' => ['required', 'unique:sizes_translations,title,{unique:id}']
+                        'rules' => ['required', 'unique:sizes_translations,title,{unique:id},sizes_id,locale,es']
                     ]                    
                 ]
             ],
@@ -413,7 +413,7 @@ return [
                         'type' => 'text',
                         'title' => 'Name',
                         'description' => 'Name',
-                        'rules' => ['unique:sizes_translations,title,{unique:id},']
+                        'rules' => ['unique:sizes_translations,title,{unique:id},sizes_id,locale,en']
                     ]
                 ]
             ]
@@ -441,7 +441,7 @@ return [
                         'type' => 'text',
                         'title' => 'Nombre',
                         'description' => 'Nombre',
-                        'rules' => ['required', 'unique:colours_translations,title,{unique:id}']
+                        'rules' => ['required', 'unique:colours_translations,title,{unique:id},colours_id,locale,es']
                     ]                    
                 ]
             ],
@@ -451,7 +451,7 @@ return [
                         'type' => 'text',
                         'title' => 'Name',
                         'description' => 'Name',
-                        'rules' => ['unique:colours_translations,title,{unique:id},']
+                        'rules' => ['unique:colours_translations,title,{unique:id},colours_id,locale,en']
                     ]
                 ]
             ]

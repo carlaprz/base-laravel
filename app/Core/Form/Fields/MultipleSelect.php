@@ -21,7 +21,8 @@ final class MultipleSelect extends AbstractField
         $options = '';
         foreach ($data as $key => $name) {
             $selected = '';
-            if (in_array($key, $this->value())) {
+            
+            if (is_array($this->value()) && in_array($key, $this->value())) {
                 $selected = 'selected="selected"';
             }
             $value = $key != 0 ? $key : "";

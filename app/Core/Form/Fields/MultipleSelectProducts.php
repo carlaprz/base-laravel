@@ -24,7 +24,7 @@ final class MultipleSelectProducts extends AbstractField
                 foreach ($categories['products'] as $productId => $productName) {
                     if (!empty($productId) && !empty($productName)) {
                         $selected = '';
-                        if (in_array($productId, $this->value())) {
+                        if (is_array($this->value()) && in_array($productId, $this->value())) {
                             $selected = 'selected="selected"';
                         }
                         $options .= "<option value='{$productId}' {$selected}> &nbsp;{$productName}</option>";
@@ -40,7 +40,7 @@ final class MultipleSelectProducts extends AbstractField
                         foreach ($children['products'] as $childrenProductId => $childrenProductName) {
                             if (!empty($childrenProductId) && !empty($childrenProductName)) {
                                 $selected = '';
-                                if (in_array($childrenProductId, $this->value())) {
+                                if (is_array($this->value()) && in_array($childrenProductId, $this->value())) {
                                     $selected = 'selected="selected"';
                                 }
                                 $options .= "
