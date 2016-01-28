@@ -66,7 +66,8 @@ class OrdersController extends BaseController
             'form' => $formBuilder->generate(
                     $this->resourceName, $data->toArray()
             ),
-            'details' => true
+            'details' => true,
+            'repository' => $this->resourceName
         ]);
     }
 

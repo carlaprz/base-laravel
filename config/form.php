@@ -309,8 +309,7 @@ return [
                 'rules' => ['']
             ],
             
-        ],
-       
+        ],       
         'lenguages' => [
             'es' => [
                 'fields' => [
@@ -477,10 +476,16 @@ return [
                 'description' => '',
                 'rules' => ['']
             ],
-            'pvpName' => [
+            'paymentName' => [
                 'type' => 'textDisabled',
                 'title' => 'Método de pago',
                 'description' => 'Método de pago',
+                'rules' => ['']
+            ],
+            'paymentResponse' => [
+                'type' => 'textDisabled',
+                'title' => 'Respuesta del método de pago',
+                'description' => 'Respuesta del método de pago',
                 'rules' => ['']
             ],
             'total_pvp' => [

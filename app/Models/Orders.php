@@ -17,7 +17,7 @@ final class Orders extends Model implements ModelInterface
 
     protected $table = 'orders';
     protected $fillable = ['reference', 'cart_id', 'total_pvp', 'total_iva', 'status', 'observations', 'bill'];
-    protected $appends = ['pvpName', 'linkUser', 'statusName', 'userNameLastName', 'shipping', 'cupon_code',
+    protected $appends = ['paymentName', 'paymentResponse', 'linkUser', 'statusName', 'userNameLastName', 'shipping', 'cupon_code',
         'cant_products', 'products', 'country_name', 'products_name'];
 
     public function paginate( $num, $filters = [] )
@@ -102,11 +102,21 @@ final class Orders extends Model implements ModelInterface
 
     // List BACKEND
 
-    public function getPvpNameAttribute()
+    public function getPaymentNameAttribute()
     {
         if (count($this->payment()) > 0) {
             $payment = $this->payment()->first()->payment()->first();
             return $payment->name;
+        }
+        return false;
+    }
+
+    public function getPaymentResponseAttribute()
+    {
+
+        if (count($this->payment()) > 0) {
+            $payment = $this->payment()->first();
+            return $payment->response_code;
         }
         return false;
     }
