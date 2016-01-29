@@ -28,6 +28,8 @@ abstract class BaseController extends Controller
     //Relaciones multiples
     protected $repositoryRelated = [];
     protected $selfReferenceRelated = "";
+    protected $relationCurrencies = "";
+    
     // IMAGENES 
     protected $pathFile = "";
     protected $filesDimensions = [
@@ -46,6 +48,7 @@ abstract class BaseController extends Controller
 
     public function edit( FormGenerator $formBuilder, $id )
     {
+
         $repo = App::make($this->repositoryName);
         $data = $repo->find($id);
 
@@ -90,9 +93,21 @@ abstract class BaseController extends Controller
 
         $resource = $repo->add($data['data']);
 
+        if (isset($data['related']['showCrop'])) {
+            $showCrop = $data['related']['showCrop'];
+            unset($data['related']['showCrop']);
+        }
+
+        if (isset($data['related']['currencies'])) {
+            $this->saveCurrencies($data['related']['currencies'], $resource);
+            unset($data['related']['currencies']);
+        }
+
+
+
         $this->dataRelated($data['related'], $resource);
 
-        if (!empty($data["showCrop"]) && is_array($data["showCrop"])) {
+        if (!empty($showCrop) && is_array($showCrop)) {
             return redirect(route('admin.' . $this->resourceName . '.crop', $resource->id));
         }
 
@@ -106,6 +121,7 @@ abstract class BaseController extends Controller
         $resource = $repo->find($id);
 
         $rules = get_rules_from($this->resourceName);
+
         $prepareData = $this->prepareData(Input::all(), $request);
 
         $validations = $this->prepareValidate($prepareData, $rules, $resource->id);
@@ -117,9 +133,15 @@ abstract class BaseController extends Controller
         $data = $this->getDataRelated($dataClear);
 
         $resource->update($data['data']);
+
         if (isset($data['related']['showCrop'])) {
             $showCrop = $data['related']['showCrop'];
             unset($data['related']['showCrop']);
+        }
+
+        if (isset($data['related']['currencies'])) {
+            $this->saveCurrencies($data['related']['currencies'], $resource);
+            unset($data['related']['currencies']);
         }
 
         //RELATED MANY TO MANY
@@ -213,7 +235,7 @@ abstract class BaseController extends Controller
     {
         $langs = langs_array();
         $errors = [];
-        
+
         if (!empty($id)) {
             $parent = isset($data['parent']) ? $data['parent'] : '';
             foreach ($rules as $key => $rulesArray) {
@@ -245,7 +267,7 @@ abstract class BaseController extends Controller
                 }
             }
         }
-        
+
         foreach ($data as $key => $value) {
             if (is_array($value)) {
                 if (in_array($key, $langs)) {
@@ -396,6 +418,38 @@ abstract class BaseController extends Controller
             }
         }
         return ['data' => $data, 'related' => $related];
+    }
+
+    private function saveCurrencies( $data, $resource )
+    {
+        $repository = App::make($this->relationCurrencies);
+        $this->deleteCurrencies($repository, $resource);
+        $this->addCurrencies($data, $repository, $resource);
+    }
+
+    private function deleteCurrencies( $repository, $resource )
+    {
+        $objects = $repository->where($this->selfReferenceRelated, $resource->id)->get();
+        foreach ($objects as $object) {
+            if (is_object($object)) {
+                $object->delete();
+            }
+        }
+    }
+
+    private function addCurrencies( $data, $repository, $resource )
+    {
+        foreach ($data as $key => $value) {
+            $dataAdd = [];
+
+            foreach ($value as $name => $val) {
+                $dataAdd[$name] = $val;
+            }
+            $dataAdd['currency_id'] = $key;
+            $dataAdd[$this->selfReferenceRelated] = $resource->id;
+          
+            $repository->add($dataAdd);
+        }
     }
 
     private function dataRelated( $data, $resource )

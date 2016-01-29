@@ -11,8 +11,8 @@ final class Select extends AbstractField
 
     private function generateOptions()
     {
-        $data = $this->description();
-        $data = $data();
+        $dataFunction = $this->description();
+        $data = $dataFunction();
 
         $data[0] = 'Selecciona';
         

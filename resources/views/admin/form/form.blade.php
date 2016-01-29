@@ -36,7 +36,7 @@
                     <form method="post" action="" > 
                  @endif
                     @if(is_array($form->getDataShow()))
-                        
+                       
                         @foreach($form->getDataShow() as $datashow )    
                         
                             <div class="{{$datashow["title"]}}">                          
@@ -51,7 +51,9 @@
                                     @elseif($datashow["title"] === 'productsRelated')
                                         <span>Productos Relacionados</span> 
                                     @elseif(in_array($datashow["title"],langs_array()))
-                                        <span>Datos  en el idioma "{{$datashow["title"]}}" </span>
+                                        <span>Datos en el idioma "{{$datashow["title"]}}" </span>
+                                    @elseif($datashow["title"] == "currencies" )
+                                        <span>Precios </span>
                                     @else
                                         <span>Datos "{{$datashow["title"]}}" </span>
                                     @endif

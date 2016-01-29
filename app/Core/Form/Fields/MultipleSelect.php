@@ -14,14 +14,14 @@ final class MultipleSelect extends AbstractField
 
     private function generateOptions()
     {
-        $data = $this->description();
-        $data = $data();
+        $dataFunction = $this->description();
+        $data = $dataFunction();
 
         $data[0] = 'Selecciona';
         $options = '';
         foreach ($data as $key => $name) {
             $selected = '';
-            
+
             if (is_array($this->value()) && in_array($key, $this->value())) {
                 $selected = 'selected="selected"';
             }

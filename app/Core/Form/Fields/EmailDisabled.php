@@ -1,7 +1,10 @@
-<?php namespace App\Core\Form\Fields;
+<?php
+
+namespace App\Core\Form\Fields;
 
 final class EmailDisabled extends AbstractField
 {
+
     public function render()
     {
         return "<div class='.form-group input-group'>
@@ -14,4 +17,5 @@ final class EmailDisabled extends AbstractField
                         disabled>
                 </div>";
     }
+
 }

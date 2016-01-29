@@ -11,6 +11,7 @@ use App\Models\Products;
 use App\Models\ProductsRelated;
 use App\Models\ProductsColours;
 use App\Models\ProductsSizes;
+use App\Models\ProductsCurrrencies;
 
 class ProductsController extends BaseController
 {
@@ -30,6 +31,7 @@ class ProductsController extends BaseController
         'size_id' => ProductsSizes::class
     ];
     protected $selfReferenceRelated = 'product_id';
+    protected $relationCurrencies = ProductsCurrrencies::class;
     
     // IMAGENES 
     protected $pathFile = 'files/products/';

@@ -1,7 +1,10 @@
-<?php namespace App\Core\Form\Fields;
+<?php
+
+namespace App\Core\Form\Fields;
 
 final class Text extends AbstractField
 {
+
     public function render()
     {
         return "<input class='form-control'
@@ -10,4 +13,5 @@ final class Text extends AbstractField
                        value='{$this->value()}'>
            ";
     }
+
 }

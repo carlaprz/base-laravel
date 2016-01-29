@@ -1,6 +1,8 @@
-<?php namespace App\Core\Form;
+<?php
+
+namespace App\Core\Form;
 
 final class FieldNotSupportedException extends \Exception
 {
-
+    
 }

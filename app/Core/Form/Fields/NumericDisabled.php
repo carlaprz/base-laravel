@@ -1,7 +1,10 @@
-<?php namespace App\Core\Form\Fields;
+<?php
+
+namespace App\Core\Form\Fields;
 
 final class NumericDisabled extends AbstractField
 {
+
     public function render()
     {
         return "
@@ -13,4 +16,5 @@ final class NumericDisabled extends AbstractField
             >
         ";
     }
+
 }

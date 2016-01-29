@@ -1,7 +1,10 @@
-<?php namespace App\Core\Form\Fields;
+<?php
+
+namespace App\Core\Form\Fields;
 
 final class Email extends AbstractField
 {
+
     public function render()
     {
         return "<div class='.form-group input-group'>
@@ -13,4 +16,5 @@ final class Email extends AbstractField
                         placeholder='{$this->description()}'>
                 </div>";
     }
+
 }

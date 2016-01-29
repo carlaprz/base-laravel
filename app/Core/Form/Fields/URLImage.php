@@ -1,7 +1,10 @@
-<?php namespace App\Core\Form\Fields;
+<?php
+
+namespace App\Core\Form\Fields;
 
 final class URLImage extends Image
 {
+
     public function render()
     {
         $image = parent::render();
@@ -11,4 +14,5 @@ final class URLImage extends Image
                        name='{$this->name()}'
                        value='{$this->value()}'>" . $image;
     }
+
 }

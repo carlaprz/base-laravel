@@ -20,10 +20,10 @@ final class Products extends Model implements ModelInterface
     protected $table = 'products';
     public $translatedAttributes = ['products_id', 'locale', 'title', 'description', 'slug'];
     protected $fillable = ['category_id', 'reference', 'image', 'thumb', 'active', 'products_id', 'pvp', 'pvp_discounted', 'iva', 'locale', 'title', 'description', 'slug', 'order'];
-    protected $appends = ["es", "en", "categoryName", "categorySlug", 'size_id', 'colour_id', 'product_id_related'];
+    protected $appends = ["es", "en", "categoryName", "categorySlug", 'size_id', 'colour_id', 'product_id_related', 'currencies'];
 
     //RELACIONES 
-    public function category()
+    private function category()
     {
         return $this->belongsTo(Categories::class, 'category_id', 'id')->first();
     }
@@ -43,19 +43,36 @@ final class Products extends Model implements ModelInterface
         return $parent->slug;
     }
 
-    public function products()
+    private function products()
     {
         return $this->hasMany(ProductsRelated::class, 'product_id', 'id')->get();
     }
 
-    public function colours()
+    private function colours()
     {
         return $this->hasMany(ProductsColours::class, 'product_id', 'id')->get();
     }
 
-    public function sizes()
+    private function sizes()
     {
         return $this->hasMany(ProductsSizes::class, 'product_id', 'id')->get();
+    }
+
+    private function currencies()
+    {
+        return $this->hasMany(ProductsCurrrencies::class, 'product_id', 'id')->get();
+    }
+
+    public function getCurrenciesAttribute()
+    {
+        $currencies = $this->currencies();
+        $return = [];
+        foreach ($currencies as $currency) {
+            $return[$currency->currency_id]['pvp'] = $currency->pvp;
+            $return[$currency->currency_id]['pvp_discounted'] = $currency->pvp_discounted;
+            $return[$currency->currency_id]['iva'] = $currency->iva;
+        }
+        return $return;
     }
 
     //BACKEND

@@ -1,7 +1,10 @@
-<?php namespace App\Core\Form\Fields;
+<?php
+
+namespace App\Core\Form\Fields;
 
 final class Textarea extends AbstractField
 {
+
     public function render()
     {
         return "<textarea class='form-control summernote'
@@ -10,4 +13,5 @@ final class Textarea extends AbstractField
                           placeholder='{$this->description()}'>{$this->value()}</textarea>
         ";
     }
+
 }

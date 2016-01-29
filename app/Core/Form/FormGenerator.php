@@ -72,7 +72,7 @@ final class FormGenerator
         }
 
         $loopGenerals = isset($data["loop"]) ? $data["loop"] : false;
-        $form->addDataShow('generals', $loopGenerals);
+        $form->addDataShow('generals');
 
         //ADD LENGUAGES DATA
         if (isset($data['lenguages'])) {
@@ -83,34 +83,35 @@ final class FormGenerator
                     $form->addField($key, $field);
                 }
                 $loopkey = isset($data[$key]["loop"]) ? $data[$key]["loop"] : false;
-                $form->addDataShow($key, $loopkey);
+                $form->addDataShow($key);
             }
         }
 
         //ADD SPECIAL DATA
         if (isset($data['dataShow']) && is_array($data['dataShow'])) {
             foreach ($data['dataShow'] as $otherData) {
-                $loopOtherData = isset($data[$otherData]["loop"]) ? isset($data[$otherData]["loop"]) : false;
-                if ($loopOtherData) {
-                    if (isset($loopsInfo['cant_' . $otherData]) && $loopsInfo['cant_' . $otherData] > 0) {
-                        for ($i = 0; $i < $loopsInfo['cant_' . $otherData]; $i++) {
-                            foreach ($data[$otherData]['fields'] as $name => $fieldData) {
-                                $name = $otherData . '[' . $i . '][' . $name . ']';
-                                $field = $this->generateField($name, $defaultData, $fieldData, $loopOtherData);
-                                $form->addField($otherData, $field);
-                            }
-                        }
-                    }
-                } else {
+                if (isset($data[$otherData]['fields'])) {
                     foreach ($data[$otherData]['fields'] as $name => $fieldData) {
                         $name = $otherData . '[' . $name . ']';
                         $field = $this->generateField($name, $defaultData, $fieldData);
                         $form->addField($otherData, $field);
                     }
+                } else {
+                    foreach ($data[$otherData] as $key => $values) {
+                        if ($values['fields']) {
+                            foreach ($values['fields'] as $name => $fieldDataAux) {
+                                $name = $otherData . '[' . $key . '][' . $name . ']';
+                                $field = $this->generateField($name, $defaultData, $fieldDataAux);
+                                
+                                $form->addField($otherData, $field);
+                            }
+                        }
+                    }
                 }
-                $form->addDataShow($otherData, $loopOtherData);
+                $form->addDataShow($otherData);
             }
         }
+       
         return $form;
     }
 
@@ -154,7 +155,7 @@ final class FormGenerator
         $value_dafault = isset($fieldData['value']) ? $fieldData['value'] : NULL;
         $value = empty($value_dafault) ? $this->getValue($defaultData, $name) : $value_dafault;
         $fieldClass = $this->fieldClass($fieldData['type']);
-        
+
         return new $fieldClass($name, $title, $description, $value, $rules);
     }
 

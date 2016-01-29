@@ -9,8 +9,6 @@ class ImageFile extends AbstractField
 
     public function render( $id = null )
     {
-
-
         $id = Request::url();
         $id = explode("/", $id);
         $id = $id[count($id) - 1];

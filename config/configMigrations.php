@@ -30,6 +30,9 @@ return [
             'size' => true,
             'colour' => true,
         ],
+        'money' => [
+           'multiple' => true
+        ],
         'cart' => true,
         'cart_opcion' => [
             'shipping' => true,

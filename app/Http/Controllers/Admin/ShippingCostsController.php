@@ -3,12 +3,15 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Models\ShippingCosts;
+use App\Models\ShippingCurrrencies;
 
 class ShippingCostsController extends BaseController
 {
 
     protected $resourceName = 'shippingCosts';
     protected $repositoryName = ShippingCosts::class;
+    protected $selfReferenceRelated = 'shipping_costs_id';
+    protected $relationCurrencies = ShippingCurrrencies::class;
 
     public function index()
     {

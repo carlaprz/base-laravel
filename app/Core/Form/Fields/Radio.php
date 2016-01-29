@@ -1,7 +1,10 @@
-<?php namespace App\Core\Form\Fields;
+<?php
+
+namespace App\Core\Form\Fields;
 
 final class Radio extends AbstractField
 {
+
     public function render()
     {
         $checked = "checked='checked'";
@@ -32,4 +35,5 @@ final class Radio extends AbstractField
             </label>
         ";
     }
+
 }

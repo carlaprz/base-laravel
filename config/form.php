@@ -156,9 +156,8 @@ return [
                 'title' => 'Imagen',
                 'description' => '',
                 'rules' => [''],
-                
-            ],            
-        ]        
+            ],
+        ]
     ],
     'categories' => [
         'name' => 'Categorías',
@@ -243,7 +242,7 @@ return [
         'name' => 'Productos',
         'for_files' => true,
         'description' => 'Administración de Productos',
-        'dataShow' => [],
+        'dataShow' => ['currencies'],
         'slug' => ['title'],
         'editor' => true,
         'fields' => [
@@ -251,10 +250,10 @@ return [
                 'type' => 'text',
                 'title' => 'Referencia',
                 'description' => 'La referencia del producto',
-                'rules' => ['required','unique:products,reference,{unique:id}']
+                'rules' => ['required', 'unique:products,reference,{unique:id}']
             ],
             'active' => [
-                'type'  => 'radio',
+                'type' => 'radio',
                 'title' => 'Activo',
                 'description' => 'Estado',
                 'rules' => ['required']
@@ -265,25 +264,24 @@ return [
                 'description' => 'Introduzca la imagen del producto',
                 'rules' => ['required']
             ],
-            'pvp' => [
-                'type' => 'numeric',
-                'title' => 'Precio del producto',
-                'description' => 'Introduzca el precio sin IVA del producto',
-                'rules' => ['required']
-            ],
-            'pvp_discounted' => [
-                'type' => 'numeric',
-                'title' => 'Precio del producto descontado',
-                'description' => 'Introduzca el precio descontado del producto en caso de que lo tenga',
-                'rules' => []
-            ],
-            'iva' => [
-                'type' => 'numeric',
-                'title' => '% de impuesto',
-                'description' => 'Introduzca el valor del impuesto en porcentaje',
-                'rules' => []
-            ],
-            
+            /* 'pvp' => [
+              'type' => 'numeric',
+              'title' => 'Precio del producto en Euro',
+              'description' => 'Introduzca el precio sin IVA del producto',
+              'rules' => ['required']
+              ],
+              'pvp_discounted' => [
+              'type' => 'numeric',
+              'title' => 'Precio descontado del producto Euro',
+              'description' => 'Introduzca el precio descontado del producto en caso de que lo tenga',
+              'rules' => []
+              ],
+              'iva' => [
+              'type' => 'numeric',
+              'title' => '% de IVA en Euros',
+              'description' => 'Introduzca el valor del impuesto en porcentaje',
+              'rules' => []
+              ], */
             'category_id' => [
                 'type' => 'select',
                 'title' => 'Categoria',
@@ -308,8 +306,53 @@ return [
                 'description' => 'all_products_backend',
                 'rules' => ['']
             ],
-            
-        ],       
+        ],
+        'currencies' => [
+            '1' => [
+                'fields' => [
+                    'pvp' => [
+                        'type' => 'numeric',
+                        'title' => 'Precio del producto en Euro',
+                        'description' => 'Introduzca el precio sin IVA del producto',
+                        'rules' => ['required']
+                    ],
+                    'pvp_discounted' => [
+                        'type' => 'numeric',
+                        'title' => 'Precio descontado del producto Euro',
+                        'description' => 'Introduzca el precio descontado del producto en caso de que lo tenga',
+                        'rules' => []
+                    ],
+                    'iva' => [
+                        'type' => 'numeric',
+                        'title' => '% de IVA en Euros',
+                        'description' => 'Introduzca el valor del impuesto en porcentaje',
+                        'rules' => []
+                    ],
+                ]
+            ],
+            '2' => [
+                'fields' => [
+                    'pvp' => [
+                        'type' => 'numeric',
+                        'title' => 'Precio del producto en Dolar',
+                        'description' => 'Introduzca el precio sin IVA del producto',
+                        'rules' => ['required']
+                    ],
+                    'pvp_discounted' => [
+                        'type' => 'numeric',
+                        'title' => 'Precio descontado del producto Dolar',
+                        'description' => 'Introduzca el precio descontado del producto en caso de que lo tenga',
+                        'rules' => []
+                    ],
+                    'iva' => [
+                        'type' => 'numeric',
+                        'title' => '% de IVA en Dolar',
+                        'description' => 'Introduzca el valor del impuesto en porcentaje',
+                        'rules' => []
+                    ],
+                ]
+            ],
+        ],
         'lenguages' => [
             'es' => [
                 'fields' => [
@@ -370,7 +413,6 @@ return [
                 'title' => 'Imagen detalle',
                 'description' => '',
                 'rules' => [''],
-                
             ],
             'thumb' => [
                 'type' => 'imageCrop',
@@ -378,7 +420,7 @@ return [
                 'description' => '',
                 'rules' => ['']
             ]
-        ]        
+        ]
     ],
     'sizes' => [
         'name' => 'Tallas',
@@ -403,7 +445,7 @@ return [
                         'title' => 'Nombre',
                         'description' => 'Nombre',
                         'rules' => ['required', 'unique:sizes_translations,title,{unique:id},sizes_id,locale,es']
-                    ]                    
+                    ]
                 ]
             ],
             'en' => [
@@ -441,7 +483,7 @@ return [
                         'title' => 'Nombre',
                         'description' => 'Nombre',
                         'rules' => ['required', 'unique:colours_translations,title,{unique:id},colours_id,locale,es']
-                    ]                    
+                    ]
                 ]
             ],
             'en' => [
@@ -582,47 +624,6 @@ return [
                     'rules' => ['']
                 ],
             ],
-        ],
-        "products" => [
-            "loop" => true,
-            "fields" => [
-                'link' => [
-                    'type' => 'link',
-                    'title' => 'Enlace al producto',
-                    'description' => '',
-                    'rules' => ['']
-                ],
-                'product_description' => [
-                    'type' => 'textDisabled',
-                    'title' => 'Producto nombre',
-                    'description' => '',
-                    'rules' => ['']
-                ],
-                'pvp' => [
-                    'type' => 'textDisabled',
-                    'title' => 'Precio',
-                    'description' => '',
-                    'rules' => ['']
-                ],
-                'iva' => [
-                    'type' => 'textDisabled',
-                    'title' => 'IVA',
-                    'description' => '',
-                    'rules' => ['']
-                ],
-                'cant' => [
-                    'type' => 'textDisabled',
-                    'title' => 'Unidades',
-                    'description' => '',
-                    'rules' => ['']
-                ],
-                'separacion' => [
-                    'type' => 'line',
-                    'title' => '',
-                    'description' => '',
-                    'rules' => ['']
-                ],
-            ],
         ]
     ],
     'ordersStatus' => [
@@ -749,18 +750,13 @@ return [
         'name' => 'Costes de envío',
         'for_files' => false,
         'description' => 'Administración de costes de envío',
+        'dataShow' => ['currencies'],
         'editor' => false,
         'fields' => [
             'name' => [
                 'type' => 'text',
                 'title' => 'Nombre',
                 'description' => 'Introduce el nombre del coste de envío',
-                'rules' => ['required']
-            ],
-            'pvp' => [
-                'type' => 'numeric',
-                'title' => 'Precio',
-                'description' => 'Introduce el precio del coste de envío',
                 'rules' => ['required']
             ],
             'units' => [
@@ -781,7 +777,29 @@ return [
                 'description' => 'Estado',
                 'rules' => ['required']
             ]
-        ]
+        ],
+        'currencies' => [
+            '1' => [
+                'fields' => [
+                    'pvp' => [
+                        'type' => 'numeric',
+                        'title' => 'Precio Euro',
+                        'description' => 'Introduce el precio del coste de envío',
+                        'rules' => ['required']
+                    ],
+                ]
+            ],
+            '2' => [
+                'fields' => [
+                    'pvp' => [
+                        'type' => 'numeric',
+                        'title' => 'Precio Dolar',
+                        'description' => 'Introduce el precio del coste de envío',
+                        'rules' => ['required']
+                    ],
+                ]
+            ],
+        ],
     ],
     'payments' => [
         'name' => 'Métodos de pago',
