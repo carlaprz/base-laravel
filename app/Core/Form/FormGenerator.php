@@ -27,7 +27,6 @@ use App\Core\Form\Fields\MultipleSelect;
 
 final class FormGenerator
 {
-
     private $configFileName = 'form';
     private $fieldsMap = [
         'numeric' => Numeric::class,
@@ -70,8 +69,6 @@ final class FormGenerator
 
             $form->addField('generals', $field);
         }
-
-
 
         $loopGenerals = isset($data["loop"]) ? $data["loop"] : false;
         $form->addDataShow('generals', false);
@@ -129,7 +126,7 @@ final class FormGenerator
             }
         }
 
-       return $form;
+        return $form;
     }
 
     private function generateConfigFileName( $config )
@@ -157,9 +154,9 @@ final class FormGenerator
 
                 $value = $data[$name][$secondname][$thirdname];
             }
-        }        
-        if(empty($value)){
-            $value =  $data[$name];
+        }
+        if (empty($value)) {
+            $value = $data[$name];
         }
 
         return $value;

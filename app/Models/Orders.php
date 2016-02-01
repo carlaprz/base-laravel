@@ -114,9 +114,10 @@ final class Orders extends Model implements ModelInterface
 
     public function getPaymentResponseAttribute()
     {
-
+       // dd($this->payment()->first());
         if (count($this->payment()) > 0) {
             $payment = $this->payment()->first();
+          
             return $payment->response;
         }
         return false;
