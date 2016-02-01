@@ -9,7 +9,7 @@ final class OrdersPayments extends Model implements ModelInterface
 {
 
     protected $table = 'orders_payments';
-    protected $fillable = ['order_id', 'payment_id', 'response_code', 'operation_code'];
+    protected $fillable = ['order_id', 'payment_id', 'response_code', 'operation_code' , 'response'];
 
     public function getOrder()
     {
@@ -19,6 +19,19 @@ final class OrdersPayments extends Model implements ModelInterface
     public function payment()
     {
         return $this->belongsTo(Payments::class, 'payment_id', 'id')->get();
+    }
+    
+    public function errors()
+    {
+        return $this->hasMany(PaymentsErrors::class, 'payment_id')->where('code',$this->response_code)->first();
+    }
+    
+    public function getResponseAttribute(){
+        $errors = $this->errors();
+        if(!empty($errors)){
+            return $errors->description;
+        }
+        return false;
     }
 
     public function add( $data )

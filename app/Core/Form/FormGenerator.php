@@ -157,8 +157,7 @@ final class FormGenerator
 
                 $value = $data[$name][$secondname][$thirdname];
             }
-        }
-        
+        }        
         if(empty($value)){
             $value =  $data[$name];
         }

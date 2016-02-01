@@ -19,6 +19,7 @@ final class Orders extends Model implements ModelInterface
     protected $fillable = ['reference', 'cart_id', 'total_pvp', 'total_iva', 'status', 'observations', 'bill'];
     protected $appends = ['paymentName', 'paymentResponse', 'linkUser', 'statusName', 'userNameLastName', 'shipping', 'cupon_code',
         'cant_products', 'products', 'country_name', 'products_name'];
+    
 
     public function paginate( $num, $filters = [] )
     {
@@ -116,7 +117,7 @@ final class Orders extends Model implements ModelInterface
 
         if (count($this->payment()) > 0) {
             $payment = $this->payment()->first();
-            return $payment->response_code;
+            return $payment->response;
         }
         return false;
     }
