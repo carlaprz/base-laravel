@@ -29,7 +29,6 @@ abstract class BaseController extends Controller
     protected $repositoryRelated = [];
     protected $selfReferenceRelated = "";
     protected $relationCurrencies = "";
-    
     // IMAGENES 
     protected $pathFile = "";
     protected $filesDimensions = [
@@ -40,6 +39,8 @@ abstract class BaseController extends Controller
 
     public function create( FormGenerator $formBuilder )
     {
+        App::setLocale('es');
+
         return view('admin.form.form', [
             'form' => $formBuilder->generate($this->resourceName),
             'repository' => $this->resourceName
@@ -48,6 +49,7 @@ abstract class BaseController extends Controller
 
     public function edit( FormGenerator $formBuilder, $id )
     {
+        App::setLocale('es');
 
         $repo = App::make($this->repositoryName);
         $data = $repo->find($id);
@@ -103,8 +105,6 @@ abstract class BaseController extends Controller
             unset($data['related']['currencies']);
         }
 
-
-
         $this->dataRelated($data['related'], $resource);
 
         if (!empty($showCrop) && is_array($showCrop)) {
@@ -123,7 +123,6 @@ abstract class BaseController extends Controller
         $rules = get_rules_from($this->resourceName);
 
         $prepareData = $this->prepareData(Input::all(), $request);
-
         $validations = $this->prepareValidate($prepareData, $rules, $resource->id);
         if (!empty($validations) && is_object($validations)) {
             return back()->withInput()->withErrors($validations);
@@ -233,7 +232,10 @@ abstract class BaseController extends Controller
 
     private function validate( $data, $rules, $id = null )
     {
+
         $langs = langs_array();
+        $otherData = config('form.' . $this->resourceName . '.dataShow');
+
         $errors = [];
 
         if (!empty($id)) {
@@ -243,15 +245,32 @@ abstract class BaseController extends Controller
                     foreach ($rulesArray as $subKey => $rule) {
                         if (is_array($rule)) {
                             foreach ($rule as $subsubKey => $value) {
-                                $val = $value;
-                                if (preg_match("/unique:id/i", $value)) {
-                                    $val = str_replace("{unique:id}", $id, $val);
-                                }
+                                if (!is_array($value)) {
+                                    $val = $value;
+                                    if (preg_match("/unique:id/i", $value)) {
+                                        $val = str_replace("{unique:id}", $id, $val);
+                                    }
 
-                                if (preg_match("/unique:parent/i", $value)) {
-                                    $val = str_replace("{unique:parent}", $parent, $val);
+                                    if (preg_match("/unique:parent/i", $value)) {
+                                        $val = str_replace("{unique:parent}", $parent, $val);
+                                    }
+                                    $rules[$key][$subKey][$subsubKey] = $val;
+                                } else {
+                                    //ARRAY
+                                    foreach ($value as $subsubsubkey => $subValue) {
+                                        if (!is_array($subValue)) {
+                                            $val = $subValue;
+                                            if (preg_match("/unique:id/i", $subValue)) {
+                                                $val = str_replace("{unique:id}", $id, $val);
+                                            }
+
+                                            if (preg_match("/unique:parent/i", $subValue)) {
+                                                $val = str_replace("{unique:parent}", $parent, $val);
+                                            }
+                                            $rules[$key][$subKey][$subsubKey][$subsubsubkey] = $val;
+                                        }
+                                    }
                                 }
-                                $rules[$key][$subKey][$subsubKey] = $val;
                             }
                         } else {
                             $val = $rule;
@@ -268,17 +287,25 @@ abstract class BaseController extends Controller
             }
         }
 
+
         foreach ($data as $key => $value) {
             if (is_array($value)) {
                 if (in_array($key, $langs)) {
+
                     $errors[] = Validator::make($value, $rules[$key]);
+                    unset($data[$key]);
+                    unset($rules[$key]);
+                } else if (in_array($key, $otherData)) {
+                    foreach ($value as $subkey => $subValue) {
+                        $errors[] = Validator::make($subValue, $rules[$key][$subkey]);
+                    }
                     unset($data[$key]);
                     unset($rules[$key]);
                 }
             }
         }
-        $errors[] = Validator::make($data, $rules);
 
+        $errors[] = Validator::make($data, $rules);
         return $errors;
     }
 
@@ -447,7 +474,7 @@ abstract class BaseController extends Controller
             }
             $dataAdd['currency_id'] = $key;
             $dataAdd[$this->selfReferenceRelated] = $resource->id;
-          
+
             $repository->add($dataAdd);
         }
     }

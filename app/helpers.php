@@ -70,7 +70,7 @@ function current_route_has( $thing, $currentKey = 'menu' )
 {
     $currentRoute = Route::currentRouteName();
     $config = config($currentKey);
-   
+
     foreach ($config as $key => $section) {
         if (array_key_exists('dropdown', $section)) {
             $currentValue = current_route_has(
@@ -111,6 +111,20 @@ function get_rules_from( $from )
             foreach ($fields as $fieldsName => $field) {
                 if (array_key_exists('rules', $field)) {
                     $rules[$lang->code][$fieldsName] = $field['rules'];
+                }
+            }
+        }
+    }
+
+    $dataExtra = config('form.' . $from . '.dataShow');
+    if (is_array($dataExtra)) {        
+        foreach ($dataExtra as $key => $data) {
+            $fieldsAll = config('form.' . $from . '.' . $data . '');
+            foreach ($fieldsAll as $subkey => $fields) {
+                foreach ($fields["fields"] as $fieldsName => $field) {
+                    if (array_key_exists('rules', $field)) {
+                        $rules[$data][$subkey][$fieldsName] = $field['rules'];
+                    }
                 }
             }
         }
@@ -321,16 +335,15 @@ function all_products_backend()
                 $products[$product->id] = $product->title;
             }
 
-            $data[$i]["child"][]= [
+            $data[$i]["child"][] = [
                 'id' => $children->id,
                 'name' => $children->title,
                 'products' => $products,
             ];
         }
     }
-    
+
     return $data;
-    
 }
 
 function all_colours()

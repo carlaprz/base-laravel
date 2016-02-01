@@ -292,19 +292,18 @@ return [
                 'type' => 'multipleSelect',
                 'title' => 'Talla',
                 'description' => 'all_sizes',
-                'rules' => ['required']
+                'rules' => ['required','']//array|exists:sizes,id
             ],
             'colour_id' => [
                 'type' => 'multipleSelect',
                 'title' => 'Colores',
                 'description' => 'all_colours',
-                'rules' => ['required']
+                'rules' => ['required',''] //array|exists:colours,id
             ],
             'product_id_related' => [
                 'type' => 'multipleSelectProducts',
                 'title' => 'Productos Relacionados',
                 'description' => 'all_products_backend',
-                'rules' => ['']
             ],
         ],
         'currencies' => [
@@ -314,7 +313,7 @@ return [
                         'type' => 'numeric',
                         'title' => 'Precio del producto en Euro',
                         'description' => 'Introduzca el precio sin IVA del producto',
-                        'rules' => ['required']
+                        'rules' => ['required','numeric']
                     ],
                     'pvp_discounted' => [
                         'type' => 'numeric',
@@ -336,7 +335,7 @@ return [
                         'type' => 'numeric',
                         'title' => 'Precio del producto en Dolar',
                         'description' => 'Introduzca el precio sin IVA del producto',
-                        'rules' => ['required']
+                        'rules' => ['required','numeric']
                     ],
                     'pvp_discounted' => [
                         'type' => 'numeric',
@@ -567,6 +566,7 @@ return [
                 'rules' => []
             ],
         ],
+        
         "shipping" => [
             'fields' => [
                 'shipping_name' => [
@@ -624,7 +624,48 @@ return [
                     'rules' => ['']
                 ],
             ],
-        ]
+        ],
+        "products" => [
+            "loop" => true,
+            "fields" => [
+                'link' => [
+                    'type' => 'link',
+                    'title' => 'Producto Link',
+                    'description' => '',
+                    'rules' => ['']
+                ],
+                'product_description' => [
+                    'type' => 'textDisabled',
+                    'title' => 'Producto nombre',
+                    'description' => '',
+                    'rules' => ['']
+                ],
+                'pvp' => [
+                    'type' => 'textDisabled',
+                    'title' => 'Precio',
+                    'description' => '',
+                    'rules' => ['']
+                ],
+                'iva' => [
+                    'type' => 'textDisabled',
+                    'title' => 'iva',
+                    'description' => '',
+                    'rules' => ['']
+                ],
+                'cant' => [
+                    'type' => 'textDisabled',
+                    'title' => 'Unidades',
+                    'description' => '',
+                    'rules' => ['']
+                ],                
+                'separacion' => [
+                    'type' => 'line',
+                    'title' => '',
+                    'description' => '',
+                    'rules' => ['']
+                ],
+            ],
+        ],
     ],
     'ordersStatus' => [
         'name' => 'Pedidos',

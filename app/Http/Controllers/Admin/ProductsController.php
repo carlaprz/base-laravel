@@ -20,7 +20,6 @@ class ProductsController extends BaseController
     protected $resourceName = 'products';
     protected $repositoryName = Products::class;
 
-
     //Paginado PHP
     const TOTAL_ITEMS_PER_PAGE = 20;
 
@@ -32,7 +31,6 @@ class ProductsController extends BaseController
     ];
     protected $selfReferenceRelated = 'product_id';
     protected $relationCurrencies = ProductsCurrrencies::class;
-    
     // IMAGENES 
     protected $pathFile = 'files/products/';
     protected $filesDimensions = [
@@ -42,6 +40,8 @@ class ProductsController extends BaseController
 
     public function index( Products $products )
     {
+        App::setLocale('es');
+
         $fluxesHead = [
             'id' => 'ID',
             'reference' => 'Referencia',
@@ -79,6 +79,7 @@ class ProductsController extends BaseController
 
     public function excel( Products $products, ExcelTransformator $excelTransformator )
     {
+        App::setLocale('es');
         $dataProducts = $products->filtered(
                 Session::get('products_filters', [])
         );
@@ -104,20 +105,20 @@ class ProductsController extends BaseController
         return back();
     }
 
-    /*public function edit( FormGenerator $formBuilder, $id )
-    {
-        $repo = App::make($this->repositoryName);
-        $data = $repo->find($id);
+    /* public function edit( FormGenerator $formBuilder, $id )
+      {
+      $repo = App::make($this->repositoryName);
+      $data = $repo->find($id);
 
-        return view('admin.form.form', [
-            'form' => $formBuilder->generate(
-                    $this->resourceName, array_merge(
-                            $data->toArray(), $data->productsRelatedData()
-                    )
-            ),
-            'repository' => $this->resourceName
-        ]);
-    }*/
+      return view('admin.form.form', [
+      'form' => $formBuilder->generate(
+      $this->resourceName, array_merge(
+      $data->toArray(), $data->productsRelatedData()
+      )
+      ),
+      'repository' => $this->resourceName
+      ]);
+      } */
 
     public function order()
     {

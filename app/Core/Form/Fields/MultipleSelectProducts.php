@@ -16,7 +16,7 @@ final class MultipleSelectProducts extends AbstractField
         $dataFunction = $this->description();
         $data = $dataFunction();
 
-        $options = "<option value=''>Seleciona</option>";
+        $options = "<option>Seleciona</option>";
 
         $options .= $this->generateParentsOpcions($data);
 

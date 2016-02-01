@@ -36,7 +36,6 @@
                     <form method="post" action="" > 
                  @endif
                     @if(is_array($form->getDataShow()))
-                       
                         @foreach($form->getDataShow() as $datashow )    
                         
                             <div class="{{$datashow["title"]}}">                          
@@ -51,16 +50,18 @@
                                     @elseif($datashow["title"] === 'productsRelated')
                                         <span>Productos Relacionados</span> 
                                     @elseif(in_array($datashow["title"],langs_array()))
-                                        <span>Datos en el idioma "{{$datashow["title"]}}" </span>
+                                        <span>Datos en el idioma "{{$datashow["title"]}}" 
+                                        <?php echo $datashow["title"]=="es"?'*':'';?></span>
                                     @elseif($datashow["title"] == "currencies" )
-                                        <span>Precios </span>
+                                        <span>Precios* </span>
                                     @else
                                         <span>Datos "{{$datashow["title"]}}" </span>
                                     @endif
                                     <span class="fa arrow"></span>
                                 </div>
-                                    
-                                    @foreach ($form->fields($datashow["title"]) as $field)
+                                   <?php  $fields = $form->fields($datashow["title"]) ; 
+                                          $fields = empty($fields)?[]:$fields;?>
+                                    @foreach ($fields as $field)
                                         <div class="row toggle_field_{{$datashow["title"]}}">
                                          <div class="col-lg-12">
                                              <div class="form-group <?php echo (is_object($field) && get_class($field) == "App\Core\Form\Fields\Datetime")?"datepicker":''; ?>">
@@ -71,7 +72,7 @@
                                          </div>
                                        </div>
 
-                                   @endforeach 
+                                   @endforeach  
                                 
                             </div>
                         @endforeach

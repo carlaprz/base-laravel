@@ -58,9 +58,9 @@ final class Form
                 $this->data['for_files']);
     }
 
-    public function addDataShow( $show )
+    public function addDataShow( $show ,$loop =false )
     {
-        $this->dataShow[] = [ 'title' => $show];
+        $this->dataShow[] = [ 'title' => $show , 'loop' => $loop];
     }
 
     public function getDataShow()
