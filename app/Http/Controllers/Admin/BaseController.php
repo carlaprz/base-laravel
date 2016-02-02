@@ -40,7 +40,6 @@ abstract class BaseController extends Controller
     public function create( FormGenerator $formBuilder )
     {
         App::setLocale('es');
-
         return view('admin.form.form', [
             'form' => $formBuilder->generate($this->resourceName),
             'repository' => $this->resourceName
@@ -50,7 +49,6 @@ abstract class BaseController extends Controller
     public function edit( FormGenerator $formBuilder, $id )
     {
         App::setLocale('es');
-
         $repo = App::make($this->repositoryName);
         $data = $repo->find($id);
 
@@ -85,7 +83,6 @@ abstract class BaseController extends Controller
 
         $prepareData = $this->prepareData(Input::all(), $request);
         $validations = $this->prepareValidate($prepareData, $rules, null);
-
         if (!empty($validations) && is_object($validations)) {
             return back()->withInput()->withErrors($validations);
         }
@@ -212,17 +209,18 @@ abstract class BaseController extends Controller
     private function prepareValidate( $data, $rules, $id = null )
     {
         $validations = $this->validate($data, $rules, $id);
-
+       
         $error = false;
         $errorMessages = new \Illuminate\Support\MessageBag;
-
+        
         foreach ($validations as $validation) {
+            
             if ($validation->fails() == true) {
                 $error = true;
                 $errorMessages->merge($validation->errors()->toArray());
             }
         }
-
+        
         if ($error === true) {
             return ($errorMessages);
         } else {

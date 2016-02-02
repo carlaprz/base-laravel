@@ -149,7 +149,8 @@ final class Products extends Model implements ModelInterface
         App::setLocale('es');
         return [
             'title' => $this->title,
-            'description' => $this->description
+            'description' => $this->description,
+            'slug' => $this->slug
         ];
     }
 
@@ -158,7 +159,8 @@ final class Products extends Model implements ModelInterface
         App::setLocale('en');
         return [
             'title' => $this->title,
-            'description' => $this->description
+            'description' => $this->description,
+            'slug' => $this->slug
         ];
     }
 

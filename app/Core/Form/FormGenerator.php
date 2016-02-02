@@ -27,6 +27,7 @@ use App\Core\Form\Fields\MultipleSelect;
 
 final class FormGenerator
 {
+
     private $configFileName = 'form';
     private $fieldsMap = [
         'numeric' => Numeric::class,
@@ -126,6 +127,8 @@ final class FormGenerator
             }
         }
 
+
+
         return $form;
     }
 
@@ -137,6 +140,8 @@ final class FormGenerator
     private function getValue( array $data, $name )
     {
         $value = false;
+        $originName = $name;
+       
         $dataAux = explode('[', $name);
 
         if (count($dataAux) > 1 && count($dataAux) < 3) {
@@ -145,6 +150,7 @@ final class FormGenerator
             if (isset($data[$name][$secondname])) {
                 $value = $data[$name][$secondname];
             }
+            
         } else if (count($dataAux) > 2) {
             $name = str_replace('[', '', $dataAux[0]);
             $secondname = str_replace(']', '', $dataAux[1]);
@@ -153,10 +159,13 @@ final class FormGenerator
             if (isset($data[$name][$secondname][$thirdname])) {
 
                 $value = $data[$name][$secondname][$thirdname];
-            }
+            }            
         }
+
         if (empty($value)) {
-            $value = $data[$name];
+            if(!empty($data[$name]) && !is_array($data[$name])){
+                 $value = $data[$name];
+            }           
         }
 
         return $value;

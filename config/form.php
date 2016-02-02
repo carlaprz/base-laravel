@@ -292,13 +292,13 @@ return [
                 'type' => 'multipleSelect',
                 'title' => 'Talla',
                 'description' => 'all_sizes',
-                'rules' => ['required','']//array|exists:sizes,id
+                'rules' => ['']//'array|exists:sizes,id'
             ],
             'colour_id' => [
                 'type' => 'multipleSelect',
                 'title' => 'Colores',
                 'description' => 'all_colours',
-                'rules' => ['required',''] //array|exists:colours,id
+                'rules' => [''] //'array|exists:colours,id'
             ],
             'product_id_related' => [
                 'type' => 'multipleSelectProducts',
