@@ -964,7 +964,7 @@ return [
         'name' => 'FAQs',
         'for_files' => false,
         'description' => 'Administración de FAQs',
-        'editor' => false,
+        'editor' => true,
         'fields' => [
             'priority' => [
                 'type' => 'numeric',
@@ -995,7 +995,7 @@ return [
                         'rules' => ['required', 'unique:categories_translations,title,{unique:id},categories_id,locale,es,parent,{unique:parent}']
                     ],
                     'answer' => [
-                        'type' => 'text',
+                        'type' => 'textarea',
                         'title' => 'Respuesta',
                         'description' => 'Respuesta de la FAQ',
                         'rules' => ['required']

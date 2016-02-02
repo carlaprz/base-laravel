@@ -52,7 +52,7 @@ return [
         //'ewo'         => ['name' => 'Ewondo',                 'script' => 'Latn', 'native' => 'ewondo'],
         //'ee'          => ['name' => 'Ewe',                    'script' => 'Latn', 'native' => 'eʋegbe'],
         //'fil'         => ['name' => 'Filipino',               'script' => 'Latn', 'native' => 'Filipino'],
-        'fr' => ['name' => 'French', 'script' => 'Latn', 'native' => 'français'],
+        //'fr' => ['name' => 'French', 'script' => 'Latn', 'native' => 'français'],
     //'fr-CA'       => ['name' => 'Canadian French',        'script' => 'Latn', 'native' => 'français canadien'],
     //'fy'          => ['name' => 'Western Frisian',        'script' => 'Latn', 'native' => 'frysk'],
     //'fur'         => ['name' => 'Friulian',               'script' => 'Latn', 'native' => 'furlan'],
