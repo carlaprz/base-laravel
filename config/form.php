@@ -13,6 +13,12 @@ return [
                 'description' => 'Introduzca el Nombre.',
                 'rules' => ['required']
             ],
+            'lastname' => [
+                'type' => 'text',
+                'title' => 'Apellido',
+                'description' => 'Introduzca el Apellido.',
+                'rules' => ['required']
+            ],
             'email' => [
                 'type' => 'text',
                 'title' => 'Email',
@@ -107,8 +113,8 @@ return [
                     ],
                     'description' => [
                         'type' => 'textarea',
-                        'title' => 'Descripción',
-                        'description' => 'Descripción',
+                        'title' => 'Descripción corta',
+                        'description' => '',
                         'rules' => ['required']
                     ],
                     'content' => [
@@ -313,7 +319,7 @@ return [
                         'type' => 'numeric',
                         'title' => 'Precio del producto en Euro',
                         'description' => 'Introduzca el precio sin IVA del producto',
-                        'rules' => ['required','numeric']
+                        'rules' => ['required', 'numeric']
                     ],
                     'pvp_discounted' => [
                         'type' => 'numeric',
@@ -335,7 +341,7 @@ return [
                         'type' => 'numeric',
                         'title' => 'Precio del producto en Dolar',
                         'description' => 'Introduzca el precio sin IVA del producto',
-                        'rules' => ['required','numeric']
+                        'rules' => ['required', 'numeric']
                     ],
                     'pvp_discounted' => [
                         'type' => 'numeric',
@@ -566,7 +572,6 @@ return [
                 'rules' => []
             ],
         ],
-        
         "shipping" => [
             'fields' => [
                 'shipping_name' => [
@@ -657,7 +662,7 @@ return [
                     'title' => 'Unidades',
                     'description' => '',
                     'rules' => ['']
-                ],                
+                ],
                 'separacion' => [
                     'type' => 'line',
                     'title' => '',
@@ -891,12 +896,6 @@ return [
                 'title' => 'Imagen del banner',
                 'description' => 'Imagen del banner. Deberá tener las medidas exactas especificadas por diseño.',
                 'rules' => ['required']
-            ],
-            'priority' => [
-                'type' => 'numeric',
-                'title' => 'Prioridad',
-                'description' => 'Tipo de descuento',
-                'rules' => ['required', 'numeric']
             ],
             'active' => [
                 'type' => 'radio',

@@ -408,6 +408,16 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => ['aut
         'as' => 'admin.banners.index',
         'uses' => 'BannersController@index'
     ]);
+    
+     Route::get('banners/order', [
+        'as' => 'admin.banners.order',
+        'uses' => 'BannersController@order'
+    ]);
+
+    Route::post('banners/order', [
+        'as' => 'admin.banners.orderSave',
+        'uses' => 'BannersController@orderSave'
+    ]);
 
     Route::get('banners/create', [
         'as' => 'admin.banners.create',

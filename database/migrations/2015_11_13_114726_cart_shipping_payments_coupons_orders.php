@@ -82,7 +82,7 @@ class CartShippingPaymentsCouponsOrders extends Migration
             {
                 $table->increments('id');
                 $table->text('name');
-                $table->boolean('active')->default(0);
+                $table->boolean('active')->default(1);
                 $table->timestamps();
             });
 

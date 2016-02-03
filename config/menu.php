@@ -29,7 +29,7 @@ return [
             [
                 'route' => 'admin.products.index',
                 'resource' => 'products',
-                'create' => 'admin.products.create',                
+                'create' => 'admin.products.create',
                 'edit' => 'admin.products.edit',
                 'delete' => 'admin.products.delete',
                 'excel' => 'admin.products.excel',
@@ -148,6 +148,7 @@ return [
         'create' => 'admin.banners.create',
         'edit' => 'admin.banners.edit',
         'delete' => 'admin.banners.delete',
+        'order' => 'admin.banners.order',
         'icon' => 'fa fa-picture-o',
         'name' => 'Banners',
         'resource' => 'banners'

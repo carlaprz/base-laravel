@@ -22,7 +22,7 @@ class BannersSlider extends Migration {
 				$table->string('text');
 				$table->string('link');
 				$table->string('image');
-				$table->integer('priority');
+				$table->integer('order');
 				$table->boolean('active')->default(1);
 				$table->timestamps();
 			});

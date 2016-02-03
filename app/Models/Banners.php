@@ -4,8 +4,7 @@ namespace App\Models;
 
 use App\Interfaces\ModelInterface;
 use Illuminate\Database\Eloquent\Model;
-use DB;
-use App;
+
 
 
 final class Banners extends Model implements ModelInterface
@@ -13,7 +12,7 @@ final class Banners extends Model implements ModelInterface
 
     const IMAGE_PATH = 'files/banners/';
 
-    protected $fillable = ['name', 'text', 'link', 'image', 'priority', 'active'];
+    protected $fillable = ['name', 'text', 'link', 'image', 'order', 'active'];
 
     public function add( $data )
     {
@@ -21,11 +20,11 @@ final class Banners extends Model implements ModelInterface
     }
 
     //Metodos FRONT
-    public function allActive()
+    public function findAllActive()
     {
         return $this
             ->where('active', '=', 1)
-            ->orderby('priority', 'ASC')
+            ->orderby('order', 'ASC')
             ->get();
     }
 
