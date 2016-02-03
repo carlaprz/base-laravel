@@ -13,7 +13,7 @@ class FileServices
         if (isset($path) && !empty($path)) {
             $langs = all_langs();
             $files = $request->files->all();
-            
+
             foreach ($files as $key => $file) {
                 if (!is_array($file)) {
                     $dataAux = FileServices::uploadFilebyRequest($file, $path, $key, $dimensions);
@@ -21,7 +21,8 @@ class FileServices
                     $data[$key] = $dataAux["imageName"];
                     $data[$key . "_showCrop"] = $dataAux["showCrop"];
                     if ($dataAux["showCrop"] === true) {
-                        $data["showCrop"][] = $key;                    }
+                        $data["showCrop"][] = $key;
+                    }
 
                     if ($key === 'image') {
                         $dataAux = FileServices::uploadFilebyRequest($file, $path, "thumb", $dimensions);
@@ -109,13 +110,16 @@ class FileServices
         return $imagePath;
     }
 
-    static function cropImage( $path, $data, $finalWidth )
+    static function cropImage( $path, $data, $finalWidth = false )
     {
         //dd($data);
         $uploadPath = public_path($path);
         $imagen = Image::make($uploadPath . '/' . $data['name']);
         $imagen->crop(round($data['w']), round($data['h']), round($data['x']), round($data['y']));
-        $imagen->widen($finalWidth);
+        if($finalWidth){
+            $imagen->widen($finalWidth);
+        }
+        
         $imagen->save($uploadPath . $data['name']);
     }
 

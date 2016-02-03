@@ -152,7 +152,7 @@ return [
     'news_crop' => [
         'name' => 'Noticias',
         'for_files' => true,
-        'description' => 'Administración de Imagen de NoticiA',
+        'description' => 'Administración de Imagen de Noticia',
         'slug' => false,
         'editor' => false,
         'dataShow' => [],
@@ -903,6 +903,22 @@ return [
                 'description' => 'Estado del banner',
                 'rules' => ['required']
             ]
+        ]
+    ],
+    'banners_crop' => [
+        'name' => 'Banners',
+        'for_files' => true,
+        'description' => 'Administración de Imagen de Banners',
+        'slug' => false,
+        'editor' => false,
+        'dataShow' => [],
+        'fields' => [
+            'image' => [
+                'type' => 'imageCrop',
+                'title' => 'Imagen',
+                'description' => '',
+                'rules' => [''],
+            ],
         ]
     ],
     'faqsCategories' => [

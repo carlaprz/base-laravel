@@ -168,7 +168,12 @@ abstract class BaseController extends Controller
         unset($data["_token"]);
         foreach ($data as $key => $imagen) {
             $d = $this->filesDimensions;
-            FileServices::cropImage($this->pathFile, $imagen, $d[$key]["w"]);
+            if (isset($d[$key]["w"])) {
+                FileServices::cropImage($this->pathFile, $imagen, $d[$key]["w"]); 
+            }else{
+                FileServices::cropImage($this->pathFile, $imagen); 
+            }
+           
         }
 
         $route = resource_home($this->resourceName);
@@ -209,18 +214,18 @@ abstract class BaseController extends Controller
     private function prepareValidate( $data, $rules, $id = null )
     {
         $validations = $this->validate($data, $rules, $id);
-       
+
         $error = false;
         $errorMessages = new \Illuminate\Support\MessageBag;
-        
+
         foreach ($validations as $validation) {
-            
+
             if ($validation->fails() == true) {
                 $error = true;
                 $errorMessages->merge($validation->errors()->toArray());
             }
         }
-        
+
         if ($error === true) {
             return ($errorMessages);
         } else {

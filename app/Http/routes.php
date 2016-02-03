@@ -173,7 +173,7 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => ['aut
         'as' => 'admin.products.excel',
         'uses' => 'ProductsController@excel'
     ]);
-    
+
     Route::get('products/order', [
         'as' => 'admin.products.order',
         'uses' => 'ProductsController@order'
@@ -253,9 +253,9 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => ['aut
         'as' => 'admin.categories.delete',
         'uses' => 'CategoriesController@delete'
     ]);
-    
+
     // TALLES
-    
+
     Route::get('sizes', [
         'as' => 'admin.sizes.index',
         'uses' => 'SizesController@index'
@@ -284,7 +284,7 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => ['aut
         'as' => 'admin.sizes.delete',
         'uses' => 'SizesController@delete'
     ]);
-    
+
     //COLOR
     Route::get('colours', [
         'as' => 'admin.colours.index',
@@ -408,8 +408,8 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => ['aut
         'as' => 'admin.banners.index',
         'uses' => 'BannersController@index'
     ]);
-    
-     Route::get('banners/order', [
+
+    Route::get('banners/order', [
         'as' => 'admin.banners.order',
         'uses' => 'BannersController@order'
     ]);
@@ -419,6 +419,15 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => ['aut
         'uses' => 'BannersController@orderSave'
     ]);
 
+    Route::get('banners/crop/{id}', [
+        'as' => 'admin.banners.crop',
+        'uses' => 'BannersController@crop'
+    ]);
+
+    Route::post('banners/crop/{id}', [
+        'as' => 'admin.banners.cropSave',
+        'uses' => 'BannersController@cropSave'
+    ]);
     Route::get('banners/create', [
         'as' => 'admin.banners.create',
         'uses' => 'BannersController@create'
