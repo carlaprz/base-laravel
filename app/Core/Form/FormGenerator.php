@@ -17,7 +17,6 @@ use App\Core\Form\Fields\RadioDisabled;
 use App\Core\Form\Fields\Select;
 use App\Core\Form\Fields\MultipleSelectProducts;
 use App\Core\Form\Fields\File;
-use App\Core\Form\Fields\URLImage;
 use App\Core\Form\Fields\Hidden;
 use App\Core\Form\Fields\Datetime;
 use App\Core\Form\Fields\SelectDisabled;
@@ -41,7 +40,6 @@ final class FormGenerator
         'image_file' => ImageFile::class,
         'imageCrop' => ImageCrop::class,
         'file' => File::class,
-        'url_image' => URLImage::class,
         'radio' => Radio::class,
         'radioDisabled' => RadioDisabled::class,
         'select' => Select::class,

@@ -37,10 +37,9 @@ final class News extends Model implements ModelInterface
 
     public function getPublishAttribute( $value )
     {
-
-        $value = explode(':', $value);
-        unset($value[2]);
-        return implode(':', $value);
+        $newValue = explode(':', $value);
+        unset($newValue[2]);
+        return implode(':', $newValue);
     }
 
     public function getImageAttribute( $image )
