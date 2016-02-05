@@ -119,7 +119,7 @@
     $(document).ready(function () {
         @foreach ($form->fields("generals") as $field)
             $("#<?php echo $field->name();?>").cropper({
-                aspectRatio: 10 / 10,
+                aspectRatio: <?php echo isset($filesDimensions[$field->name()]['w'])? $filesDimensions[$field->name()]['w']: '0'?><?php echo isset($filesDimensions[$field->name()]['h'])? '/'.$filesDimensions[$field->name()]['h']: '0'?>,
                 crop: function (e) {
                  
                  $("#<?php echo $field->name();?>_x").val(e.x);

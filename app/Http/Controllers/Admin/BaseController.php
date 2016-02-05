@@ -70,7 +70,8 @@ abstract class BaseController extends Controller
                     $this->resourceName . '_crop', $data->toArray()
             ),
             'repository' => $this->resourceName,
-            'id' => $id
+            'id' => $id,
+            'filesDimensions' => $this->filesDimensions
         ]);
     }
 
