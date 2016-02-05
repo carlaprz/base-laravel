@@ -14,20 +14,20 @@ final class News extends Model implements ModelInterface
 
     const IMAGE_PATH = 'files/news/';
 
-    public $translatedAttributes = ['title', 'description', 'slug'];
-    protected $fillable = ['order', 'publish', 'active', 'title', 'description', 'image', 'slug'];
+    public $translatedAttributes = ['title', 'description', 'content', 'slug'];
+    protected $fillable = ['order', 'publish', 'active', 'title', 'description', 'content', 'image', 'slug'];
     protected $appends = ["es", "en"];
 
     public function getEsAttribute()
     {
         App::setLocale('es');
-        return ['title' => $this->title, 'description' => $this->description];
+        return ['title' => $this->title, 'description' => $this->description, 'content' => $this->content];
     }
 
     public function getEnAttribute()
     {
         App::setLocale('en');
-        return ['title' => $this->title, 'description' => $this->description];
+        return ['title' => $this->title, 'description' => $this->description, 'content' => $this->content];
     }
 
     public function add( $data )

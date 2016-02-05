@@ -84,7 +84,7 @@ return [
         'slug' => ['title'],
         'fields' => [
             'image' => [
-                'type' => 'image_file',
+                'type' => 'imageFile',
                 'title' => 'Image',
                 'description' => 'Introduzca la imagen principal de la noticia',
                 'rules' => ['required']
@@ -265,7 +265,7 @@ return [
                 'rules' => ['required']
             ],
             'image' => [
-                'type' => 'image_file',
+                'type' => 'imageFile',
                 'title' => 'Imagen para el detalle del producto (400x400)',
                 'description' => 'Introduzca la imagen del producto',
                 'rules' => ['required']
@@ -892,7 +892,7 @@ return [
                 'rules' => ''
             ],
             'image' => [
-                'type' => 'image_file',
+                'type' => 'imageFile',
                 'title' => 'Imagen del banner',
                 'description' => 'Imagen del banner. Deberá tener las medidas exactas especificadas por diseño.',
                 'rules' => ['required']

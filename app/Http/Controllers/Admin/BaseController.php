@@ -298,7 +298,7 @@ abstract class BaseController extends Controller
                     $errors[] = Validator::make($value, $rules[$key]);
                     unset($data[$key]);
                     unset($rules[$key]);
-                } else if (in_array($key, $otherData)) {
+                } else if (!empty($otherData) && in_array($key, $otherData)) {
                     foreach ($value as $subkey => $subValue) {
                         $errors[] = Validator::make($subValue, $rules[$key][$subkey]);
                     }

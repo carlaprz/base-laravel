@@ -37,7 +37,7 @@ final class FormGenerator
         'email' => Email::class,
         'emailDisabled' => EmailDisabled::class,
         'image' => Image::class,
-        'image_file' => ImageFile::class,
+        'imageFile' => ImageFile::class,
         'imageCrop' => ImageCrop::class,
         'file' => File::class,
         'radio' => Radio::class,
@@ -161,7 +161,7 @@ final class FormGenerator
         }
 
         if (empty($value)) {
-            if(!empty($data[$name]) && !is_array($data[$name])){
+             if( (!empty($data[$name]) && !is_array($data[$name])) || (!empty($data[$name]) && $name == 'product_id_related' )){
                  $value = $data[$name];
             }           
         }
