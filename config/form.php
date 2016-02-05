@@ -926,13 +926,7 @@ return [
         'for_files' => false,
         'description' => 'Administración de Categorías de FAQs',
         'editor' => false,
-        'fields' => [
-            'priority' => [
-                'type' => 'numeric',
-                'title' => 'Prioridad',
-                'description' => 'Prioridad de la categoría en un listado',
-                'rules' => []
-            ],
+        'fields' => [            
             'active' => [
                 'type' => 'radio',
                 'title' => 'Activo',
@@ -947,7 +941,7 @@ return [
                         'type' => 'text',
                         'title' => 'Título',
                         'description' => 'Título de la categoría',
-                        'rules' => ['required', 'unique:categories_translations,title,{unique:id},categories_id,locale,es,parent,{unique:parent}']
+                        'rules' => ['required', 'unique:faqs_categories_translations,title,{unique:id},faqs_categories_id,locale,es']
                     ],
                     'description' => [
                         'type' => 'text',
@@ -963,7 +957,7 @@ return [
                         'type' => 'text',
                         'title' => 'Name',
                         'description' => 'Name of the category',
-                        'rules' => ['unique:categories_translations,title,{unique:id},categories_id,locale,en,parent,{unique:parent}']
+                        'rules' => ['unique:faqs_categories_translations,title,{unique:id},faqs_categories_id,locale,en']
                     ],
                     'descriptiton' => [
                         'type' => 'text',
@@ -981,13 +975,7 @@ return [
         'description' => 'Administración de FAQs',
         'editor' => true,
         'fields' => [
-            'priority' => [
-                'type' => 'numeric',
-                'title' => 'Prioridad',
-                'description' => 'Prioridad de la categoría en un listado',
-                'rules' => ['required']
-            ],
-            'active' => [
+           'active' => [
                 'type' => 'radio',
                 'title' => 'Activo',
                 'description' => 'Estado',
@@ -1007,7 +995,7 @@ return [
                         'type' => 'text',
                         'title' => 'Pregunta',
                         'description' => 'Pregunta de la FAQ',
-                        'rules' => ['required', 'unique:categories_translations,title,{unique:id},categories_id,locale,es,parent,{unique:parent}']
+                        'rules' => ['required', 'unique:faqs_translations,question,{unique:id},faqs_id,locale,es']
                     ],
                     'answer' => [
                         'type' => 'textarea',
@@ -1023,7 +1011,7 @@ return [
                         'type' => 'text',
                         'title' => 'Question',
                         'description' => 'Name of the FAQ',
-                        'rules' => ['unique:categories_translations,title,{unique:id},categories_id,locale,en,parent,{unique:parent}']
+                        'rules' => ['unique:faqs_translations,question,{unique:id},faqs_id,locale,en']
                     ],
                     'answer' => [
                         'type' => 'text',

@@ -18,7 +18,7 @@ class Faqs extends Migration
             Schema::create('faqs_categories', function(Blueprint $table)
             {
                 $table->increments('id');
-                $table->integer('priority');
+                $table->integer('order');
                 $table->boolean('active')->default(1);
                 $table->timestamps();
             });
@@ -43,7 +43,7 @@ class Faqs extends Migration
             {
                 $table->increments('id');
                 $table->integer('faqs_categories_id')->unsigned();
-                $table->integer('priority');
+                $table->integer('order');
                 $table->boolean('active')->default(1);
                 $table->timestamps();
 

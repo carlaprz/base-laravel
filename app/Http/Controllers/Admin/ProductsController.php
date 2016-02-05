@@ -105,21 +105,6 @@ class ProductsController extends BaseController
         return back();
     }
 
-    /* public function edit( FormGenerator $formBuilder, $id )
-      {
-      $repo = App::make($this->repositoryName);
-      $data = $repo->find($id);
-
-      return view('admin.form.form', [
-      'form' => $formBuilder->generate(
-      $this->resourceName, array_merge(
-      $data->toArray(), $data->productsRelatedData()
-      )
-      ),
-      'repository' => $this->resourceName
-      ]);
-      } */
-
     public function order()
     {
         App::setLocale('es');

@@ -4,7 +4,6 @@ namespace App\Models;
 
 use App\Interfaces\ModelInterface;
 use Illuminate\Database\Eloquent\Model;
-use DB;
 use App;
 
 
@@ -15,7 +14,7 @@ final class FaqsCategories extends Model implements ModelInterface
 
     public $timestamps = true;
     public $translatedAttributes = ['faqs_categories_id', 'locale', 'title', 'description'];
-    protected $fillable = ['faqs_categories_id', 'locale', 'title', 'description', 'priority', 'active'];
+    protected $fillable = ['faqs_categories_id', 'locale', 'title', 'description', 'order', 'active'];
     protected $appends = ["es", "en"];
 
     public function add( $data )
@@ -36,7 +35,7 @@ final class FaqsCategories extends Model implements ModelInterface
     }
 
     //Metodos FRONT
-    public function allActive()
+    public function findAllActive()
     {
         return $this->where('active', '=', 1)->get();
     }

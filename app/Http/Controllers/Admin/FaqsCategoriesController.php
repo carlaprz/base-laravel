@@ -18,7 +18,7 @@ class FaqsCategoriesController extends BaseController
             'id' => 'ID',
             'title' => 'Título',
             'description' => 'Descripción',
-            'priority' => 'Prioridad',
+            'order' => 'Orden',
             'active' => 'Activo'
         ];
 
@@ -27,6 +27,23 @@ class FaqsCategoriesController extends BaseController
             'title' => 'Categorías de FAQs',
             'pageTitle' => 'Listado de categorías de FAQs',
             'header' => $fluxesHead
+        ]);
+    }
+    
+     public function order()
+    {
+        $repo = App::make($this->repositoryName);
+        $data = $repo->findAllActive();
+        $fluxesHead = [
+            'title' => 'Título',
+        ];
+
+        return view('admin.order', [
+            'data' => $data,
+            'pageTitle' => 'Orden de Categorias de Faqs',
+            'title' => 'Categorias de Faqs',
+            'header' => $fluxesHead,
+            'repository' => $this->resourceName
         ]);
     }
 

@@ -12,7 +12,7 @@ final class Faqs extends Model implements ModelInterface
 
     public $timestamps = true;
     public $translatedAttributes = ['faqs_id','locale','answer', 'question'];
-    protected $fillable = ['faqs_id','faqs_categories_id','locale','answer', 'question','active', 'priority'];
+    protected $fillable = ['faqs_id','faqs_categories_id','locale','answer', 'question','active', 'order'];
     protected $appends = ["es", "en", "categoryName"];
 
     public function add( $data )
@@ -54,5 +54,11 @@ final class Faqs extends Model implements ModelInterface
     {
         return $this->where('active', '=', 1)->get();
     }
-
+    
+    public function findByCategoryIdActive( $categoryId )
+    {
+        return $this->where('faqs_categories_id', '=', $categoryId)
+                        ->where('active', '=', 1)
+                        ->get();
+    }
 }

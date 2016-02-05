@@ -131,6 +131,7 @@ return [
                 'create' => 'admin.faqs.create',
                 'edit' => 'admin.faqs.edit',
                 'delete' => 'admin.faqs.delete',
+                'order' => 'admin.faqs.order',
                 'name' => 'Faqs',
             ],
             [
@@ -139,6 +140,7 @@ return [
                 'create' => 'admin.faqsCategories.create',
                 'edit' => 'admin.faqsCategories.edit',
                 'delete' => 'admin.faqsCategories.delete',
+                'order' => 'admin.faqsCategories.order',
                 'name' => 'Categorías'
             ]
         ]

@@ -578,6 +578,16 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => ['aut
         'uses' => 'FaqsCategoriesController@delete'
     ]);
 
+    Route::get('faqsCategories/order', [
+        'as' => 'admin.faqsCategories.order',
+        'uses' => 'FaqsCategoriesController@order'
+    ]);
+
+    Route::post('faqsCategories/order', [
+        'as' => 'admin.faqsCategories.orderSave',
+        'uses' => 'FaqsCategoriesController@orderSave'
+    ]);
+
     Route::get('faqs', [
         'as' => 'admin.faqs.index',
         'uses' => 'FaqsController@index'
@@ -606,6 +616,21 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => ['aut
     Route::get('faqs/delete/{id}', [
         'as' => 'admin.faqs.delete',
         'uses' => 'FaqsController@delete'
+    ]);
+
+    Route::get('faqs/order', [
+        'as' => 'admin.faqs.order',
+        'uses' => 'FaqsController@order'
+    ]);
+
+    Route::post('faqs/order', [
+        'as' => 'admin.faqs.orderSave',
+        'uses' => 'FaqsController@orderSave'
+    ]);
+
+    Route::get('faqs/order/{categoryId}', [
+        'as' => 'admin.faqs.orderByCategory',
+        'uses' => 'FaqsController@orderByCategory'
     ]);
 });
 
