@@ -56,8 +56,21 @@ final class FormGenerator
     {
         $data = (array) config($this->generateConfigFileName($config));
         $form = new Form($data['name'], $data['description'], $data['editor'], $data);
-
         $loopsInfo = [];
+        
+         //ADD LENGUAGES DATA
+        if (isset($data['lenguages'])) {
+            foreach ($data['lenguages'] as $key => $value) {
+                foreach ($value['fields'] as $name => $fieldData) {
+                    $name = $key .'[' . $name . ']';
+                    $field = $this->generateField($name, $defaultData, $fieldData);
+                    $form->addField('lenguages['.$key .']', $field);
+                }
+            }
+            
+            $form->addDataShow('lenguages', false);
+        }
+        
         //ADD GENERALS DATA
         foreach ($data['fields'] as $name => $fieldData) {
             $field = $this->generateField($name, $defaultData, $fieldData);
@@ -70,20 +83,9 @@ final class FormGenerator
         }
 
         $loopGenerals = isset($data["loop"]) ? $data["loop"] : false;
-        $form->addDataShow('generals', false);
+        $form->addDataShow('generals', $loopGenerals);
 
-        //ADD LENGUAGES DATA
-        if (isset($data['lenguages'])) {
-            foreach ($data['lenguages'] as $key => $value) {
-                foreach ($value['fields'] as $name => $fieldData) {
-                    $name = $key . '[' . $name . ']';
-                    $field = $this->generateField($name, $defaultData, $fieldData);
-                    $form->addField($key, $field);
-                }
-                $loopkey = isset($data[$key]["loop"]) ? $data[$key]["loop"] : false;
-                $form->addDataShow($key, $loopkey);
-            }
-        }
+       
 
         //ADD SPECIAL DATA
         if (isset($data['dataShow']) && is_array($data['dataShow'])) {
@@ -91,7 +93,6 @@ final class FormGenerator
                 $loopOtherData = isset($data[$otherData]["loop"]) ? isset($data[$otherData]["loop"]) : false;
                 if (isset($data[$otherData]['fields'])) {
                     if ($loopOtherData) {
-                        //dd($loopsInfo['cant_' . $otherData]);
                         if (isset($loopsInfo['cant_' . $otherData]) && $loopsInfo['cant_' . $otherData] > 0) {
                             for ($i = 0; $i < $loopsInfo['cant_' . $otherData]; $i++) {
                                 foreach ($data[$otherData]['fields'] as $name => $fieldData) {
@@ -124,9 +125,7 @@ final class FormGenerator
                 $form->addDataShow($otherData, $loopOtherData);
             }
         }
-
-
-
+       
         return $form;
     }
 

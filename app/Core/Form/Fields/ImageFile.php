@@ -31,7 +31,7 @@ class ImageFile extends AbstractField
 
             $data.='<a style="margin-left: 10px;" data-id="' . $this->name() . '" class="deleteImage btn btn-small btn-danger" title="Eliminar Imagen" >
                         <i class="glyphicon glyphicon-trash"> </i>
-                    </a> Eliminar Imagen 
+                    </a> Eliminar 
                     <a style="margin-left: 10px;" data-id="' . $this->name() . '" href="' . route("admin." . $repo . '.crop', $id) . '" target="_blank" class="btn btn-small btn-danger" title="Editar Imagen" >
                         <i class="glyphicon glyphicon-pencil"> </i>
                     </a> Editar 

@@ -83,6 +83,7 @@ abstract class BaseController extends Controller
         $rules = get_rules_from($this->resourceName);
 
         $prepareData = $this->prepareData(Input::all(), $request);
+        
         $validations = $this->prepareValidate($prepareData, $rules, null);
         if (!empty($validations) && is_object($validations)) {
             return back()->withInput()->withErrors($validations);
@@ -121,6 +122,7 @@ abstract class BaseController extends Controller
         $rules = get_rules_from($this->resourceName);
 
         $prepareData = $this->prepareData(Input::all(), $request);
+    
         $validations = $this->prepareValidate($prepareData, $rules, $resource->id);
         if (!empty($validations) && is_object($validations)) {
             return back()->withInput()->withErrors($validations);
@@ -203,6 +205,14 @@ abstract class BaseController extends Controller
 
     private function prepareData( $data, $request )
     {
+        
+        if(isset($data['lenguages']) && is_array($data['lenguages'])){
+            foreach ($data['lenguages'] as $keyLang => $dataLang){
+                $data[$keyLang] = $dataLang;
+            }
+            unset($data['lenguages']);
+        }
+        
         $dataWithImages = FileServices::uploadFilesRequest($request, $data, $this->pathFile, $this->filesDimensions);
         $dataAutoComplete = $this->generateAutocomplete($dataWithImages);
         $dataWithSlug = $this->generateSlugs($dataAutoComplete);
@@ -236,7 +246,6 @@ abstract class BaseController extends Controller
 
     private function validate( $data, $rules, $id = null )
     {
-
         $langs = langs_array();
         $otherData = config('form.' . $this->resourceName . '.dataShow');
 
@@ -284,21 +293,23 @@ abstract class BaseController extends Controller
                             if (preg_match("/unique:parent/i", $rule)) {
                                 $val = str_replace("{unique:parent}", $parent, $val);
                             }
+                            //echo 'key: '.$key.'<br/>';
                             $rules[$key] = $val;
                         }
                     }
                 }
             }
         }
-
-
+        
+       
         foreach ($data as $key => $value) {
             if (is_array($value)) {
                 if (in_array($key, $langs)) {
-
+                   
                     $errors[] = Validator::make($value, $rules[$key]);
                     unset($data[$key]);
                     unset($rules[$key]);
+                    
                 } else if (!empty($otherData) && in_array($key, $otherData)) {
                     foreach ($value as $subkey => $subValue) {
                         $errors[] = Validator::make($subValue, $rules[$key][$subkey]);
@@ -308,7 +319,7 @@ abstract class BaseController extends Controller
                 }
             }
         }
-
+     
         $errors[] = Validator::make($data, $rules);
         return $errors;
     }

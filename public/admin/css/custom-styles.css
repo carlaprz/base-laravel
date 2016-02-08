@@ -881,3 +881,7 @@ ol {
 ol {
     list-style: decimal;
 }
+
+.lenguages div.content{
+   margin-top: 15px;
+}

@@ -190,25 +190,25 @@ return [
                 'fields' => [
                     'title' => [
                         'type' => 'text',
-                        'title' => 'Nombre',
+                        'title' => 'Nombre de la categoria (ES) ',
                         'description' => 'Nombre',
                         'rules' => ['required', 'unique:categories_translations,title,{unique:id},categories_id,locale,es,parent,{unique:parent}']
                     ],
                     'slug' => [
                         'type' => 'text',
-                        'title' => 'URL',
+                        'title' => 'Url amigable (ES) ',
                         'description' => 'URL amigable para SEO,en caso de no completarlo se completara con el nombre.',
                         'rules' => ['required']
                     ],
                     'meta_title' => [
                         'type' => 'text',
-                        'title' => 'Meta Titulo ',
+                        'title' => 'Meta Titulo (ES) ',
                         'description' => 'Meta Titulo',
                         'rules' => []
                     ],
                     'meta_description' => [
                         'type' => 'textarea',
-                        'title' => 'Meta Descripcion',
+                        'title' => 'Meta Descripcion (ES) ',
                         'description' => 'Meta Descripcion',
                         'rules' => []
                     ]
@@ -250,7 +250,7 @@ return [
         'description' => 'Administración de Productos',
         'dataShow' => ['currencies'],
         'slug' => ['title'],
-        'editor' => true,
+        'editor' => false,
         'fields' => [
             'reference' => [
                 'type' => 'text',
@@ -298,13 +298,13 @@ return [
                 'type' => 'multipleSelect',
                 'title' => 'Talla',
                 'description' => 'all_sizes',
-                'rules' => ['']//'array|exists:sizes,id'
+                //'rules' => ['array|exists:sizes,id']
             ],
             'colour_id' => [
                 'type' => 'multipleSelect',
                 'title' => 'Colores',
                 'description' => 'all_colours',
-                'rules' => [''] //'array|exists:colours,id'
+                //'rules' => ['array|exists:colours,id']
             ],
             'product_id_related' => [
                 'type' => 'multipleSelectProducts',
@@ -325,13 +325,13 @@ return [
                         'type' => 'numeric',
                         'title' => 'Precio descontado del producto Euro',
                         'description' => 'Introduzca el precio descontado del producto en caso de que lo tenga',
-                        'rules' => []
+                        
                     ],
                     'iva' => [
                         'type' => 'numeric',
                         'title' => '% de IVA en Euros',
                         'description' => 'Introduzca el valor del impuesto en porcentaje',
-                        'rules' => []
+                        
                     ],
                 ]
             ],
@@ -347,13 +347,13 @@ return [
                         'type' => 'numeric',
                         'title' => 'Precio descontado del producto Dolar',
                         'description' => 'Introduzca el precio descontado del producto en caso de que lo tenga',
-                        'rules' => []
+                       
                     ],
                     'iva' => [
                         'type' => 'numeric',
                         'title' => '% de IVA en Dolar',
                         'description' => 'Introduzca el valor del impuesto en porcentaje',
-                        'rules' => []
+                       
                     ],
                 ]
             ],
@@ -363,21 +363,19 @@ return [
                 'fields' => [
                     'title' => [
                         'type' => 'text',
-                        'title' => 'Título',
+                        'title' => 'Nombre del producto (ES)',
                         'description' => 'Título del producto',
                         'rules' => ['required', 'unique:products_translations,title,{unique:id},products_id,locale,es']
                     ],
                     'description' => [
                         'type' => 'textarea',
-                        'title' => 'Descripción',
+                        'title' => 'Descripción del producto (ES)',
                         'description' => 'Descripcion',
-                        'rules' => ''
                     ],
                     'slug' => [
                         'type' => 'text',
-                        'title' => 'URL',
+                        'title' => 'Url Amigable del producto (ES)',
                         'description' => 'URL amigable para SEO. En caso de no completarlo se completara con el nombre del producto.',
-                        'rules' => ['required']
                     ]
                 ]
             ],
@@ -385,19 +383,19 @@ return [
                 'fields' => [
                     'title' => [
                         'type' => 'text',
-                        'title' => 'Title',
+                        'title' => 'Nombre del producto (EN)',
                         'description' => 'Título del producto',
                         'rules' => ['unique:products_translations,title,{unique:id},products_id,locale,en']
                     ],
                     'description' => [
                         'type' => 'textarea',
-                        'title' => 'Description',
+                        'title' => 'Descripción del producto (EN)',
                         'description' => 'Descripción',
                         'rules' => ['required_with:title']
                     ],
                     'slug' => [
                         'type' => 'text',
-                        'title' => 'URL',
+                        'title' => 'Url Amigable del producto (EN)',
                         'description' => 'Friendly SEO URL',
                         'rules' => ['required_with:title']
                     ]

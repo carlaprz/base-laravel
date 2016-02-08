@@ -47,7 +47,6 @@ class ProductsController extends BaseController
             'reference' => 'Referencia',
             'title' => 'Nombre',
             'categoryName' => 'Categoría',
-            'pvp' => 'Precio',
             'slug' => 'URL',
             'thumb' => 'Imagen Listado',
             'image' => 'Imagen Detalle',
