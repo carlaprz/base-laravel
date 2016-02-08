@@ -57,37 +57,77 @@ final class FormGenerator
         $data = (array) config($this->generateConfigFileName($config));
         $form = new Form($data['name'], $data['description'], $data['editor'], $data);
         $loopsInfo = [];
-        
-         //ADD LENGUAGES DATA
-        if (isset($data['lenguages'])) {
-            foreach ($data['lenguages'] as $key => $value) {
-                foreach ($value['fields'] as $name => $fieldData) {
-                    $name = $key .'[' . $name . ']';
-                    $field = $this->generateField($name, $defaultData, $fieldData);
-                    $form->addField('lenguages['.$key .']', $field);
+        if (isset($data['orderToShow']) && is_array($data['orderToShow'])) {
+            
+            foreach ($data['orderToShow'] as $order) {
+                if ($order == "generals") {
+                    $info = $this->addDataGenerals($data, $form, $defaultData);
+                    $form = $info[0];
+                    $loopsInfo = $info[1];
+                } elseif ($order == "lenguages") {
+                    $form = $this->addDataLenguagues($data, $form, $defaultData);
+                } elseif ($order == "dataShow") {
+                    $form = $this->addSpecialData($data, $form, $defaultData, $loopsInfo);
                 }
             }
             
+        } else {
+            $form = $this->addDataToForm($data, $form, $defaultData);
+        }
+
+        return $form;
+    }
+
+    private function addDataToForm( $data, $form, $defaultData )
+    {
+        //ADD LENGUAGES DATA
+        $formWithLanguagues = $this->addDataLenguagues($data, $form, $defaultData);
+
+        //ADD GENERALS DATA
+        $info = $this->addDataGenerals($data, $formWithLanguagues, $defaultData);
+        $formWithGenerals = $info[0];
+        $loopsInfo = $info[1];
+
+        //ADD SPECIAL DATA
+        $formwithSpecialData = $this->addSpecialData($data, $formWithGenerals, $defaultData, $loopsInfo);
+
+        return $formwithSpecialData;
+    }
+
+    private function addDataLenguagues( $data, $form, $defaultData )
+    {
+        if (isset($data['lenguages'])) {
+            foreach ($data['lenguages'] as $key => $value) {
+                foreach ($value['fields'] as $name => $fieldData) {
+                    $name = $key . '[' . $name . ']';
+                    $field = $this->generateField($name, $defaultData, $fieldData);
+                    $form->addField('lenguages[' . $key . ']', $field);
+                }
+            }
             $form->addDataShow('lenguages', false);
         }
-        
-        //ADD GENERALS DATA
+        return $form;
+    }
+
+    private function addDataGenerals( $data, $form, $defaultData )
+    {
+        $loopsInfo = [];
         foreach ($data['fields'] as $name => $fieldData) {
             $field = $this->generateField($name, $defaultData, $fieldData);
-
             if (strpos($name, "cant_") !== false) {
                 $loopsInfo[$name] = $field->value();
             }
-
             $form->addField('generals', $field);
         }
 
         $loopGenerals = isset($data["loop"]) ? $data["loop"] : false;
         $form->addDataShow('generals', $loopGenerals);
 
-       
+        return [$form, $loopsInfo];
+    }
 
-        //ADD SPECIAL DATA
+    private function addSpecialData( $data, $form, $defaultData, $loopsInfo )
+    {
         if (isset($data['dataShow']) && is_array($data['dataShow'])) {
             foreach ($data['dataShow'] as $otherData) {
                 $loopOtherData = isset($data[$otherData]["loop"]) ? isset($data[$otherData]["loop"]) : false;
@@ -125,7 +165,7 @@ final class FormGenerator
                 $form->addDataShow($otherData, $loopOtherData);
             }
         }
-       
+
         return $form;
     }
 
@@ -138,7 +178,7 @@ final class FormGenerator
     {
         $value = false;
         $originName = $name;
-       
+
         $dataAux = explode('[', $name);
 
         if (count($dataAux) > 1 && count($dataAux) < 3) {
@@ -147,7 +187,6 @@ final class FormGenerator
             if (isset($data[$name][$secondname])) {
                 $value = $data[$name][$secondname];
             }
-            
         } else if (count($dataAux) > 2) {
             $name = str_replace('[', '', $dataAux[0]);
             $secondname = str_replace(']', '', $dataAux[1]);
@@ -156,13 +195,13 @@ final class FormGenerator
             if (isset($data[$name][$secondname][$thirdname])) {
 
                 $value = $data[$name][$secondname][$thirdname];
-            }            
+            }
         }
 
         if (empty($value)) {
-             if( (!empty($data[$name]) && !is_array($data[$name])) || (!empty($data[$name]) && $name == 'product_id_related' )){
-                 $value = $data[$name];
-            }           
+            if ((!empty($data[$name]) && !is_array($data[$name])) || (!empty($data[$name]) && $name == 'product_id_related' )) {
+                $value = $data[$name];
+            }
         }
 
         return $value;

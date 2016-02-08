@@ -80,6 +80,7 @@ return [
         'name' => 'Noticias',
         'for_files' => true,
         'description' => 'Administración de Noticias',
+        'orderToShow' => ['lenguages', 'generals'],
         'editor' => true,
         'slug' => ['title'],
         'fields' => [
@@ -169,6 +170,7 @@ return [
         'name' => 'Categorías',
         'for_files' => false,
         'description' => 'Administración de Categorías',
+        'orderToShow' => ['generals', 'lenguages'],
         'editor' => false,
         'autocomplete' => ['meta_title' => 'title'],
         'slug' => ['title'],
@@ -248,6 +250,7 @@ return [
         'name' => 'Productos',
         'for_files' => true,
         'description' => 'Administración de Productos',
+        'orderToShow' => ['lenguages', 'generals', 'dataShow'],
         'dataShow' => ['currencies'],
         'slug' => ['title'],
         'editor' => false,
@@ -298,13 +301,13 @@ return [
                 'type' => 'multipleSelect',
                 'title' => 'Talla',
                 'description' => 'all_sizes',
-                //'rules' => ['array|exists:sizes,id']
+            //'rules' => ['array|exists:sizes,id']
             ],
             'colour_id' => [
                 'type' => 'multipleSelect',
                 'title' => 'Colores',
                 'description' => 'all_colours',
-                //'rules' => ['array|exists:colours,id']
+            //'rules' => ['array|exists:colours,id']
             ],
             'product_id_related' => [
                 'type' => 'multipleSelectProducts',
@@ -325,13 +328,11 @@ return [
                         'type' => 'numeric',
                         'title' => 'Precio descontado del producto Euro',
                         'description' => 'Introduzca el precio descontado del producto en caso de que lo tenga',
-                        
                     ],
                     'iva' => [
                         'type' => 'numeric',
                         'title' => '% de IVA en Euros',
                         'description' => 'Introduzca el valor del impuesto en porcentaje',
-                        
                     ],
                 ]
             ],
@@ -347,13 +348,11 @@ return [
                         'type' => 'numeric',
                         'title' => 'Precio descontado del producto Dolar',
                         'description' => 'Introduzca el precio descontado del producto en caso de que lo tenga',
-                       
                     ],
                     'iva' => [
                         'type' => 'numeric',
                         'title' => '% de IVA en Dolar',
                         'description' => 'Introduzca el valor del impuesto en porcentaje',
-                       
                     ],
                 ]
             ],
@@ -507,6 +506,7 @@ return [
         'description' => 'Administración de Pedidos',
         'slug' => false,
         'editor' => false,
+        'orderToShow' => ['generals', 'dataShow'],
         'dataShow' => ['products', 'shipping'],
         'fields' => [
             'status' => [
@@ -924,7 +924,7 @@ return [
         'for_files' => false,
         'description' => 'Administración de Categorías de FAQs',
         'editor' => false,
-        'fields' => [            
+        'fields' => [
             'active' => [
                 'type' => 'radio',
                 'title' => 'Activo',
@@ -973,7 +973,7 @@ return [
         'description' => 'Administración de FAQs',
         'editor' => true,
         'fields' => [
-           'active' => [
+            'active' => [
                 'type' => 'radio',
                 'title' => 'Activo',
                 'description' => 'Estado',
