@@ -34,7 +34,7 @@ class ProductsController extends BaseController
     // IMAGENES 
     protected $pathFile = 'files/products/';
     protected $filesDimensions = [
-        'image' => ['w' => 400, 'h' => 400],
+        'image' => ['w' => 200, 'h' => 400],
         'thumb' => ['w' => 150, 'h' => 150],
     ];
 

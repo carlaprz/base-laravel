@@ -23,6 +23,7 @@ use App\Core\Form\Fields\SelectDisabled;
 use App\Core\Form\Fields\Link;
 use App\Core\Form\Fields\Line;
 use App\Core\Form\Fields\MultipleSelect;
+use App\Core\Form\Fields\ImageFileNoCrop;
 
 final class FormGenerator
 {
@@ -49,7 +50,8 @@ final class FormGenerator
         'link' => Link::class,
         'line' => Line::class,
         'multipleSelectProducts' => MultipleSelectProducts::class,
-        'multipleSelect' => MultipleSelect::class
+        'multipleSelect' => MultipleSelect::class,
+        'imageFileNoCrop' => ImageFileNoCrop::class,
     ];
 
     public function generate( $config, array $defaultData = [] )

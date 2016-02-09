@@ -116,10 +116,10 @@ class FileServices
         $uploadPath = public_path($path);
         $imagen = Image::make($uploadPath . '/' . $data['name']);
         $imagen->crop(round($data['w']), round($data['h']), round($data['x']), round($data['y']));
-        if($finalWidth){
+        if ($finalWidth) {
             $imagen->widen($finalWidth);
         }
-        
+        //$data['name'] = str_replace(".jpg", '.png', $data['name']);
         $imagen->save($uploadPath . $data['name']);
     }
 
