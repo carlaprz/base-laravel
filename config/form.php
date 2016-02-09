@@ -113,7 +113,7 @@ return [
                         'rules' => ['required', 'unique:news_translations,title,{unique:id},news_id,locale,es']
                     ],
                     'description' => [
-                        'type' => 'textarea',
+                        'type' => 'text',
                         'title' => 'Descripción corta',
                         'description' => '',
                         'rules' => ['required']
@@ -135,7 +135,7 @@ return [
                         'rules' => ['unique:news_translations,title,{unique:id},news_id,locale,en']
                     ],
                     'description' => [
-                        'type' => 'textarea',
+                        'type' => 'text',
                         'title' => 'Description',
                         'description' => 'Short text for preview the new',
                         'rules' => ['required_with:title']
