@@ -40,7 +40,7 @@ class UserController extends Controller
     public function logout()
     {
         Auth::logout();
-        Session::forget('coupons');
+        Session::flush();
         return back();
     }
 
