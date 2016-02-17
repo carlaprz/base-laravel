@@ -8,17 +8,13 @@ use App;
 
 final class Faqs extends Model implements ModelInterface
 {
+
     use \Dimsav\Translatable\Translatable;
 
     public $timestamps = true;
-    public $translatedAttributes = ['faqs_id','locale','answer', 'question'];
-    protected $fillable = ['faqs_id','faqs_categories_id','locale','answer', 'question','active', 'order'];
+    public $translatedAttributes = ['faqs_id', 'locale', 'answer', 'question'];
+    protected $fillable = ['faqs_id', 'faqs_categories_id', 'locale', 'answer', 'question', 'active', 'order'];
     protected $appends = ["es", "en", "categoryName"];
-
-    public function add( $data )
-    {
-        return $this->create($data);
-    }
 
     public function category()
     {
@@ -35,8 +31,8 @@ final class Faqs extends Model implements ModelInterface
     {
         App::setLocale('es');
         return [
-            'question'  =>  $this->question,
-            'answer'    =>  $this->answer
+            'question' => $this->question,
+            'answer' => $this->answer
         ];
     }
 
@@ -44,21 +40,27 @@ final class Faqs extends Model implements ModelInterface
     {
         App::setLocale('en');
         return [
-            'question'  =>  $this->question,
-            'answer'    =>  $this->answer
+            'question' => $this->question,
+            'answer' => $this->answer
         ];
     }
 
-    //Metodos FRONT
+    public function add( $data )
+    {
+        return $this->create($data);
+    }
+
+//Metodos FRONT
     public function allActive()
     {
         return $this->where('active', '=', 1)->get();
     }
-    
+
     public function findByCategoryIdActive( $categoryId )
     {
         return $this->where('faqs_categories_id', '=', $categoryId)
                         ->where('active', '=', 1)
                         ->get();
     }
+
 }

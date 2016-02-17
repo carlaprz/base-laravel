@@ -6,7 +6,6 @@ use App\Interfaces\ModelInterface;
 use Illuminate\Database\Eloquent\Model;
 use App;
 
-
 final class FaqsCategories extends Model implements ModelInterface
 {
 

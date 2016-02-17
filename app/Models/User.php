@@ -110,11 +110,12 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
         }
         return 0;
     }
-    
-     public function checkEmail( $email, $user )
+
+    public function checkEmail( $email, $user )
     {
         return $this->where('email', '=', "$email")
                         ->where('id', '<>', $user->id)
                         ->first();
     }
+
 }

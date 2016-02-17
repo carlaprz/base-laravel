@@ -2,8 +2,6 @@
 
 namespace App\Models;
 
-use App;
-use DB;
 use App\Interfaces\ModelInterface;
 use Illuminate\Database\Eloquent\Model;
 
@@ -18,12 +16,5 @@ final class ShippingZones extends Model implements ModelInterface
     {
         return $this->create($data);
     }
-
-
-
-
-
-
-
 
 }

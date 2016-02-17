@@ -16,7 +16,7 @@ final class Orders extends Model implements ModelInterface
 {
 
     protected $table = 'orders';
-    protected $fillable = ['reference', 'cart_id', 'total_pvp', 'total_iva', 'status', 'observations', 'bill'];
+    protected $fillable = ['reference', 'cart_id', 'total_pvp', 'total_iva', 'status', 'observations', 'bill', 'coupon_id'];
     protected $appends = ['paymentName', 'paymentResponse', 'linkUser', 'statusName', 'userNameLastName', 'shipping', 'cupon_code',
         'cant_products', 'products_cant_unit', 'products', 'country_name', 'products_name'];
 

@@ -6,8 +6,6 @@ use App\Interfaces\ModelInterface;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\ProductsCurrrencies;
 
-
-
 final class Currencies extends Model implements ModelInterface
 {
 
@@ -17,7 +15,7 @@ final class Currencies extends Model implements ModelInterface
     {
         return $this->create($data);
     }
-    
+
     public function currencies()
     {
         return $this->hasMany(ProductsCurrrencies::class, '_id', 'id')->get();
@@ -26,12 +24,7 @@ final class Currencies extends Model implements ModelInterface
     //Metodos FRONT
     public function allActive()
     {
-        return $this
-            ->where('active', '=', 1)
-            ->orderby('priority', 'ASC')
-            ->get();
+        return $this->where('active', '=', 1)->orderby('priority', 'ASC')->get();
     }
-
-
 
 }

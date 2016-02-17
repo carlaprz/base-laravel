@@ -8,8 +8,12 @@ use App\Services\FileServices;
 use App\Models\User;
 Use App\Services\UserService;
 use App\Services\PaypalService;
+use App\Services\CartService;
 
-//use App\Services\MobileServices;
+use App\Models\Carts;
+use App\Models\CartsProducts;
+use App\Models\Orders;
+use App\Models\OrdersDetails;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -44,6 +48,9 @@ class AppServiceProvider extends ServiceProvider
         $this->registerUserService();
         $this->registerPaypalService();
         $this->registerTpvService();
+
+        $this->registerCartService();
+        $this->registerEcommerceService();
     }
 
     public function registerFileServices()
@@ -83,6 +90,22 @@ class AppServiceProvider extends ServiceProvider
         $this->app->singleton(TpvService::class, function ()
         {
             return new TpvService();
+        });
+    }
+
+    public function registerCartService()
+    {
+        $this->app->singleton(CartService::class, function ()
+        {
+            return new CartService();
+        });
+    }
+    
+    
+    public function registerEcommerceService(){
+        $this->app->singleton(EcommerceService::class, function ($app)
+        {
+            return new EcommerceService($app[UserService::class], $app[Carts::class], $app[CartService::class],$app[CartsProducts::class], $app[Orders::class], $app[OrdersDetails::class]);
         });
     }
 
