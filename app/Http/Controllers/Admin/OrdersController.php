@@ -16,7 +16,7 @@ class OrdersController extends BaseController
 
     protected $resourceName = 'orders';
     protected $repositoryName = Orders::class;
-    
+    protected $rules = "ordersStatus";
 
     public function index( Orders $orders )
     {
