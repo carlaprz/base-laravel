@@ -1,1 +1,1 @@
-[{"name":"TPV"},{"name":"Transferencia"},{"name":"Paypal"}]
+[{"name":"TPV"},{"name":"Paypal"},{"name":"Transferencia"}]

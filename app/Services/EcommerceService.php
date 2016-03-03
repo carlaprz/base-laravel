@@ -38,7 +38,7 @@ class EcommerceService
 
         $orderDetails = $this->getOrderDetails($order, $data);
         Session::put('order_details', $orderDetails);
-    
+
         return $order;
     }
 
@@ -88,7 +88,7 @@ class EcommerceService
             "telephone" => $data["telephone"],
             "email" => $data["email"]
         ];
-        
+
         return $this->userServices->updateUser($user, $dataUser);
     }
 
@@ -163,8 +163,7 @@ class EcommerceService
             'cart_id' => $cart->id,
             'total_pvp' => $total,
             'status' => '8',
-            'observations' => Session::get('order_observations', ''),
-                //'bill' => Session::get('order_bill', ''),
+            'observations' => Session::get('order_observations', '')
         ];
 
         $order = $this->orderRepository->add($orderData);
@@ -177,12 +176,9 @@ class EcommerceService
         $total = $this->getPricetotal($coupons);
 
         $orderData = [
-
             'coupon_id' => !empty($coupons) ? $coupons->id : null,
             'total_pvp' => $total,
-            'status' => '8',
             'observations' => Session::get('order_observations', ''),
-                //'bill' => Session::get('order_bill', ''),
         ];
 
         $order->update($orderData);
@@ -233,7 +229,7 @@ class EcommerceService
             'shipping_country' => $data['country_id2'],
             'shipping_telephone' => $data['telephone2'],
         ];
-         $orderDetails->update($orderDataDetails);
+        $orderDetails->update($orderDataDetails);
         return $orderDetails;
     }
 

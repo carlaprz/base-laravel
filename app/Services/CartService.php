@@ -2,6 +2,8 @@
 
 namespace App\Services;
 
+use Cart;
+
 class CartService
 {
 
@@ -25,23 +27,32 @@ class CartService
     {
         return Cart::destroy();
     }
-    
-    public function total(){
-       return Cart::total();
+
+    public function total()
+    {
+        return Cart::total();
     }
-    
-    public function count(){
-       return Cart::count();
+
+    public function count()
+    {
+        return Cart::count();
     }
-    
-    public function search($data ){
-       //EJ data: ['id' => 1, 'options' => ['size' => 'L']]
-       return Cart::search($data);
+
+    public function search( $data )
+    {
+        //EJ data: ['id' => 1, 'options' => ['size' => 'L']]
+        return Cart::search($data);
     }
 
     public function content()
     {
         return Cart::content();
+    }
+
+    public function getTotalbyKey( $key )
+    {
+        $data = Cart::get($key);
+        return $data->subtotal;
     }
 
 }

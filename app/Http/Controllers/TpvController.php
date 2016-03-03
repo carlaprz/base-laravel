@@ -1,47 +1,106 @@
 <?php
 
-namespace Potoroze\Http\Controllers\Account;
+namespace App\Http\Controllers;
 
-use App\Models\OrdersPayments;
-use App\Models\Orders;
-use App\Http\Controllers\Controller;
+use App\Services\CartService;
 use App\Services\TpvService;
-
+use App\Services\EmailServices;
+use App\Models\Orders;
+use App\Models\OrdersPayments;
+use App\Models\OrdersDetails;
+use App\Models\Carts;
+use Session;
+use Auth;
 use Request;
+use App\Services\UserService;
 
-final class TpvController extends Controller
+class TpvController extends Controller
 {
 
-    public function IPN( TpvService $tpvService, OrdersPayments $paymentRepository, Orders $ordersRespository )
+    public function Tpv( CartService $cartServices, TpvService $tpv, Orders $ordersRepository )
+    {
+        $orderDetails = Session::get('order_details', FALSE)->getAttributes();
+        $coupon = Session::get('coupons', FALSE);
+        $total = $cartServices->total();
+
+        if ($coupon !== false):
+            if ($coupon->percentage === 1):
+                $discount = $total - ( ($total * $coupon->discount) / 100);
+            else:
+                $discount = $coupon->discount;
+            endif;
+        else:
+            $discount = 0;
+        endif;
+
+        $order = $ordersRepository->find($orderDetails['order_id']);
+        $order->update(["status" => 1]);
+
+        $tpvData = [];
+        $tpvData['order_id'] = $orderDetails['order_id'];
+        $tpvData['reference'] = $order->reference;
+        $tpvData['order_total'] = $total - $discount;
+
+        $formTPV = $tpv->makeForm($tpvData);
+
+        return View('front.payments.tpv.index', [
+            'formTPV' => $formTPV
+        ]);
+    }
+
+    public function TpvResponse( TpvService $tpv, OrdersPayments $ordersPaymentsRepository, Orders $ordersRepository, EmailServices $emailService, OrdersDetails $orderDetails, Carts $cartRepository )
     {
         $params = Request::all();
+        $data = $tpv->decryptResponse($params);
 
-        if (empty($params)) {
-            die('error de parametros');
-        }
+        if (!empty($data)):
+            if ($data['validation']):
 
-        $response = $tpvService->decryptResponse($params);
+                $operation_code = $data['order'];
+                $authCode = $data['auth_code'];
+                $response = $data['response'];
 
-        if (!empty($response['order'])) {
-            $orders_payment = $paymentRepository->findByOperationCode($response['order']);
-            $orders_payment->update(['response_code' => $response['response']]);
+                $orderPayment = $ordersPaymentsRepository->findByOperationCode($operation_code);
 
+                $orderPayment->update([
+                    "transaction_code" => $authCode,
+                    "response_code" => $response
+                ]);
 
-                if ($response['validation'] && intval($response['response']) >= 0 && intval($response['response']) < 100):
-                    $orders = $ordersRespository->find($orders_payment->order_id);
-                    $orders->update(['status' => 2]);
+                $order = $ordersRepository->find($orderPayment->order_id);
+
+                if (!empty($authCode) && $response == "0000"):
+
+                    $order->update(["status" => 2]);        //PAGO OK
+                    //Obtenemos DATOS
+                    $order_details = $orderDetails->findByOrder($order);
+                    $products = $cartRepository->find($order->id)->products();
+
+                    //Enviamos mail al cliente y al vendedor
+                    $emailService->orderAdminMail($order_details->toArray(), $products, $order->toArray(), '1');
+                    $emailService->orderClientMail($order_details->toArray(), $products, $order->toArray(), '1');
+
+                else:
+                    $order->update(["status" => 5]);        //PAGO KO
                 endif;
-        }
+
+            endif;
+        endif;
     }
 
-    public function paymentCorrect()
+    public function TpvOk( UserService $userService )
     {
-        return view('front.payments.pay-tpv-correct');
+        $user = Auth::User();
+        Session::flush();
+        if ($user)
+            $userService->logUser($user);
+
+        return View('front.payments.tpv.ok');
     }
 
-    public function paymentIncorrect()
+    public function TpvKo()
     {
-        return view('front.payments.pay-tpv-incorrect');
+        return View('front.payments.tpv.ko');
     }
 
 }

@@ -17,41 +17,24 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['lo
 });
 
 
-//PAYPAL
-Route::get('payment/paypal/ok', [
-    'as' => 'payments.paypal_ok',
-    'uses' => 'PaypalController@paymentCorrect',
-    'middleware' => 'auth'
-]);
+/* PAYMENTS */
 
-Route::get('payment/paypal/ko', [
-    'as' => 'payments.paypal_ko',
-    'uses' => 'PaypalController@paymentIncorrect',
-    'middleware' => 'auth'
-]);
+//TPV
+Route::post('payment/tpv', ['as' => 'payments.tpv', 'uses' => 'TpvController@Tpv']);
+Route::post('payment/tpv/response', ['as' => 'payments.tpv.response', 'uses' => 'TpvController@TpvResponse']);
+Route::get('payment/tpv/ok', ['as' => 'payments.tpv.ok', 'uses' => 'TpvController@TpvOk']);
+Route::get('payment/tpv/ko', ['as' => 'payments.tpv.ko', 'uses' => 'TpvController@TpvKo']);
 
-Route::post('payment/paypal/ipn', [
-    'as' => 'payment.paypal',
-    'uses' => 'PaypalController@IPN'
-]);
+//TPV
+Route::post('payment/paypal', ['as' => 'payments.paypal', 'uses' => 'PaypalController@Paypal']);
+Route::post('payment/paypal/response', ['as' => 'payments.paypal.response', 'uses' => 'PaypalController@PaypalResponse']);
+Route::get('payment/paypal/ok', ['as' => 'payments.paypal.ok', 'uses' => 'PaypalController@PaypalOk']);
+Route::post('payment/paypal/ok', ['as' => 'payments.paypal.ok', 'uses' => 'PaypalController@PaypalOk']);
+Route::get('payment/paypal/ko', ['as' => 'payments.paypal.ko', 'uses' => 'PaypalController@PaypalKo']);
 
-//TVP
-Route::get('payment/tpv/ok', [
-    'as' => 'payments.tpv_ok',
-    'uses' => 'TpvController@paymentCorrect',
-    'middleware' => 'auth'
-]);
+//TRANSFER
+Route::post('payment/transfer', ['as' => 'payments.transfer', 'uses' => 'TransferController@Transfer']);
 
-Route::get('payment/tpv/ko', [
-    'as' => 'payments.tpv_ko',
-    'uses' => 'TpvController@paymentIncorrect',
-    'middleware' => 'auth'
-]);
-
-Route::post('payment/tpv/ipn', [
-    'as' => 'payment.tpv',
-    'uses' => 'TpvController@IPN'
-]);
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 

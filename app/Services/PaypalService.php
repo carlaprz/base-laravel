@@ -1,10 +1,15 @@
 <?php
 
 namespace App\Services;
-
+use App\Models\OrdersPayments;
 class PaypalService
 {
-    private $inTestMode = true;
+    private $inTestMode;
+
+    public function __construct( OrdersPayments $ordersPaymentsRepository )
+    {
+        $this->ordersPayments = $ordersPaymentsRepository;
+    }
 
     private static $environmentsUrls = [
         'test' => 'https://www.sandbox.paypal.com/cgi-bin/webscr',
@@ -17,11 +22,17 @@ class PaypalService
 
     private function getApiUrl()
     {
+        $this->inTestMode = false;
+        if (urlencode(env('PAYPAL_TEST')) == "1") $this->inTestMode = true;
+
         return $this->inTestMode ? self::$checkoutUrls['test'] : self::$checkoutUrls['production'];
     }
 
     private function getPaypalUrl()
     {
+        $this->inTestMode = false;
+        if (urlencode(env('PAYPAL_TEST')) == "1") $this->inTestMode = true;
+
         return $this->inTestMode ? self::$environmentsUrls['test'] : self::$environmentsUrls['production'];
     }
 
@@ -95,7 +106,7 @@ class PaypalService
         return $this->doPost($url, $nvp);
     }
 
-    public function validateIpn( $data )
+    public function validateIpn($data)
     {
         $this->guardReponseIsValid($data);
 
@@ -105,14 +116,15 @@ class PaypalService
 
         $paymentStatus = $data['payment_status'];
         $adId = $data['custom'];
+        $txn_id = $data['txn_id'];
 
         if ($this->payPalResponseIsValid($response)) {
 
-            if ($paymentStatus != 'Completed' || !$adId) {
+            /*if ($paymentStatus != 'Completed' || !$adId) {
                 throw new Exception('Payment status unfinished');
-            }
+            }*/
             // @todo, update add to paid using the $adId         
-            return ['id' => $adId, 'status' => $paymentStatus];
+            return ['id' => $adId, 'status' => $paymentStatus, 'txn_id' => $txn_id];
         }
         throw new Exception('Invalid paypal response');
     }
@@ -162,6 +174,113 @@ class PaypalService
         }
 
         return $generatedRequest;
+    }
+
+    public function makeSimpleForm($data){
+
+        //Creamos el registro del pago en BBDD
+        $orderPayment = [
+            'order_id'          => $data['order_id'],
+            'payment_id'        => "2",
+            'operation_code'    => date('ymdHis')
+        ];
+
+        $orderPayments = $this->ordersPayments;
+        $orderPayments->create($orderPayment);
+
+        $html = "<form name='paypal_form' action='".$this->getPaypalUrl()."' method='POST' id='paypal_form'>
+        <input type='hidden' name='cmd' value='_xclick'>
+        <input type='hidden' name='bn'          value='".env('PAYPAL_BUSINESS_NAME')."' />
+        <input type='hidden' name='business' value='".env('PAYPAL_USER')."'>
+        <input type='hidden' name='image_url'   value='".env('PAYPAL_LOGO')."'/>
+        <input type='hidden' name='item_name' value='Pedido ".$data['ref']."'>
+        <input type='hidden' name='custom' value='".$orderPayment['operation_code']."'>
+        <input type='hidden' name='currency_code' value='EUR'>
+        <input type='hidden' name='amount' value='".$data['total']."'>
+        <input type='hidden' name='return'               value='".route('payments.paypal.ok')."' />
+        <input type='hidden' name='cancel_return'        value='".route('payments.paypal.ko')."' />
+        <input type='hidden' name='notify_url'           value='".route('payments.paypal.response')."'>
+        </form>
+        <script>document.paypal_form.submit()</script>";
+        return $html;
+    }
+
+    public function makeForm($config, $order, $cart){
+
+        /*
+        $config = [
+            "name" => "Emporda Estil",
+            "logo" => "http://www.empordaestil.com/front/img/logo2.png"
+        ];
+
+        $order = [
+            "ref"       => "referencia pedido",
+            "name"      => "Nombre del usuario",
+            "surnames"  => "Apellidos usuario",
+            "address"   => "Dirección del usuario",
+            "city"      => "Ciudad del usuario",
+            "cp"        => "codigo postal",
+            "shippings" => "0",
+            "discount"  => "descuento aplicado en euros",
+        ];
+
+        $cart = [
+            [
+                "name"  => "Producto 1",
+                'ref'   => "ref111",
+                'pvp'   => "12.50",
+                'qty'   => "1"
+            ],
+            [
+                "name"  => "Producto 2",
+                'ref'   => "ref222",
+                'pvp'   => "12.52",
+                'qty'   => "2"
+            ]
+        ];
+        */
+
+        $html = "<form name='paypal_form' action='".$this->getPaypalUrl()."' method='POST' id='paypal_form'>
+        <input type='hidden' name='business'    value='info-facilitator@atmospheresp.com' />
+        <input type='hidden' name='cmd'         value='_cart' />
+        <input type='hidden' name='upload'      value='1'>
+        <input type='hidden' name='bn'          value='".$config['name']."' />
+        <input type='hidden' name='image_url'   value='".$config['logo']."'/>";
+
+        $i = 1;
+        foreach ($cart as $item) {
+            $html = $html."
+            <input type='hidden' name='item_name_".$i."'    value='".$item['name']."' />
+            <input type='hidden' name='item_number_".$i."'  value='".$item['ref']."' />
+            <input type='hidden' name='amount_".$i."'       value='".$item['pvp']."' />
+            <input type='hidden' name='quantity_".$i."'     value='".$item['qty']."' />";
+            $i++;
+        }
+
+        $html = $html."
+        <input type='hidden' name='page_style'           value='primary' />
+        <input type='hidden' name='return'               value='".urlencode(route('payments.paypal.ok'))."' />
+        <input type='hidden' name='cancel_return'        value='".urlencode(route('payments.paypal.ko'))."' />
+        <input type='hidden' name='notify_url'           value='".urlencode(route('payments.paypal.response'))."'>
+        <input type='hidden' name='currency_code'        value='EUR' />
+        <input type='hidden' name='cn'                   value='PP-BuyNowBF' />
+        <input type='hidden' name='custom'               value='".$order['ref']."' />
+        <input type='hidden' name='first_name'           value='".$order['name']."' />
+        <input type='hidden' name='last_name'            value='".$order['surnames']."' />
+        <input type='hidden' name='address1'             value='".$order['address']."' />
+        <input type='hidden' name='city'                 value='".$order['city']."' />
+        <input type='hidden' name='zip'                  value='".$order['cp']."' />
+        <input type='hidden' name='lc'                   value='es' />
+        <input type='hidden' name='country'              value='ES' />
+        <input type='hidden' name='rm'                   value='2'>
+        <input type='hidden' name='shipping'             value='".$order['shippings']."'>
+        <input type='hidden' name='cbt'                  value='Clique aquí para finalizar su compra'>
+        <input type='hidden' name='discount_amount_cart' value='".$order['discount']."' />
+        </form>
+        <script>document.paypal_form.submit()</script>
+        ";
+
+        return $html;
     }
 
 }

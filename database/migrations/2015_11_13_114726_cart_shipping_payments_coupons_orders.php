@@ -164,6 +164,7 @@ class CartShippingPaymentsCouponsOrders extends Migration
 
                 $table->string('response_code', 255);
                 $table->string('operation_code', 255);
+                $table->string('transaction_code', 255);
 
                 $table->timestamps();
                 $table->foreign('order_id')->references('id')->on('orders');
