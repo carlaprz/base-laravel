@@ -124,7 +124,7 @@ abstract class BaseController extends Controller
         } else {
             $rules = $this->resourceName;
         }
-        
+
         $rules = get_rules_from($rules);
 
         $prepareData = $this->prepareData(Input::all(), $request);
