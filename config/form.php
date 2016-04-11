@@ -113,13 +113,10 @@ return [
                         'rules' => ['required', 'unique:news_translations,title,{unique:id},news_id,locale,es']
                     ],
                     'description' => [
-<<<<<<< HEAD
                         'type' => 'text',
                         'title' => 'Descripción corta',
-=======
                         'type' => 'textarea',
                         'title' => 'Descripción corta de la noticia',
->>>>>>> f/FaqsFixes
                         'description' => '',
                         'rules' => ['required']
                     ],
@@ -207,15 +204,13 @@ return [
                     ],
                     'meta_title' => [
                         'type' => 'text',
-<<<<<<< HEAD
                         'title' => 'Meta Titulo (ES) ',
                         'description' => 'Meta Titulo'
                     ],
                     'meta_description' => [
                         'type' => 'textarea',
                         'title' => 'Meta Descripcion (ES) ',
-                        'description' => 'Meta Descripcion'
-=======
+                        'description' => 'Meta Descripcion',
                         'title' => 'Meta Título (ES) ',
                         'description' => 'Introduzca Meta Título',
                         'rules' => []
@@ -225,7 +220,6 @@ return [
                         'title' => 'Meta Descripción (ES) ',
                         'description' => 'Introduzca Meta Descripción',
                         'rules' => []
->>>>>>> f/FaqsFixes
                     ]
                 ]
             ],
@@ -246,22 +240,16 @@ return [
                     'meta_title' => [
                         'type' => 'text',
                         'title' => 'Meta title',
-<<<<<<< HEAD
-                        'description' => 'Meta title'
-=======
+                        'description' => 'Meta title',
                         'description' => 'Insert Meta title',
                         'rules' => []
->>>>>>> f/FaqsFixes
                     ],
                     'meta_description' => [
                         'type' => 'textarea',
                         'title' => 'Meta Description',
-<<<<<<< HEAD
-                        'description' => 'Meta Description'
-=======
+                        'description' => 'Meta Description',
                         'description' => 'Insert Meta Description',
                         'rules' => []
->>>>>>> f/FaqsFixes
                     ]
                 ]
             ]
@@ -900,9 +888,7 @@ return [
             ]
         ]
     ],
-<<<<<<< HEAD
    
-=======
     'banners_crop' => [
         'name' => 'Banners',
         'for_files' => true,
@@ -919,7 +905,6 @@ return [
             ],
         ]
     ],
->>>>>>> f/FaqsFixes
     'faqsCategories' => [
         'name' => 'Categorias de FAQs',
         'for_files' => false,
