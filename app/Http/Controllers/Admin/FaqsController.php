@@ -40,7 +40,7 @@ class FaqsController extends BaseController
         return view('admin.order', [
             'data' => [],
             'pageTitle' => 'Orden de Faqs',
-            'title' => 'Productos',
+            'title' => 'Faqs',
             'header' => $fluxesHead,
             'filter' => all_faqs_categories(),
             'filter_id' => false,

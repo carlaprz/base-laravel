@@ -17,6 +17,30 @@ class News extends Migration
 
         if ($news === true) {
 
+            Schema::create('news_categories', function(Blueprint $table)
+            {
+                $table->increments('id');
+                $table->integer('order');
+                $table->boolean('active')->default(1);
+                $table->timestamps();
+            });
+
+            Schema::create('news_categories_translations', function(Blueprint $table)
+            {
+                $table->increments('id');
+                $table->integer('news_categories_id')->unsigned();
+                $table->string('locale')->index();
+                $table->string('slug');
+
+                $table->string('title');
+                $table->longText('description');
+
+                $table->timestamps();
+
+                $table->unique(['news_categories_id', 'locale']);
+                $table->foreign('news_categories_id')->references('id')->on('news_categories')->onDelete('cascade');
+            });
+
             Schema::create('news', function(Blueprint $table)
             {
                 $table->increments('id');
@@ -57,7 +81,8 @@ class News extends Migration
         $news = Config::get('configMigrations.news');
 
         if ($news === true) {
-
+            Schema::drop('news_categories_translations');
+            Schema::drop('news_categories');
             Schema::drop('news_translations');
             Schema::drop('news');
         }

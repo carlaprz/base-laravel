@@ -10,13 +10,13 @@ return [
             'name' => [
                 'type' => 'text',
                 'title' => 'Nombre',
-                'description' => 'Introduzca el Nombre.',
+                'description' => 'Introduzca el nombre.',
                 'rules' => ['required']
             ],
             'lastname' => [
                 'type' => 'text',
                 'title' => 'Apellido',
-                'description' => 'Introduzca el Apellido.',
+                'description' => 'Introduzca los apellidos.',
                 'rules' => ['required']
             ],
             'email' => [
@@ -40,13 +40,13 @@ return [
             'city' => [
                 'type' => 'text',
                 'title' => 'Ciudad',
-                'description' => 'Introduzca el código postal',
+                'description' => 'Introduzca la ciudad',
                 'rules' => ['required']
             ],
             'telephone' => [
                 'type' => 'numeric',
                 'title' => 'Teléfono',
-                'description' => 'Introduzca el numero de telefono',
+                'description' => 'Introduzca el número de teléfono',
                 'rules' => ['required']
             ],
             'province' => [
@@ -87,7 +87,7 @@ return [
             'image' => [
                 'type' => 'imageFile',
                 'title' => 'Image',
-                'description' => 'Introduzca la imagen principal de la noticia',
+                'description' => 'Introduzca la imagen principal de la noticia (100x100px)',
                 'rules' => ['required']
             ],
             'publish' => [
@@ -109,12 +109,12 @@ return [
                     'title' => [
                         'type' => 'text',
                         'title' => 'Título',
-                        'description' => 'Título',
+                        'description' => 'Título de la noticia',
                         'rules' => ['required', 'unique:news_translations,title,{unique:id},news_id,locale,es']
                     ],
                     'description' => [
                         'type' => 'textarea',
-                        'title' => 'Descripción corta',
+                        'title' => 'Descripción corta de la noticia',
                         'description' => '',
                         'rules' => ['required']
                     ],
@@ -204,14 +204,14 @@ return [
                     ],
                     'meta_title' => [
                         'type' => 'text',
-                        'title' => 'Meta Titulo (ES) ',
-                        'description' => 'Meta Titulo',
+                        'title' => 'Meta Título (ES) ',
+                        'description' => 'Introduzca Meta Título',
                         'rules' => []
                     ],
                     'meta_description' => [
                         'type' => 'textarea',
-                        'title' => 'Meta Descripcion (ES) ',
-                        'description' => 'Meta Descripcion',
+                        'title' => 'Meta Descripción (ES) ',
+                        'description' => 'Introduzca Meta Descripción',
                         'rules' => []
                     ]
                 ]
@@ -233,13 +233,13 @@ return [
                     'meta_title' => [
                         'type' => 'text',
                         'title' => 'Meta title',
-                        'description' => 'Meta title',
+                        'description' => 'Insert Meta title',
                         'rules' => []
                     ],
                     'meta_description' => [
                         'type' => 'textarea',
                         'title' => 'Meta Description',
-                        'description' => 'Meta Description',
+                        'description' => 'Insert Meta Description',
                         'rules' => []
                     ]
                 ]
@@ -363,12 +363,12 @@ return [
                     'title' => [
                         'type' => 'text',
                         'title' => 'Nombre del producto (ES)',
-                        'description' => 'Título del producto',
+                        'description' => 'Introduzca nombre del producto',
                         'rules' => ['required', 'unique:products_translations,title,{unique:id},products_id,locale,es']
                     ],
                     'description' => [
                         'type' => 'textarea',
-                        'title' => 'Descripción del producto (ES)',
+                        'title' => 'Introduzca descripción del producto (ES)',
                         'description' => 'Descripcion',
                     ],
                     'slug' => [
@@ -383,13 +383,13 @@ return [
                     'title' => [
                         'type' => 'text',
                         'title' => 'Nombre del producto (EN)',
-                        'description' => 'Título del producto',
+                        'description' => 'Insert name of the product',
                         'rules' => ['unique:products_translations,title,{unique:id},products_id,locale,en']
                     ],
                     'description' => [
                         'type' => 'textarea',
                         'title' => 'Descripción del producto (EN)',
-                        'description' => 'Descripción',
+                        'description' => 'Insert description of the product',
                         'rules' => ['required_with:title']
                     ],
                     'slug' => [
@@ -695,7 +695,7 @@ return [
             'name' => [
                 'type' => 'text',
                 'title' => 'Nombre',
-                'description' => 'Introduce el nombre del método de pago',
+                'description' => 'Introduzca el nombre del método de pago',
                 'rules' => ['required']
             ],
             'active' => [
@@ -715,7 +715,7 @@ return [
             'code' => [
                 'type' => 'text',
                 'title' => 'Código',
-                'description' => 'Introduce el código de descuento',
+                'description' => 'Introduzca el código de descuento',
                 'rules' => ['required']
             ],
             'start' => [
@@ -759,7 +759,7 @@ return [
             'name' => [
                 'type' => 'text',
                 'title' => 'Nombre',
-                'description' => 'Introduce el nombre de la zona de envío',
+                'description' => 'Introduzca el nombre de la zona de envío',
                 'rules' => ['required']
             ]
         ]
@@ -773,13 +773,13 @@ return [
             'code' => [
                 'type' => 'text',
                 'title' => 'Código',
-                'description' => 'Introduce el nombre del país de envío',
+                'description' => 'Introduzca el nombre del país de envío',
                 'rules' => ['required']
             ],
             'name' => [
                 'type' => 'text',
                 'title' => 'Nombre',
-                'description' => 'Introduce el nombre del país de envío',
+                'description' => 'Introduzca el nombre del país de envío',
                 'rules' => ['required']
             ],
             'shipping_zone' => [
@@ -793,20 +793,20 @@ return [
     'shippingCosts' => [
         'name' => 'Costes de envío',
         'for_files' => false,
-        'description' => 'Administración de costes de envío',
+        'description' => 'Administración de gastos de envío',
         'dataShow' => ['currencies'],
         'editor' => false,
         'fields' => [
             'name' => [
                 'type' => 'text',
                 'title' => 'Nombre',
-                'description' => 'Introduce el nombre del coste de envío',
+                'description' => 'Introduzca el nombre del gasto de envío',
                 'rules' => ['required']
             ],
             'units' => [
                 'type' => 'numeric',
                 'title' => 'Unidades',
-                'description' => 'Introduce las unidades tendrá el coste de envío',
+                'description' => 'Introduzca el numero de productos para este gasto de envío',
                 'rules' => ['required']
             ],
             'shipping_zone' => [
@@ -828,7 +828,7 @@ return [
                     'pvp' => [
                         'type' => 'numeric',
                         'title' => 'Precio Euro',
-                        'description' => 'Introduce el precio del coste de envío',
+                        'description' => 'Introduzca el precio del gasto de envío',
                         'rules' => ['required']
                     ],
                 ]
@@ -838,7 +838,7 @@ return [
                     'pvp' => [
                         'type' => 'numeric',
                         'title' => 'Precio Dolar',
-                        'description' => 'Introduce el precio del coste de envío',
+                        'description' => 'Introduzca el precio del gasto de envío',
                         'rules' => ['required']
                     ],
                 ]
@@ -854,7 +854,7 @@ return [
             'name' => [
                 'type' => 'text',
                 'title' => 'Nombre',
-                'description' => 'Introduce el nombre del método de pago',
+                'description' => 'Introduzca el nombre del método de pago',
                 'rules' => ['required']
             ],
             'active' => [
@@ -874,13 +874,13 @@ return [
             'name' => [
                 'type' => 'text',
                 'title' => 'Nombre',
-                'description' => 'Introduce el nombre del banner',
+                'description' => 'Introduzca el nombre del banner',
                 'rules' => ['required']
             ],
             'text' => [
                 'type' => 'text',
                 'title' => 'Texto',
-                'description' => 'Introduce el texto del banner',
+                'description' => 'Introduzca el texto del banner',
                 'rules' => ''
             ],
             'link' => [
@@ -892,7 +892,7 @@ return [
             'image' => [
                 'type' => 'imageFile',
                 'title' => 'Imagen del banner',
-                'description' => 'Imagen del banner. Deberá tener las medidas exactas especificadas por diseño.',
+                'description' => 'Imagen del banner. Deberá tener las medidas exactas especificadas por diseño (100x100px).',
                 'rules' => ['required']
             ],
             'active' => [
@@ -906,7 +906,7 @@ return [
     'banners_crop' => [
         'name' => 'Banners',
         'for_files' => true,
-        'description' => 'Administración de Imagen de Banners',
+        'description' => 'Administración de imágenes de banners',
         'slug' => false,
         'editor' => false,
         'dataShow' => [],
@@ -992,13 +992,13 @@ return [
                     'question' => [
                         'type' => 'text',
                         'title' => 'Pregunta',
-                        'description' => 'Pregunta de la FAQ',
+                        'description' => 'Introduzca la pregunta',
                         'rules' => ['required', 'unique:faqs_translations,question,{unique:id},faqs_id,locale,es']
                     ],
                     'answer' => [
                         'type' => 'textarea',
                         'title' => 'Respuesta',
-                        'description' => 'Respuesta de la FAQ',
+                        'description' => 'Introduzca la respuesta',
                         'rules' => ['required']
                     ]
                 ]
@@ -1008,13 +1008,13 @@ return [
                     'question' => [
                         'type' => 'text',
                         'title' => 'Question',
-                        'description' => 'Name of the FAQ',
+                        'description' => 'Insert the name of the question',
                         'rules' => ['unique:faqs_translations,question,{unique:id},faqs_id,locale,en']
                     ],
                     'answer' => [
                         'type' => 'text',
                         'title' => 'Answer',
-                        'description' => 'Answer of the FAQ',
+                        'description' => 'Insert the answer of the question',
                         'rules' => ['required_with:title']
                     ]
                 ]
