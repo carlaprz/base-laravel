@@ -945,7 +945,7 @@ return [
                         'type' => 'text',
                         'title' => 'Descripcion',
                         'description' => 'Descripcion de la categoría',
-                        'rules' => ['required']
+                        'rules' => []
                     ]
                 ]
             ],
@@ -961,7 +961,7 @@ return [
                         'type' => 'text',
                         'title' => 'Description',
                         'description' => 'Description of the category',
-                        'rules' => ['required_with:title']
+                        'rules' => []
                     ]
                 ]
             ]
