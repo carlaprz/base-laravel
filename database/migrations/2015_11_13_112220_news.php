@@ -44,11 +44,14 @@ class News extends Migration
             Schema::create('news', function(Blueprint $table)
             {
                 $table->increments('id');
+                $table->integer('news_categories_id')->unsigned();
                 $table->string('image');
                 $table->integer('order');
                 $table->datetime('publish');
                 $table->boolean('active')->default(1);
                 $table->timestamps();
+
+                $table->foreign('news_categories_id')->references('id')->on('news_categories');
             });
 
             Schema::create('news_translations', function(Blueprint $table)

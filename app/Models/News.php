@@ -14,8 +14,8 @@ final class News extends Model implements ModelInterface
 
     const IMAGE_PATH = 'files/news/';
 
-    public $translatedAttributes = ['title', 'description', 'content', 'slug'];
-    protected $fillable = ['order', 'publish', 'active', 'title', 'description', 'content', 'image', 'slug'];
+    public $translatedAttributes = ['news_id','title', 'description', 'content', 'slug'];
+    protected $fillable = ['news_id', 'news_categories_id','order', 'publish', 'active', 'title', 'description', 'content', 'image', 'slug'];
     protected $appends = ["es", "en"];
 
     public function getEsAttribute()
@@ -33,6 +33,17 @@ final class News extends Model implements ModelInterface
     public function add( $data )
     {
         return $this->create($data);
+    }
+
+    public function category()
+    {
+        return $this->belongsTo(NewsCategories::class, 'news_categories_id', 'id')->first();
+    }
+
+    public function getCategoryNameAttribute()
+    {
+        $parent = $this->category();
+        return $parent->title;
     }
 
     public function getPublishAttribute( $value )
