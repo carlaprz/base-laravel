@@ -30,15 +30,14 @@ final class Categories extends Model implements ModelInterface
     public function getEsAttribute()
     {
         App::setLocale('es');
-        return ['title' => $this->title, 'slug' => $this->slug , 'meta_title' => $this->meta_title, 'meta_description' => $this->meta_description];
+        return ['title' => $this->title, 'slug' => $this->slug, 'meta_title' => $this->meta_title, 'meta_description' => $this->meta_description];
     }
 
     public function getEnAttribute()
     {
         App::setLocale('en');
-        return ['title' => $this->title, 'slug' => $this->slug ,'meta_title' => $this->meta_title, 'meta_description' => $this->meta_description];
+        return ['title' => $this->title, 'slug' => $this->slug, 'meta_title' => $this->meta_title, 'meta_description' => $this->meta_description];
     }
-
 
     public function getParentNameAttribute()
     {

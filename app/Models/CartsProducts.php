@@ -15,10 +15,10 @@ final class CartsProducts extends Model implements ModelInterface
     {
         return $this->belongsTo(Carts::class, 'cart_id', 'id')->first();
     }
-    
+
     public function product()
     {
-       return $this->belongsTo(Products::class, 'product_id', 'id')->first();
+        return $this->belongsTo(Products::class, 'product_id', 'id')->first();
     }
 
     public function add( $data )

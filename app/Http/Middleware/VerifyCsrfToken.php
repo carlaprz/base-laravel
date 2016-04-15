@@ -1,20 +1,38 @@
-<?php namespace App\Http\Middleware;
+<?php
+namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken as BaseVerifier;
 
 class VerifyCsrfToken extends BaseVerifier {
 
-	/**
-	 * Handle an incoming request.
-	 *
-	 * @param  \Illuminate\Http\Request  $request
-	 * @param  \Closure  $next
-	 * @return mixed
-	 */
-	public function handle($request, Closure $next)
+	protected $except = [
+		'payment/tpv/response',
+		'payment/tpv/ok',
+		'payment/tpv/ko',
+		'payment/paypal/response',
+		'payment/paypal/ko',
+		'payment/paypal/ok',
+	];
+
+	public function handle( $request, Closure $next )
 	{
-		return parent::handle($request, $next);
+		if ($this->isReading($request) || $this->excludedRoutes($request) || $this->tokensMatch($request)) {
+			return $this->addCookieToResponse($request, $next($request));
+		}
+
+		throw new TokenMismatchException;
+	}
+
+	protected function excludedRoutes( $request )
+	{
+		$routes = $this->except;
+
+		foreach ($routes as $route)
+			if ($request->is($route))
+				return true;
+
+		return false;
 	}
 
 }

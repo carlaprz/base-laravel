@@ -1,60 +1,119 @@
 <?php
 
-namespace Potoroze\Http\Controllers\Account;
+namespace App\Http\Controllers;
 
 use App\Models\OrdersPayments;
 use App\Models\Orders;
-use App\Http\Controllers\Controller;
+use App\Models\OrdersDetails;
+use App\Models\Carts;
 use App\Services\PaypalService;
+use App\Services\CartService;
+use App\Services\EmailServices;
+use App\Services\UserService;
+use Session;
 use Request;
+use Log;
+use Auth;
 
 final class PaypalController extends Controller
 {
 
-    public function IPN( PaypalService $paypalService, OrdersPayments $paymentRepository, Orders $ordersRespository )
+    public function Paypal( CartService $cartServices, PaypalService $paypal, Orders $ordersRepository )
+    {
+        $orderDetails = Session::get('order_details', FALSE)->getAttributes();
+        $coupon = Session::get('coupons', FALSE);
+        $total = $cartServices->total();
+
+        if ($coupon !== false):
+            if ($coupon->percentage === 1):
+                $discount = $total - ( ($total * $coupon->discount) / 100);
+            else:
+                $discount = $coupon->discount;
+            endif;
+        else:
+            $discount = 0;
+        endif;
+
+        $order = $ordersRepository->find($orderDetails['order_id']);
+        $order->update(["status" => 1]);
+
+        $paypalData = [
+            'order_id' => $orderDetails['order_id'],
+            "ref" => $order->reference,
+            "total" => $total - $discount
+        ];
+
+        $formPaypal = $paypal->makeSimpleForm($paypalData);
+
+        return View('front.payments.paypal.index', [
+            'form' => $formPaypal
+        ]);
+    }
+
+    public function PaypalResponse( PaypalService $paypalService, OrdersPayments $paymentRepository, Orders $ordersRespository, EmailServices $emailService, OrdersDetails $orderDetails, Carts $cartRepository )
     {
         $params = Request::all();
-
         if (empty($params['custom'])) {
             die('error de parametros');
         }
 
+        $error = false;
+
         $response = $paypalService->validateIpn($params);
+
         if (!empty($response['id'])) {
+
             $orders_payment = $paymentRepository->findByOperationCode($response['id']);
-            $orders_payment->update(['response_code' => $response['status']]);
+            if (!empty($orders_payment)) {
+                $orders_payment->update(['response_code' => $response['status']]);
+                $order = $ordersRespository->find($orders_payment->order_id);
 
-            $orders = $ordersRespository->find($orders_payment->order_id);
-            $orders->update(['status' => 2]);
+                if (!empty($order)) {
+                    if ($response['status'] == "Completed") {
+                        $order->update(['status' => 2, 'transaction_code' => $response['txn_id']]); //Marcamos el pedido como pagado
+                        //Obtenemos DATOS
+                        $order_details = $orderDetails->findByOrder($order);
+                        $products = $cartRepository->find($order->id)->products();
+
+                        //Enviamos mail al usuario
+                        $emailService->orderAdminMail($order_details->toArray(), $products, $order->toArray(), '2');
+                        $emailService->orderClientMail($order_details->toArray(), $products, $order->toArray(), '2');
+                    } else if ($response['status'] == "In-Progress" || $response['status'] == "Pending" || $response['status'] == "Processed") {
+                        $order->update(['status' => 1]); //Esperando pago
+                    } else {
+                        $order->update(['status' => 5]); //Error de pago
+                    }
+                } else {
+                    $error = true;
+                }
+            } else {
+                $error = true;
+            }
+        } else {
+            $error = true;
+        }
+
+        if ($error) {
+            Log::info("Error PayPal Response: ");
+            Log::info($params);
         }
     }
 
-    public function paymentCorrect( PaypalService $paypalService )
+    public function PaypalOk( UserService $userService )
     {
-        $params = Request::all();
+        // Borrar todos los datos de session y volver a logear al usuario
+        $user = Auth::User();
+        Session::flush();
 
-        if (empty($params['token']) || empty($params['PayerID'])) {
-            die('error de parametros');
-        }
+        if ($user)
+            $userService->logUser($user);
 
-        $details = $paypalService->getExpressCheckoutDetails($params['token']);
-        if (strtolower($details['ACK']) != 'success') {
-            die('error en detalles');
-        }
-
-        $confirmation = $paypalService->confirmExpressCheckout(
-                $details['TOKEN'], $details['PAYERID'], 'Sale', $details['PAYMENTREQUEST_0_AMT'], $details['PAYMENTREQUEST_0_CURRENCYCODE']);
-
-        if (strtolower($confirmation['ACK']) != 'success' || strtolower($confirmation['PAYMENTINFO_0_PAYMENTSTATUS']) != 'completed') {
-            die('error en confirmacion');
-        }
-
-        return view('front.payments.pay-paypal-correct');
+        return view('front.payments.paypal.ok');
     }
 
-    public function paymentIncorrect()
+    public function PaypalKo()
     {
-        return view('front.payments.pay-paypal-incorrect');
+        return view('front.payments.paypal.ko');
     }
 
 }

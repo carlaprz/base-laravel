@@ -89,6 +89,7 @@ final class Products extends Model implements ModelInterface
         foreach ($sizes as $size) {
             $return[] = $size->size_id;
         }
+      
 
         return $return;
     }
@@ -100,6 +101,7 @@ final class Products extends Model implements ModelInterface
         foreach ($colours as $color) {
             $return[] = $color->colour_id;
         }
+        
         return $return;
     }
 

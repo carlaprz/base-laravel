@@ -5,8 +5,6 @@ namespace App\Models;
 use App\Interfaces\ModelInterface;
 use Illuminate\Database\Eloquent\Model;
 
-
-
 final class Banners extends Model implements ModelInterface
 {
 
@@ -23,9 +21,9 @@ final class Banners extends Model implements ModelInterface
     public function findAllActive()
     {
         return $this
-            ->where('active', '=', 1)
-            ->orderby('order', 'ASC')
-            ->get();
+                        ->where('active', '=', 1)
+                        ->orderby('order', 'ASC')
+                        ->get();
     }
 
     public function getImageAttribute( $image )
@@ -40,6 +38,5 @@ final class Banners extends Model implements ModelInterface
         }
         return false;
     }
-
 
 }

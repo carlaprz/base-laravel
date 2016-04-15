@@ -3,7 +3,7 @@
 namespace App\Services;
 
 use Auth;
-Use App\Services\EmailService;
+Use App\Services\EmailServices;
 use App\Models\User;
 use Session;
 
@@ -14,27 +14,28 @@ class UserService
     const FB = 'fb';
     const GOOGLE = 'google';
 
-    public function __construct( User $userRepository, EmailService $emailservice )
+    public function __construct( User $userRepository )
     {
         $this->userRepository = $userRepository;
-        $this->emailServices = $emailservice;
     }
 
     public function registerUser( $data )
     {
         if ($data['type'] == self::EMAIL) {
-            $user = $this->registerByEmail($data['user']);
+            $user = $this->registerByEmail($data);
         } else {
             $user = $this->registerBySocial($data);
         }
-       
-        $this->emailServices->welcomeEmail($user);
+
+//        $this->emailServices->welcomeEmail($user);
         return $user;
     }
 
     private function registerByEmail( $userData )
     {
-        return $this->userRepository->add($userData);
+        $user = $this->userRepository->add($userData);
+        $this->logUser($user);
+        return $user;
     }
 
     public function updateBySocial( $user, $socialData, $type )
@@ -79,10 +80,10 @@ class UserService
         return $this->userRepository->add($userData);
     }
 
-     public function updateUser( $user, $userData )
+    public function updateUser( $user, $userData )
     {
         $error = [];
-        
+
         $checkEmail = $this->userRepository->checkEmail($userData['email'], $user);
         if (!empty($checkEmail)) {
             $error[] = [
@@ -93,7 +94,8 @@ class UserService
 
         if (empty($error)) {
             $user->update($userData);
-            return ['success' => true];
+            Auth::setUser($user);
+            return $user;
         }
 
         return ['success' => false, 'errors' => $error];

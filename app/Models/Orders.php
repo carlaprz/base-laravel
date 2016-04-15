@@ -16,10 +16,9 @@ final class Orders extends Model implements ModelInterface
 {
 
     protected $table = 'orders';
-    protected $fillable = ['reference', 'cart_id', 'total_pvp', 'total_iva', 'status', 'observations', 'bill'];
+    protected $fillable = ['reference', 'cart_id', 'total_pvp', 'total_iva', 'status', 'observations', 'bill', 'coupon_id'];
     protected $appends = ['paymentName', 'paymentResponse', 'linkUser', 'statusName', 'userNameLastName', 'shipping', 'cupon_code',
-        'cant_products', 'products', 'country_name', 'products_name'];
-    
+        'cant_products', 'products_cant_unit', 'products', 'country_name', 'products_name'];
 
     public function paginate( $num, $filters = [] )
     {
@@ -114,10 +113,10 @@ final class Orders extends Model implements ModelInterface
 
     public function getPaymentResponseAttribute()
     {
-       // dd($this->payment()->first());
+        // dd($this->payment()->first());
         if (count($this->payment()) > 0) {
             $payment = $this->payment()->first();
-          
+
             return $payment->response;
         }
         return false;
@@ -159,6 +158,16 @@ final class Orders extends Model implements ModelInterface
     public function getCantProductsAttribute()
     {
         return count($this->cart()->cartProducts());
+    }
+
+    public function getProductsCantUnitAttribute()
+    {        
+        $return = false;
+        $totalProducts = $this->cart()->cartProducts();
+        foreach ($totalProducts as $product) {
+            $return = $return + $product->cant;
+        }
+        return $return;
     }
 
     public function getProductsAttribute()

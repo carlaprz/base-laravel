@@ -83,7 +83,7 @@ abstract class BaseController extends Controller
         $rules = get_rules_from($this->resourceName);
 
         $prepareData = $this->prepareData(Input::all(), $request);
-        
+
         $validations = $this->prepareValidate($prepareData, $rules, null);
         if (!empty($validations) && is_object($validations)) {
             return back()->withInput()->withErrors($validations);
@@ -119,10 +119,16 @@ abstract class BaseController extends Controller
         $repo = App::make($this->repositoryName);
         $resource = $repo->find($id);
 
-        $rules = get_rules_from($this->resourceName);
+        if (!empty($this->rules)) {
+            $rules = $this->rules;
+        } else {
+            $rules = $this->resourceName;
+        }
+
+        $rules = get_rules_from($rules);
 
         $prepareData = $this->prepareData(Input::all(), $request);
-    
+
         $validations = $this->prepareValidate($prepareData, $rules, $resource->id);
         if (!empty($validations) && is_object($validations)) {
             return back()->withInput()->withErrors($validations);
@@ -172,11 +178,10 @@ abstract class BaseController extends Controller
         foreach ($data as $key => $imagen) {
             $d = $this->filesDimensions;
             if (isset($d[$key]["w"])) {
-                FileServices::cropImage($this->pathFile, $imagen, $d[$key]["w"]); 
-            }else{
-                FileServices::cropImage($this->pathFile, $imagen); 
+                FileServices::cropImage($this->pathFile, $imagen, $d[$key]["w"]);
+            } else {
+                FileServices::cropImage($this->pathFile, $imagen);
             }
-           
         }
 
         $route = resource_home($this->resourceName);
@@ -205,14 +210,14 @@ abstract class BaseController extends Controller
 
     private function prepareData( $data, $request )
     {
-        
-        if(isset($data['lenguages']) && is_array($data['lenguages'])){
-            foreach ($data['lenguages'] as $keyLang => $dataLang){
+
+        if (isset($data['lenguages']) && is_array($data['lenguages'])) {
+            foreach ($data['lenguages'] as $keyLang => $dataLang) {
                 $data[$keyLang] = $dataLang;
             }
             unset($data['lenguages']);
         }
-        
+
         $dataWithImages = FileServices::uploadFilesRequest($request, $data, $this->pathFile, $this->filesDimensions);
         $dataAutoComplete = $this->generateAutocomplete($dataWithImages);
         $dataWithSlug = $this->generateSlugs($dataAutoComplete);
@@ -300,16 +305,15 @@ abstract class BaseController extends Controller
                 }
             }
         }
-        
-       
+
+
         foreach ($data as $key => $value) {
             if (is_array($value)) {
                 if (in_array($key, $langs)) {
-                   
+
                     $errors[] = Validator::make($value, $rules[$key]);
                     unset($data[$key]);
                     unset($rules[$key]);
-                    
                 } else if (!empty($otherData) && in_array($key, $otherData)) {
                     foreach ($value as $subkey => $subValue) {
                         $errors[] = Validator::make($subValue, $rules[$key][$subkey]);
@@ -319,7 +323,7 @@ abstract class BaseController extends Controller
                 }
             }
         }
-     
+
         $errors[] = Validator::make($data, $rules);
         return $errors;
     }

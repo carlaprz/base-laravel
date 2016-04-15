@@ -113,6 +113,8 @@ return [
                         'rules' => ['required', 'unique:news_translations,title,{unique:id},news_id,locale,es']
                     ],
                     'description' => [
+                        'type' => 'text',
+                        'title' => 'Descripción corta',
                         'type' => 'textarea',
                         'title' => 'Descripción corta de la noticia',
                         'description' => '',
@@ -135,7 +137,7 @@ return [
                         'rules' => ['unique:news_translations,title,{unique:id},news_id,locale,en']
                     ],
                     'description' => [
-                        'type' => 'textarea',
+                        'type' => 'text',
                         'title' => 'Description',
                         'description' => 'Short text for preview the new',
                         'rules' => ['required_with:title']
@@ -161,8 +163,7 @@ return [
             'image' => [
                 'type' => 'imageCrop',
                 'title' => 'Imagen',
-                'description' => '',
-                'rules' => [''],
+                'description' => ''               
             ],
         ]
     ],
@@ -183,8 +184,7 @@ return [
             'active' => [
                 'type' => 'radio',
                 'title' => 'Activo',
-                'description' => 'Estado',
-                'rules' => []
+                'description' => 'Estado'
             ]
         ],
         'lenguages' => [
@@ -204,6 +204,13 @@ return [
                     ],
                     'meta_title' => [
                         'type' => 'text',
+                        'title' => 'Meta Titulo (ES) ',
+                        'description' => 'Meta Titulo'
+                    ],
+                    'meta_description' => [
+                        'type' => 'textarea',
+                        'title' => 'Meta Descripcion (ES) ',
+                        'description' => 'Meta Descripcion',
                         'title' => 'Meta Título (ES) ',
                         'description' => 'Introduzca Meta Título',
                         'rules' => []
@@ -233,12 +240,14 @@ return [
                     'meta_title' => [
                         'type' => 'text',
                         'title' => 'Meta title',
+                        'description' => 'Meta title',
                         'description' => 'Insert Meta title',
                         'rules' => []
                     ],
                     'meta_description' => [
                         'type' => 'textarea',
                         'title' => 'Meta Description',
+                        'description' => 'Meta Description',
                         'description' => 'Insert Meta Description',
                         'rules' => []
                     ]
@@ -413,14 +422,12 @@ return [
             'image' => [
                 'type' => 'imageCrop',
                 'title' => 'Imagen detalle',
-                'description' => '',
-                'rules' => [''],
+                'description' => ''               
             ],
             'thumb' => [
                 'type' => 'imageCrop',
                 'title' => 'Imagen Listado',
-                'description' => '',
-                'rules' => ['']
+                'description' => ''
             ]
         ]
     ],
@@ -435,8 +442,7 @@ return [
             'active' => [
                 'type' => 'radio',
                 'title' => 'Activo',
-                'description' => 'Estado',
-                'rules' => []
+                'description' => 'Estado'
             ]
         ],
         'lenguages' => [
@@ -473,8 +479,7 @@ return [
             'active' => [
                 'type' => 'radio',
                 'title' => 'Activo',
-                'description' => 'Estado',
-                'rules' => []
+                'description' => 'Estado'
             ]
         ],
         'lenguages' => [
@@ -506,68 +511,63 @@ return [
         'description' => 'Administración de Pedidos',
         'slug' => false,
         'editor' => false,
-        'orderToShow' => ['generals', 'dataShow'],
-        'dataShow' => ['products', 'shipping'],
+        'orderToShow' => [ 'generals', 'dataShow'],
+        'dataShow' => [ 'products' ,'shipping'],
         'fields' => [
             'status' => [
                 'type' => 'selectDisabled',
                 'title' => 'Estado',
-                'description' => 'orders_status',
-                'rules' => ['']
+                'description' => 'orders_status'
             ],
             'reference' => [
                 'type' => 'textDisabled',
                 'title' => 'Código pedido',
-                'description' => '',
-                'rules' => ['']
+                'description' => ''
             ],
             'paymentName' => [
                 'type' => 'textDisabled',
                 'title' => 'Método de pago',
-                'description' => 'Método de pago',
-                'rules' => ['']
+                'description' => 'Método de pago'
             ],
             'paymentResponse' => [
                 'type' => 'textDisabled',
                 'title' => 'Respuesta del método de pago',
-                'description' => 'Respuesta del método de pago',
-                'rules' => ['']
+                'description' => 'Respuesta del método de pago'
             ],
             'total_pvp' => [
                 'type' => 'numericDisabled',
                 'title' => 'Importe total',
-                'description' => '',
-                'rules' => ['']
+                'description' => ''
             ],
             'total_iva' => [
                 'type' => 'numericDisabled',
                 'title' => 'IVA',
-                'description' => '',
-                'rules' => ['']
+                'description' => ''
             ],
             'userNameLastName' => [
                 'type' => 'textDisabled',
                 'title' => 'Cliente',
-                'description' => '',
-                'rules' => []
+                'description' => ''
             ],
             'cupon_code' => [
                 'type' => 'textDisabled',
                 'title' => 'Cupón de descuento',
-                'description' => '',
-                'rules' => []
+                'description' => ''
             ],
             'bill' => [
                 'type' => 'radioDisabled',
                 'title' => 'Factura',
-                'description' => '',
-                'rules' => []
+                'description' => ''
             ],
-            'cant_products' => [
+            'products_cant_unit' => [
                 'type' => 'textDisabled',
                 'title' => 'Total de Productos',
-                'description' => '',
-                'rules' => []
+                'description' => ''                
+            ],
+            'cant_products' => [
+                'type' => 'hidden',
+                'title' => '',
+                'description' => ''
             ],
         ],
         "shipping" => [
@@ -575,56 +575,47 @@ return [
                 'shipping_name' => [
                     'type' => 'textDisabled',
                     'title' => 'Nombre',
-                    'description' => '',
-                    'rules' => ['']
+                    'description' => ''                   
                 ],
                 'shipping_lastname' => [
                     'type' => 'textDisabled',
                     'title' => 'Apellido',
-                    'description' => '',
-                    'rules' => ['']
+                    'description' => ''                   
                 ],
                 'shipping_email' => [
                     'type' => 'textDisabled',
                     'title' => 'Email',
-                    'description' => '',
-                    'rules' => ['']
+                    'description' => ''                   
                 ],
                 'shipping_telephone' => [
                     'type' => 'textDisabled',
                     'title' => 'Teléfono',
-                    'description' => '',
-                    'rules' => ['']
+                    'description' => ''                   
                 ],
                 'shipping_address' => [
                     'type' => 'textDisabled',
                     'title' => 'Dirección de envío',
-                    'description' => '',
-                    'rules' => ['']
+                    'description' => ''                   
                 ],
                 'shipping_postalcode' => [
                     'type' => 'textDisabled',
                     'title' => 'Código postal de envío',
-                    'description' => '',
-                    'rules' => ['']
+                    'description' => ''                   
                 ],
                 'shipping_city' => [
                     'type' => 'textDisabled',
                     'title' => 'Ciudad de envío',
-                    'description' => '',
-                    'rules' => ['']
+                    'description' => ''                   
                 ],
                 'shipping_province' => [
                     'type' => 'textDisabled',
                     'title' => 'Provincia de envío',
-                    'description' => '',
-                    'rules' => ['']
+                    'description' => ''                   
                 ],
                 'shipping_country_name' => [
                     'type' => 'textDisabled',
                     'title' => 'País de envío',
-                    'description' => '',
-                    'rules' => ['']
+                    'description' => ''                   
                 ],
             ],
         ],
@@ -634,38 +625,32 @@ return [
                 'link' => [
                     'type' => 'link',
                     'title' => 'Producto Link',
-                    'description' => '',
-                    'rules' => ['']
+                    'description' => ''                   
                 ],
                 'product_description' => [
                     'type' => 'textDisabled',
                     'title' => 'Producto nombre',
-                    'description' => '',
-                    'rules' => ['']
+                    'description' => ''                   
                 ],
                 'pvp' => [
                     'type' => 'textDisabled',
                     'title' => 'Precio',
-                    'description' => '',
-                    'rules' => ['']
+                    'description' => ''                   
                 ],
                 'iva' => [
                     'type' => 'textDisabled',
                     'title' => 'iva',
-                    'description' => '',
-                    'rules' => ['']
+                    'description' => ''                   
                 ],
                 'cant' => [
                     'type' => 'textDisabled',
                     'title' => 'Unidades',
-                    'description' => '',
-                    'rules' => ['']
+                    'description' => ''                   
                 ],
                 'separacion' => [
                     'type' => 'line',
                     'title' => '',
-                    'description' => '',
-                    'rules' => ['']
+                    'description' => ''                   
                 ],
             ],
         ],
@@ -682,7 +667,7 @@ return [
                 'type' => 'select',
                 'title' => 'Estado',
                 'description' => 'orders_status',
-                'rules' => ['']
+               
             ],
         ],
     ],
@@ -890,7 +875,7 @@ return [
                 'rules' => ''
             ],
             'image' => [
-                'type' => 'imageFile',
+                'type' => 'imageFileNoCrop',
                 'title' => 'Imagen del banner',
                 'description' => 'Imagen del banner. Deberá tener las medidas exactas especificadas por diseño (100x100px).',
                 'rules' => ['required']
@@ -903,6 +888,7 @@ return [
             ]
         ]
     ],
+   
     'banners_crop' => [
         'name' => 'Banners',
         'for_files' => true,
@@ -945,7 +931,7 @@ return [
                         'type' => 'text',
                         'title' => 'Descripcion',
                         'description' => 'Descripcion de la categoría',
-                        'rules' => ['required']
+                        'rules' => []
                     ]
                 ]
             ],
@@ -961,7 +947,7 @@ return [
                         'type' => 'text',
                         'title' => 'Description',
                         'description' => 'Description of the category',
-                        'rules' => ['required_with:title']
+                        'rules' => []
                     ]
                 ]
             ]

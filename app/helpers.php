@@ -330,19 +330,20 @@ function all_products_backend()
 
         foreach ($category->getChildren() as $children) {
 
-            $products = [];
+            $productsAux = [];
             foreach ($repoProducts->findByCategoryId($children->id) as $product) {
-                $products[$product->id] = $product->title;
+                $productsAux[$product->id] = $product->title;
             }
 
             $data[$i]["child"][] = [
                 'id' => $children->id,
                 'name' => $children->title,
-                'products' => $products,
+                'products' => $productsAux,
             ];
         }
+        $i++;
     }
-
+  
     return $data;
 }
 

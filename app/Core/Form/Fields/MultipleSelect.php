@@ -8,7 +8,7 @@ final class MultipleSelect extends AbstractField
     public function render()
     {
         $options = $this->generateOptions();
-
+       
         return "<select multiple class='form-control' name='{$this->name()}[]'>{$options}</select>";
     }
 
@@ -16,6 +16,7 @@ final class MultipleSelect extends AbstractField
     {
         $dataFunction = $this->description();
         $data = $dataFunction();
+        
 
         $data[0] = 'Selecciona';
         $options = '';

@@ -23,6 +23,7 @@ use App\Core\Form\Fields\SelectDisabled;
 use App\Core\Form\Fields\Link;
 use App\Core\Form\Fields\Line;
 use App\Core\Form\Fields\MultipleSelect;
+use App\Core\Form\Fields\ImageFileNoCrop;
 
 final class FormGenerator
 {
@@ -49,7 +50,8 @@ final class FormGenerator
         'link' => Link::class,
         'line' => Line::class,
         'multipleSelectProducts' => MultipleSelectProducts::class,
-        'multipleSelect' => MultipleSelect::class
+        'multipleSelect' => MultipleSelect::class,
+        'imageFileNoCrop' => ImageFileNoCrop::class,
     ];
 
     public function generate( $config, array $defaultData = [] )
@@ -58,7 +60,7 @@ final class FormGenerator
         $form = new Form($data['name'], $data['description'], $data['editor'], $data);
         $loopsInfo = [];
         if (isset($data['orderToShow']) && is_array($data['orderToShow'])) {
-            
+
             foreach ($data['orderToShow'] as $order) {
                 if ($order == "generals") {
                     $info = $this->addDataGenerals($data, $form, $defaultData);
@@ -70,10 +72,10 @@ final class FormGenerator
                     $form = $this->addSpecialData($data, $form, $defaultData, $loopsInfo);
                 }
             }
-            
         } else {
             $form = $this->addDataToForm($data, $form, $defaultData);
         }
+
 
         return $form;
     }
@@ -114,6 +116,7 @@ final class FormGenerator
         $loopsInfo = [];
         foreach ($data['fields'] as $name => $fieldData) {
             $field = $this->generateField($name, $defaultData, $fieldData);
+
             if (strpos($name, "cant_") !== false) {
                 $loopsInfo[$name] = $field->value();
             }
@@ -178,9 +181,9 @@ final class FormGenerator
     {
         $value = false;
         $originName = $name;
-
         $dataAux = explode('[', $name);
 
+        
         if (count($dataAux) > 1 && count($dataAux) < 3) {
             $name = str_replace('[', '', $dataAux[0]);
             $secondname = str_replace(']', '', $dataAux[1]);
@@ -193,14 +196,15 @@ final class FormGenerator
             $thirdname = str_replace(']', '', $dataAux[2]);
 
             if (isset($data[$name][$secondname][$thirdname])) {
-
                 $value = $data[$name][$secondname][$thirdname];
             }
         }
-
+        
         if (empty($value)) {
-            if ((!empty($data[$name]) && !is_array($data[$name])) || (!empty($data[$name]) && $name == 'product_id_related' )) {
+            if ((!empty($data[$name]) && !is_array($data[$name])) ) { // || (!empty($data[$name]) && $name == 'product_id_related' )
                 $value = $data[$name];
+            } else if (!empty($data[$originName]) && is_array($data[$originName])) {
+                $value = $data[$originName];
             }
         }
 
