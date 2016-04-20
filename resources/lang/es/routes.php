@@ -2,5 +2,8 @@
 
 return [
     'home' => '',
-    'hello' => 'hola'
+    'hello' => 'hola',
+    'news'     	=> 'noticias',
+    'newscat'  	=> 'noticias/categoria/{cslug}',
+    'news_det'	=> 'noticias/{cslug}',
 ];

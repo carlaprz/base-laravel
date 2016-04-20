@@ -14,6 +14,21 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['lo
         'as' => 'hello',
         'uses' => 'WelcomeController@hello'
     ]);
+
+    Route::get(LaravelLocalization::transRoute('routes.news'), [
+        'as' => 'news',
+        'uses' => 'NewsController@news'
+    ]);
+
+    Route::get(LaravelLocalization::transRoute('routes.newscat'), [
+        'as' => 'newscat', 
+        'uses' => 'NewsController@newsCategory'
+    ]);
+    
+    Route::get(LaravelLocalization::transRoute('routes.news_det'), [
+        'as' => 'news_det', 
+        'uses' => 'NewsController@detail'
+    ]);
 });
 
 
