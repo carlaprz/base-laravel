@@ -28,7 +28,7 @@ class News extends Migration
             Schema::create('news_categories_translations', function(Blueprint $table)
             {
                 $table->increments('id');
-                $table->integer('news_categories_id')->unsigned();
+                $table->integer('news_cat_trans_id')->unsigned();
                 $table->string('locale')->index();
                 $table->string('slug');
 
@@ -37,8 +37,8 @@ class News extends Migration
 
                 $table->timestamps();
 
-                $table->unique(['news_categories_id', 'locale']);
-                $table->foreign('news_categories_id')->references('id')->on('news_categories')->onDelete('cascade');
+                $table->unique(['news_cat_trans_id', 'locale']);
+                $table->foreign('news_cat_trans_id')->references('id')->on('news_categories')->onDelete('cascade');
             });
 
             Schema::create('news', function(Blueprint $table)
@@ -51,7 +51,7 @@ class News extends Migration
                 $table->boolean('active')->default(1);
                 $table->timestamps();
 
-                $table->foreign('news_categories_id')->references('id')->on('news_categories');
+                $table->foreign('news_categories_id')->references('id')->on('news_categories')->onDelete('cascade');
             });
 
             Schema::create('news_translations', function(Blueprint $table)
@@ -59,7 +59,6 @@ class News extends Migration
                 $table->increments('id');
                 $table->integer('news_id')->unsigned();
                 $table->string('locale')->index();
-
                 $table->string('title');
                 $table->string('description')->nullable();
                 $table->longText('content');
@@ -84,10 +83,13 @@ class News extends Migration
         $news = Config::get('configMigrations.news');
 
         if ($news === true) {
-            Schema::drop('news_categories_translations');
-            Schema::drop('news_categories');
+
             Schema::drop('news_translations');
             Schema::drop('news');
+            Schema::drop('news_categories_translations');
+            Schema::drop('news_categories');
+            
+            
         }
     }
 
